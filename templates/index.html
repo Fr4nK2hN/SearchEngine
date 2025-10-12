@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Search Engine</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Academic Search</h1>
+        <div class="search-container">
+            <input type="text" id="search-box" placeholder="Search for academic papers, research topics...">
+            <!-- Hidden mode selector for research purposes -->
+            <select id="mode-selector">
+                <option value="optimal">Optimal Mode</option>
+                <option value="degraded_relevance">Degraded Relevance</option>
+                <option value="highly_irrelevant">Highly Irrelevant</option>
+                <option value="mixed_coherence">Mixed Coherence</option>
+            </select>
+            <button id="search-button">Search</button>
+        </div>
+        
+        <!-- Research controls (hidden by default, can be shown via URL parameter) -->
+        <div id="research-controls" style="display: none;">
+            <h3>Research Controls</h3>
+            <label for="visible-mode-selector">Experiment Mode:</label>
+            <select id="visible-mode-selector">
+                <option value="optimal">Baseline (Optimal)</option>
+                <option value="degraded_relevance">Mixed Relevance</option>
+                <option value="highly_irrelevant">Low Relevance</option>
+                <option value="mixed_coherence">Mixed Coherence</option>
+            </select>
+            <button id="toggle-tracking">Toggle Tracking: <span id="tracking-status">ON</span></button>
+            <button id="export-data">Export Session Data</button>
+        </div>
+        
+        <div id="results-container">
+            <div class="loader-container" style="display: none;">
+                <div class="loader"></div>
+            </div>
+        </div>
+        
+        <!-- Session info display -->
+        <div id="session-info" style="display: none;">
+            <p>Session ID: <span id="session-id-display"></span></p>
+            <p>Queries: <span id="query-count">0</span> | Clicks: <span id="click-count">0</span></p>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+{
+  "evaluation_metrics": {
+    "user_satisfaction": {
+      "name": "用户满意度",
+      "description": "用户对搜索结果的整体满意程度",
+      "measurement_method": "post_search_survey",
+      "scale": "1-5 likert scale",
+      "calculation": "average_rating",
+      "target_baseline": ">= 3.5"
+    },
+    "query_abandonment_rate": {
+      "name": "查询放弃率",
+      "description": "用户在不点击任何结果的情况下离开的比例",
+      "measurement_method": "behavioral_tracking",
+      "calculation": "abandoned_queries / total_queries",
+      "target_baseline": "<= 0.3",
+      "definition": "No clicks within 30 seconds of SERP load"
+    },
+    "click_through_rate": {
+      "name": "点击率",
+      "description": "用户点击搜索结果的比例",
+      "measurement_method": "behavioral_tracking",
+      "calculation": "clicked_queries / total_queries",
+      "target_baseline": ">= 0.6",
+      "breakdown": {
+        "first_result_ctr": "clicks_on_rank_1 / total_queries",
+        "top_3_ctr": "clicks_on_rank_1_to_3 / total_queries",
+        "overall_ctr": "total_clicks / total_queries"
+      }
+    },
+    "dwell_time": {
+      "name": "停留时间",
+      "description": "用户在搜索结果页面的停留时间",
+      "measurement_method": "behavioral_tracking",
+      "calculation": "average_time_on_serp",
+      "target_baseline": "10-60 seconds",
+      "categories": {
+        "quick_scan": "< 10 seconds",
+        "normal_browse": "10-60 seconds",
+        "deep_engagement": "> 60 seconds"
+      }
+    },
+    "scroll_behavior": {
+      "name": "滚动行为",
+      "description": "用户在结果页面的滚动模式",
+      "measurement_method": "behavioral_tracking",
+      "metrics": {
+        "max_scroll_depth": "Maximum percentage of page scrolled",
+        "scroll_speed": "Average scrolling velocity",
+        "scroll_pauses": "Number of scroll pause events"
+      }
+    },
+    "reformulation_rate": {
+      "name": "查询重构率",
+      "description": "用户修改或重新提交查询的比例",
+      "measurement_method": "behavioral_tracking",
+      "calculation": "reformulated_queries / total_sessions",
+      "target_baseline": "<= 0.4",
+      "types": {
+        "addition": "Adding terms to original query",
+        "substitution": "Replacing terms in original query",
+        "refinement": "Making query more specific"
+      }
+    },
+    "task_completion_rate": {
+      "name": "任务完成率",
+      "description": "用户成功完成搜索任务的比例",
+      "measurement_method": "post_task_survey",
+      "calculation": "completed_tasks / total_tasks",
+      "target_baseline": ">= 0.7",
+      "definition": "User reports finding satisfactory information"
+    },
+    "search_efficiency": {
+      "name": "搜索效率",
+      "description": "用户完成搜索任务所需的时间和努力",
+      "measurement_method": "behavioral_tracking",
+      "metrics": {
+        "time_to_first_click": "Time from SERP load to first result click",
+        "queries_per_session": "Number of queries in a search session",
+        "session_duration": "Total time spent in search session"
+      }
+    },
+    "result_relevance_perception": {
+      "name": "结果相关性感知",
+      "description": "用户对搜索结果相关性的主观评价",
+      "measurement_method": "post_search_survey",
+      "scale": "1-5 likert scale",
+      "calculation": "average_relevance_rating",
+      "target_baseline": ">= 3.0"
+    },
+    "cognitive_load": {
+      "name": "认知负荷",
+      "description": "用户处理搜索结果时的认知努力程度",
+      "measurement_method": "behavioral_tracking + survey",
+      "indicators": {
+        "hesitation_time": "Time before first interaction",
+        "back_and_forth_clicks": "Number of result revisits",
+        "perceived_difficulty": "Self-reported task difficulty (1-5)"
+      }
+    },
+    "error_recovery": {
+      "name": "错误恢复",
+      "description": "用户从不相关结果中恢复的能力",
+      "measurement_method": "behavioral_tracking",
+      "metrics": {
+        "bounce_rate": "Immediate return to SERP after click",
+        "recovery_time": "Time to find relevant result after irrelevant click",
+        "recovery_success": "Eventually finding satisfactory result"
+      }
+    }
+  },
+  "experimental_conditions": {
+    "optimal": {
+      "description": "High-quality, relevant results",
+      "expected_performance": "Baseline performance levels"
+    },
+    "degraded_relevance": {
+      "description": "Mixed relevant and irrelevant results",
+      "expected_impact": "Increased abandonment, longer dwell time"
+    },
+    "highly_irrelevant": {
+      "description": "Mostly irrelevant results",
+      "expected_impact": "High abandonment, low satisfaction"
+    },
+    "mixed_coherence": {
+      "description": "Inconsistent result quality",
+      "expected_impact": "Increased cognitive load, more reformulations"
+    }
+  },
+  "data_collection_intervals": {
+    "real_time": ["click_events", "scroll_events", "dwell_time"],
+    "post_query": ["satisfaction_rating", "relevance_perception"],
+    "post_session": ["task_completion", "overall_experience"],
+    "post_experiment": ["demographic_info", "search_expertise"]
+  },
+  "statistical_analysis": {
+    "primary_tests": ["ANOVA", "t-test", "chi-square"],
+    "effect_size_measures": ["Cohen's d", "eta-squared"],
+    "significance_level": 0.05,
+    "power_analysis": "Minimum 80% power for medium effect sizes"
+  }
+}

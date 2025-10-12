@@ -1,0 +1,8 @@
+Flask==2.2.2
+elasticsearch==8.14.0
+ir_datasets
+tqdm
+Werkzeug==2.3.0
+sentence-transformers
+torch
+gunicorn

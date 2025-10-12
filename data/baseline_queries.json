@@ -1,0 +1,224 @@
+{
+  "baseline_queries": [
+    {
+      "id": 1,
+      "query": "vitamins health benefits",
+      "category": "health",
+      "difficulty": "easy",
+      "expected_results": "high",
+      "description": "Common health query with clear intent"
+    },
+    {
+      "id": 2,
+      "query": "tesla battery technology",
+      "category": "technology",
+      "difficulty": "medium",
+      "expected_results": "high",
+      "description": "Specific technology query"
+    },
+    {
+      "id": 3,
+      "query": "climate change effects",
+      "category": "environment",
+      "difficulty": "medium",
+      "expected_results": "high",
+      "description": "Broad environmental topic"
+    },
+    {
+      "id": 4,
+      "query": "machine learning algorithms",
+      "category": "technology",
+      "difficulty": "hard",
+      "expected_results": "medium",
+      "description": "Technical computer science topic"
+    },
+    {
+      "id": 5,
+      "query": "cooking pasta recipes",
+      "category": "lifestyle",
+      "difficulty": "easy",
+      "expected_results": "high",
+      "description": "Common cooking query"
+    },
+    {
+      "id": 6,
+      "query": "investment strategies",
+      "category": "finance",
+      "difficulty": "medium",
+      "expected_results": "medium",
+      "description": "Financial advice query"
+    },
+    {
+      "id": 7,
+      "query": "quantum computing principles",
+      "category": "technology",
+      "difficulty": "hard",
+      "expected_results": "low",
+      "description": "Advanced physics/technology topic"
+    },
+    {
+      "id": 8,
+      "query": "exercise weight loss",
+      "category": "health",
+      "difficulty": "easy",
+      "expected_results": "high",
+      "description": "Popular fitness query"
+    },
+    {
+      "id": 9,
+      "query": "renewable energy sources",
+      "category": "environment",
+      "difficulty": "medium",
+      "expected_results": "medium",
+      "description": "Environmental technology topic"
+    },
+    {
+      "id": 10,
+      "query": "smartphone photography tips",
+      "category": "technology",
+      "difficulty": "easy",
+      "expected_results": "high",
+      "description": "Practical technology advice"
+    },
+    {
+      "id": 11,
+      "query": "meditation stress relief",
+      "category": "health",
+      "difficulty": "easy",
+      "expected_results": "high",
+      "description": "Mental health and wellness"
+    },
+    {
+      "id": 12,
+      "query": "artificial intelligence ethics",
+      "category": "technology",
+      "difficulty": "hard",
+      "expected_results": "low",
+      "description": "Complex philosophical technology topic"
+    },
+    {
+      "id": 13,
+      "query": "travel budget planning",
+      "category": "lifestyle",
+      "difficulty": "medium",
+      "expected_results": "medium",
+      "description": "Practical travel advice"
+    },
+    {
+      "id": 14,
+      "query": "home gardening vegetables",
+      "category": "lifestyle",
+      "difficulty": "easy",
+      "expected_results": "high",
+      "description": "Popular hobby topic"
+    },
+    {
+      "id": 15,
+      "query": "cryptocurrency blockchain",
+      "category": "finance",
+      "difficulty": "hard",
+      "expected_results": "low",
+      "description": "Complex financial technology"
+    },
+    {
+      "id": 16,
+      "query": "sleep quality improvement",
+      "category": "health",
+      "difficulty": "medium",
+      "expected_results": "high",
+      "description": "Common health concern"
+    },
+    {
+      "id": 17,
+      "query": "electric vehicle charging",
+      "category": "technology",
+      "difficulty": "medium",
+      "expected_results": "medium",
+      "description": "Emerging technology topic"
+    },
+    {
+      "id": 18,
+      "query": "online learning platforms",
+      "category": "education",
+      "difficulty": "easy",
+      "expected_results": "high",
+      "description": "Educational technology"
+    },
+    {
+      "id": 19,
+      "query": "sustainable fashion brands",
+      "category": "lifestyle",
+      "difficulty": "medium",
+      "expected_results": "medium",
+      "description": "Niche lifestyle topic"
+    },
+    {
+      "id": 20,
+      "query": "data privacy protection",
+      "category": "technology",
+      "difficulty": "medium",
+      "expected_results": "medium",
+      "description": "Important digital rights topic"
+    },
+    {
+      "id": 21,
+      "query": "mental health therapy",
+      "category": "health",
+      "difficulty": "medium",
+      "expected_results": "high",
+      "description": "Mental health treatment"
+    },
+    {
+      "id": 22,
+      "query": "remote work productivity",
+      "category": "lifestyle",
+      "difficulty": "easy",
+      "expected_results": "high",
+      "description": "Modern work practices"
+    },
+    {
+      "id": 23,
+      "query": "space exploration missions",
+      "category": "science",
+      "difficulty": "medium",
+      "expected_results": "low",
+      "description": "Specialized science topic"
+    },
+    {
+      "id": 24,
+      "query": "social media marketing",
+      "category": "business",
+      "difficulty": "medium",
+      "expected_results": "medium",
+      "description": "Digital marketing topic"
+    },
+    {
+      "id": 25,
+      "query": "protein rich foods",
+      "category": "health",
+      "difficulty": "easy",
+      "expected_results": "high",
+      "description": "Nutrition information"
+    }
+  ],
+  "categories": {
+    "health": "Health and wellness topics",
+    "technology": "Technology and innovation",
+    "environment": "Environmental and sustainability topics",
+    "lifestyle": "Lifestyle and personal interests",
+    "finance": "Financial and investment topics",
+    "education": "Learning and educational resources",
+    "science": "Scientific research and discoveries",
+    "business": "Business and professional topics"
+  },
+  "difficulty_levels": {
+    "easy": "Common queries with broad appeal and likely good results",
+    "medium": "Moderately specific queries with variable result quality",
+    "hard": "Complex or niche queries with potentially limited results"
+  },
+  "expected_results": {
+    "high": "Query likely to return many relevant results",
+    "medium": "Query may return some relevant results",
+    "low": "Query likely to have limited relevant results in dataset"
+  }
+}
