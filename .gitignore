@@ -1,0 +1,65 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+.python-version
+
+# Packaging/build artifacts
+build/
+dist/
+downloads/
+*.egg-info/
+.eggs/
+*.egg
+pip-wheel-metadata/
+wheels/
+share/python-wheels/
+
+# Test/coverage caches
+.pytest_cache/
+.hypothesis/
+.coverage*
+coverage.xml
+htmlcov/
+nosetests.xml
+
+# Type checker caches
+.mypy_cache/
+.pytype/
+.pyre/
+
+# Editor/IDE settings
+.vscode/
+.idea/
+*.code-workspace
+
+# OS-specific junk
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+logs/
+*.log
+
+# Docker overrides (optional local-only files)
+docker-compose.override.yml
+
+# Project-specific large artifacts
+models/
+data/msmarco_*.json
+data/*processed.json
+data/ltr_training_data.json
+
+# Keep small sample/config data
+!data/sample_queries.json
+!data/baseline_queries.json

@@ -14,6 +14,15 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir --user -r requirements.txt
 
+# Set explicit cache directory for torch
+ENV TORCH_HOME /root/.cache/torch
+RUN mkdir -p /root/.cache/torch
+
+# Download models and NLTK data
+RUN python -m nltk.downloader -d /root/nltk_data punkt stopwords punkt_tab
+COPY download_resources.py .
+RUN python download_resources.py && rm download_resources.py
+
 # Production stage
 FROM docker.m.daocloud.io/library/python:3.13.7-slim
 
@@ -25,6 +34,12 @@ WORKDIR /app
 
 # Copy Python packages from builder stage
 COPY --from=builder /root/.local /home/app/.local
+
+# Copy NLTK data from builder
+COPY --from=builder /root/nltk_data /home/app/nltk_data
+
+# Copy sentence-transformer models cache from builder
+COPY --from=builder --chown=app:app /root/.cache/torch /home/app/.cache/torch
 
 # Copy application code
 COPY --chown=app:app . .
@@ -39,4 +54,5 @@ USER app
 EXPOSE 5000
 
 # Run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "--timeout", "120", "app:app"]
+# CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "--timeout", "120", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]

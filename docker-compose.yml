@@ -6,9 +6,6 @@ services:
     environment:
       - "discovery.type=single-node"
       - "xpack.security.enabled=false"
-    ports:
-      - "9200:9200"
-      - "9300:9300"
     volumes:
       - es_data:/usr/share/elasticsearch/data
 
@@ -24,7 +21,7 @@ services:
     build: .
     container_name: app
     ports:
-      - "5000:5000"
+      - "127.0.0.1:5000:5000"
     volumes:
       - .:/app
     depends_on:

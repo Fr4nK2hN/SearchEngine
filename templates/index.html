@@ -1,52 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Search Engine</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Search Engine</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
     <div class="container">
-        <h1>Academic Search</h1>
-        <div class="search-container">
-            <input type="text" id="search-box" placeholder="Search for academic papers, research topics...">
-            <!-- Hidden mode selector for research purposes -->
-            <select id="mode-selector">
-                <option value="optimal">Optimal Mode</option>
-                <option value="degraded_relevance">Degraded Relevance</option>
-                <option value="highly_irrelevant">Highly Irrelevant</option>
-                <option value="mixed_coherence">Mixed Coherence</option>
-            </select>
-            <button id="search-button">Search</button>
+      <div class="header">
+        <h1>Smart Search</h1>
+      </div>
+
+      <div class="search-box">
+        <input
+          type="text"
+          id="search-box"
+          placeholder="Type your query..."
+          aria-label="Search query"
+          autofocus
+        />
+        <!-- Hidden mode selector for internal logic -->
+        <select id="mode-selector" hidden>
+          <option value="ltr">LTR</option>
+          <option value="cross_encoder">Cross Encoder</option>
+          <option value="hybrid">Hybrid</option>
+          <option value="baseline">Baseline</option>
+        </select>
+        <button id="search-button">Search</button>
+        <button
+          id="clear-button"
+          class="secondary-button"
+          aria-label="Clear results"
+        >
+          Clear
+        </button>
+      </div>
+
+      <div class="controls" aria-label="Ranking mode">
+        <input
+          type="radio"
+          name="mode"
+          value="ltr"
+          id="mode-ltr"
+          checked
+          style="display: none"
+        />
+        <label for="mode-ltr"> LTR Ranking</label>
+
+        <input
+          type="radio"
+          name="mode"
+          value="cross_encoder"
+          id="mode-cross"
+          style="display: none"
+        />
+        <label for="mode-cross"> Semantic Ranking</label>
+
+        <input
+          type="radio"
+          name="mode"
+          value="hybrid"
+          id="mode-hybrid"
+          style="display: none"
+        />
+        <label for="mode-hybrid"> Hybrid Ranking</label>
+
+        <input
+          type="radio"
+          name="mode"
+          value="baseline"
+          id="mode-baseline"
+          style="display: none"
+        />
+        <label for="mode-baseline"> Baseline Ranking</label>
+      </div>
+
+      <!-- Alerts -->
+      <div id="alert" role="alert" class="alert" style="display: none"></div>
+
+      <!-- Results -->
+      <div id="results-container" aria-live="polite">
+        <div
+          class="loader-container"
+          style="display: none"
+          role="status"
+          aria-live="polite"
+        >
+          <div class="loader"></div>
         </div>
-        
-        <!-- Research controls (hidden by default, can be shown via URL parameter) -->
-        <div id="research-controls" style="display: none;">
-            <h3>Research Controls</h3>
-            <label for="visible-mode-selector">Experiment Mode:</label>
-            <select id="visible-mode-selector">
-                <option value="optimal">Baseline (Optimal)</option>
-                <option value="degraded_relevance">Mixed Relevance</option>
-                <option value="highly_irrelevant">Low Relevance</option>
-                <option value="mixed_coherence">Mixed Coherence</option>
-            </select>
-            <button id="toggle-tracking">Toggle Tracking: <span id="tracking-status">ON</span></button>
-            <button id="export-data">Export Session Data</button>
-        </div>
-        
-        <div id="results-container">
-            <div class="loader-container" style="display: none;">
-                <div class="loader"></div>
-            </div>
-        </div>
-        
-        <!-- Session info display -->
-        <div id="session-info" style="display: none;">
-            <p>Session ID: <span id="session-id-display"></span></p>
-            <p>Queries: <span id="query-count">0</span> | Clicks: <span id="click-count">0</span></p>
-        </div>
+        <div class="results-empty">Type a query to start searching</div>
+      </div>
+
+      <!-- Research controls (hidden by default, can be shown via URL parameter) -->
+      <div id="research-controls" style="display: none">
+        <h3>Research Console</h3>
+        <label for="visible-mode-selector">Experiment Mode:</label>
+        <select id="visible-mode-selector">
+          <option value="ltr">LTR</option>
+          <option value="cross_encoder">Cross Encoder</option>
+          <option value="hybrid">Hybrid</option>
+          <option value="baseline">Baseline</option>
+        </select>
+        <button id="toggle-tracking">
+          Tracking: <span id="tracking-status">ON</span>
+        </button>
+        <button id="export-data">Export Session Data</button>
+      </div>
+
+      <!-- Session info display -->
+      <div id="session-info" style="display: none">
+        <p>Session ID: <span id="session-id-display"></span></p>
+        <p>
+          Queries: <span id="query-count">0</span> | Clicks:
+          <span id="click-count">0</span>
+        </p>
+      </div>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-</body>
+  </body>
 </html>
