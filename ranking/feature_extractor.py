@@ -1,8 +1,3 @@
-"""
-Learning to Rank 特征提取器
-实现 20+ 维度的查询-文档匹配特征
-"""
-
 import re
 import math
 import numpy as np

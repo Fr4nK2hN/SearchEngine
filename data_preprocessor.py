@@ -1,8 +1,3 @@
-"""
-MS MARCO 数据预处理器
-清洗、优化和格式化搜索数据
-"""
-
 import json
 import re
 from typing import List, Dict

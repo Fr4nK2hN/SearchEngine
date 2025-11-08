@@ -1,7 +1,3 @@
-"""
-完整的 LTR 模型训练脚本
-"""
-
 import os
 import sys
 import argparse

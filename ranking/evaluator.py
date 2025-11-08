@@ -1,8 +1,3 @@
-"""
-排序模型评估模块
-实现 NDCG, MAP, MRR, Precision@K 等指标
-"""
-
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns

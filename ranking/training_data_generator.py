@@ -1,8 +1,3 @@
-"""
-训练数据生成器
-使用伪标注策略生成 LTR 训练数据
-"""
-
 import json
 import random
 from elasticsearch import Elasticsearch

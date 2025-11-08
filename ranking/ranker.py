@@ -1,8 +1,3 @@
-"""
-Learning to Rank 排序模型
-使用 LightGBM LambdaMART 算法
-"""
-
 import numpy as np
 import pickle
 from lightgbm import LGBMRanker
