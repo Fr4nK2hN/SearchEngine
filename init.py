@@ -11,11 +11,18 @@ es = Elasticsearch([{'host': 'elasticsearch', 'port': 9200, 'scheme': 'http'}])
 def create_index_and_bulk_index():
     """
     Create (or recreate) the 'documents' index and bulk index data.
+    If the index already exists and has documents, skip to avoid redundant rebuilds.
     Prefer using processed dataset if available to match app.py mappings.
     """
     index_name = "documents"
+
+    # 幂等守卫：如果索引已存在且有文档，跳过重建
     if es.indices.exists(index=index_name):
-        print(f"Index '{index_name}' exists. Deleting...")
+        count = es.count(index=index_name)['count']
+        if count > 0:
+            print(f"✓ Index '{index_name}' already exists with {count} documents. Skipping rebuild.")
+            return
+        print(f"Index '{index_name}' exists but is empty. Deleting and recreating...")
         es.indices.delete(index=index_name)
 
     print(f"Creating index '{index_name}' with unified mappings...")

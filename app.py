@@ -7,6 +7,7 @@ import os
 from sentence_transformers import CrossEncoder
 from pythonjsonlogger import jsonlogger
 import uuid
+import time
 
 # 导入 LTR 相关模块
 from ranking.feature_extractor import FeatureExtractor
@@ -50,103 +51,27 @@ logger.addHandler(log_handler)
 logger.setLevel(logging.INFO)
 
 
+def _normalize_scores(scores):
+    """Min-Max 归一化分数到 [0, 1]，解决不同模型输出量纲不一致的问题"""
+    if not scores:
+        return scores
+    min_s = min(scores)
+    max_s = max(scores)
+    if max_s == min_s:
+        return [0.5] * len(scores)
+    return [(s - min_s) / (max_s - min_s) for s in scores]
+
+
 def create_index_and_bulk_index():
-    """创建索引并导入处理后的数据"""
+    """Check if index exists (used only when running app.py directly for dev)"""
     index_name = "documents"
-    
     if not es.indices.exists(index=index_name):
-        print(f"索引 '{index_name}' 不存在，正在创建...")
-        
-        mappings = {
-            "properties": {
-                "title": {
-                    "type": "text",
-                    "analyzer": "standard",
-                    "fields": {"keyword": {"type": "keyword"}}
-                },
-                "content": {
-                    "type": "text",
-                    "analyzer": "standard"
-                },
-                "content_full": {
-                    "type": "text",
-                    "analyzer": "standard"
-                },
-                "keywords": {
-                    "type": "keyword"
-                },
-                "related_queries": {
-                    "type": "text",
-                    "analyzer": "standard"
-                },
-                "combined_text": {
-                    "type": "text",
-                    "analyzer": "standard"
-                },
-                "quality": {
-                    "type": "keyword"
-                }
-            }
-        }
-        
-        es.indices.create(index=index_name, mappings=mappings)
-        print(f"索引 '{index_name}' 创建完成")
-
-        # 尝试加载处理后的数据（优先 100k 文件名），如果不存在则使用原始数据
-        data_paths_processed = [
-            "data/msmarco_100k_processed.json",
-            "data/msmarco_docs_processed.json"
-        ]
-        data_paths_raw = [
-            "data/msmarco_100k.json",
-            "data/msmarco_docs.json"
-        ]
-
-        documents = None
-        for p in data_paths_processed:
-            try:
-                with open(p, "r", encoding="utf-8") as f:
-                    documents = json.load(f)
-                print(f"✓ 使用处理后的数据: {p}")
-                break
-            except FileNotFoundError:
-                continue
-
-        if documents is None:
-            print("⚠ 未找到处理后的数据，尝试使用原始数据")
-            for p in data_paths_raw:
-                try:
-                    with open(p, "r", encoding="utf-8") as f:
-                        documents = json.load(f)
-                    print(f"✓ 使用原始数据: {p}")
-                    break
-                except FileNotFoundError:
-                    continue
-            if documents is None:
-                raise FileNotFoundError("未找到任何可用的数据文件，请先生成或下载数据集")
-
-        actions = []
-        for doc in documents:
-            action = {
-                "_index": index_name,
-                "_id": doc.get("id", ""),
-                "_source": {
-                    "title": doc.get("title", ""),
-                    "content": doc.get("content", ""),
-                    "content_full": doc.get("content_full", doc.get("content", "")),
-                    "keywords": doc.get("keywords", []),
-                    "related_queries": doc.get("related_queries", []),
-                    "combined_text": doc.get("combined_text", ""),
-                    "quality": doc.get("quality", "unknown")
-                }
-            }
-            actions.append(action)
-
-        # 立即刷新索引，避免首次搜索空结果
-        bulk(es, actions, refresh=True)
-        print(f"✓ 批量索引完成，共 {len(actions)} 个文档")
+        print(f"⚠ 索引 '{index_name}' 不存在。请先运行 init.py 初始化索引。")
+        print("  docker-compose 部署时由 init 服务自动完成。")
+        print("  本地开发时请执行: python init.py")
     else:
-        print(f"索引 '{index_name}' 已存在")
+        count = es.count(index=index_name)['count']
+        print(f"✓ 索引 '{index_name}' 已存在，包含 {count} 个文档")
 
 
 @app.route('/')
@@ -172,6 +97,7 @@ def search():
         return jsonify({"results": [], "search_id": search_id})
     
     try:
+        t_start = time.perf_counter()
         # ========== Stage 1: Elasticsearch 召回 ==========
         # 对短单词禁用模糊匹配，避免 "java" 命中 "lava" 等错误召回
         tokens = query.strip().split()
@@ -185,6 +111,7 @@ def search():
         if not is_short_single_term:
             multi_match["fuzziness"] = "AUTO"
 
+        hl = request.args.get('hl', 'false').lower() == 'true'
         es_query = {
             "query": {
                 "bool": {
@@ -210,20 +137,28 @@ def search():
                     "minimum_should_match": 1
                 }
             },
-            "highlight": {
-                "fields": {
-                    "title": {},
-                    "content": {}
-                }
-            },
-            "size": 100  # 召回更多候选
+            "size": 50
         }
+        if hl:
+            es_query["highlight"] = {"fields": {"title": {}, "content": {}}}
         
+        t_es0 = time.perf_counter()
         response = es.search(index="documents", body=es_query)
+        t_es1 = time.perf_counter()
         results = response['hits']['hits']
         
         if not results:
-            log_entry['results_count'] = 0
+            total_ms = (time.perf_counter() - t_start) * 1000.0
+            retrieval_ms = (t_es1 - t_es0) * 1000.0
+            log_entry.update({
+                "rankingMethod": "N/A",
+                "results_count": 0,
+                "result_ids": [],
+                "total_ms": total_ms,
+                "retrieval_ms": retrieval_ms,
+                "feature_ms": 0.0,
+                "inference_ms": 0.0
+            })
             logger.info("No results found", extra=log_entry)
             return jsonify({"results": [], "search_id": search_id})
         
@@ -233,33 +168,53 @@ def search():
             # 使用 LTR 模型重排序
             results = ltr_ranker.rerank(query, results)
             ranking_method = 'LTR'
+            feature_ms = float(ltr_ranker.last_timing.get('feature_ms', 0.0))
+            inference_ms = float(ltr_ranker.last_timing.get('inference_ms', 0.0))
             
         elif mode == 'cross_encoder':
             # 使用 Cross-Encoder 重排序
+            t_ce0 = time.perf_counter()
             results = cross_encoder_rerank(query, results)
+            t_ce1 = time.perf_counter()
             ranking_method = 'Cross-Encoder'
+            feature_ms = 0.0
+            inference_ms = (t_ce1 - t_ce0) * 1000.0
             
         elif mode == 'hybrid':
             # 混合方法：LTR + Cross-Encoder
             if ltr_ranker and ltr_ranker.is_trained:
-                results = hybrid_rerank(query, results)
+                results, hybrid_timing = hybrid_rerank(query, results)
                 ranking_method = 'Hybrid (LTR + Cross-Encoder)'
+                feature_ms = float(hybrid_timing.get('feature_ms', 0.0))
+                inference_ms = float(hybrid_timing.get('inference_ms', 0.0))
             else:
+                t_ce0 = time.perf_counter()
                 results = cross_encoder_rerank(query, results)
+                t_ce1 = time.perf_counter()
                 ranking_method = 'Cross-Encoder (LTR unavailable)'
+                feature_ms = 0.0
+                inference_ms = (t_ce1 - t_ce0) * 1000.0
                 
         elif mode == 'baseline':
             # 仅使用 Elasticsearch 分数
             ranking_method = 'Baseline (ES only)'
+            feature_ms = 0.0
+            inference_ms = 0.0
             
         else:
             # 默认：如果有 LTR 就用 LTR，否则用 Cross-Encoder
             if ltr_ranker and ltr_ranker.is_trained:
                 results = ltr_ranker.rerank(query, results)
                 ranking_method = 'LTR'
+                feature_ms = float(ltr_ranker.last_timing.get('feature_ms', 0.0))
+                inference_ms = float(ltr_ranker.last_timing.get('inference_ms', 0.0))
             else:
+                t_ce0 = time.perf_counter()
                 results = cross_encoder_rerank(query, results)
+                t_ce1 = time.perf_counter()
                 ranking_method = 'Cross-Encoder'
+                feature_ms = 0.0
+                inference_ms = (t_ce1 - t_ce0) * 1000.0
         
         # ========== Stage 3: 返回结果 ==========
         final_results = results[:10]
@@ -268,10 +223,16 @@ def search():
         for result in final_results:
             result['_ranking_method'] = ranking_method
 
+        total_ms = (time.perf_counter() - t_start) * 1000.0
+        retrieval_ms = (t_es1 - t_es0) * 1000.0
         log_entry.update({
             "rankingMethod": ranking_method,
             "results_count": len(final_results),
-            "result_ids": [r['_id'] for r in final_results]
+            "result_ids": [r['_id'] for r in final_results],
+            "total_ms": total_ms,
+            "retrieval_ms": retrieval_ms,
+            "feature_ms": feature_ms,
+            "inference_ms": inference_ms
         })
         logger.info("Search successful", extra=log_entry)
         
@@ -286,50 +247,56 @@ def search():
 
 
 def cross_encoder_rerank(query, results):
-    """使用 Cross-Encoder 重排序"""
+    """使用 Cross-Encoder 重排序（带分数归一化）"""
     passages = [hit['_source']['content'] for hit in results]
     pairs = [[query, passage] for passage in passages]
     
     cross_scores = cross_encoder_model.predict(pairs)
     
+    # 分别归一化 ES 分数和 CE 分数到 [0, 1]
+    es_scores = [hit['_score'] for hit in results]
+    es_norm = _normalize_scores(es_scores)
+    ce_norm = _normalize_scores([float(s) for s in cross_scores])
+    
     for i, hit in enumerate(results):
-        original_score = hit['_score']
-        cross_score = float(cross_scores[i])
-        # 混合分数
-        hit['_score'] = 0.3 * original_score + 0.7 * cross_score
-        hit['_cross_score'] = cross_score
+        hit['_cross_score'] = float(cross_scores[i])
+        # 归一化后再混合，解决量纲不一致问题
+        hit['_score'] = 0.3 * es_norm[i] + 0.7 * ce_norm[i]
     
     results.sort(key=lambda x: x['_score'], reverse=True)
     return results
 
 
 def hybrid_rerank(query, results):
-    """混合重排序：LTR + Cross-Encoder"""
-    # 先用 LTR 重排
+    """LTR + Cross-Encoder 混合重排序（带分数归一化）"""
     results = ltr_ranker.rerank(query, results)
-    
-    # 再用 Cross-Encoder 微调 top 20
-    top_results = results[:20]
+    ltr_feat_ms = float(ltr_ranker.last_timing.get('feature_ms', 0.0))
+    ltr_inf_ms = float(ltr_ranker.last_timing.get('inference_ms', 0.0))
+    top_results = results[:10]
     passages = [hit['_source']['content'] for hit in top_results]
     pairs = [[query, passage] for passage in passages]
-    
+    t0 = time.perf_counter()
     cross_scores = cross_encoder_model.predict(pairs)
-    
+    t1 = time.perf_counter()
+
+    # 分别归一化 LTR 分数和 CE 分数
+    ltr_scores = [hit.get('_ltr_score', hit['_score']) for hit in top_results]
+    ltr_norm = _normalize_scores(ltr_scores)
+    ce_norm = _normalize_scores([float(s) for s in cross_scores])
+
     for i, hit in enumerate(top_results):
-        ltr_score = hit.get('_ltr_score', hit['_score'])
-        cross_score = float(cross_scores[i])
-        # 混合 LTR 和 Cross-Encoder 分数
-        hit['_score'] = 0.6 * ltr_score + 0.4 * cross_score
         hit['_hybrid_components'] = {
-            'ltr': ltr_score,
-            'cross': cross_score
+            'ltr': float(ltr_scores[i]),
+            'cross': float(cross_scores[i])
         }
-    
+        hit['_score'] = 0.6 * ltr_norm[i] + 0.4 * ce_norm[i]
     top_results.sort(key=lambda x: x['_score'], reverse=True)
-    
-    # 合并回完整结果
-    results[:20] = top_results
-    return results
+    results[:10] = top_results
+    timing = {
+        'feature_ms': ltr_feat_ms,
+        'inference_ms': ltr_inf_ms + (t1 - t0) * 1000.0
+    }
+    return results, timing
 
 
 @app.route('/log', methods=['POST'])

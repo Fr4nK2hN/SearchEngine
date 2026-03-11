@@ -4,6 +4,7 @@ from lightgbm import LGBMRanker
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 import seaborn as sns
+import time
 
 
 class LTRRanker:
@@ -20,6 +21,7 @@ class LTRRanker:
         self.scaler = StandardScaler()
         self.feature_names = feature_extractor.get_feature_names()
         self.is_trained = False
+        self.last_timing = {}
         
     def train(self, training_data, validation_data=None, 
               n_estimators=200, learning_rate=0.05, max_depth=6):
@@ -108,12 +110,13 @@ class LTRRanker:
             query = item['query']
             documents = item['documents']
             labels = item['relevance_labels']
+            query_emb = self.feature_extractor._encode_text(query)
             
             group_size = 0
             for doc, label in zip(documents, labels):
                 # 提取特征
                 features = self.feature_extractor.extract_all_features(
-                    query, doc, es_score=doc.get('es_score')
+                    query, doc, es_score=doc.get('es_score'), query_emb=query_emb
                 )
                 
                 # 转换为特征向量（按固定顺序）
@@ -141,18 +144,24 @@ class LTRRanker:
         if not self.is_trained:
             raise ValueError("Model not trained yet. Call train() first.")
         
+        t0 = time.perf_counter()
+        query_emb = self.feature_extractor._encode_text(query)
         X = []
         for doc in documents:
             features = self.feature_extractor.extract_all_features(
-                query, doc, es_score=doc.get('es_score')
+                query, doc, es_score=doc.get('es_score'), query_emb=query_emb
             )
             feature_vector = [features.get(name, 0.0) for name in self.feature_names]
             X.append(feature_vector)
-        
+        t1 = time.perf_counter()
         X = np.array(X)
         X_scaled = self.scaler.transform(X)
-        
         scores = self.model.predict(X_scaled)
+        t2 = time.perf_counter()
+        self.last_timing = {
+            'feature_ms': (t1 - t0) * 1000.0,
+            'inference_ms': (t2 - t1) * 1000.0
+        }
         return scores
     
     def rerank(self, query, search_results):

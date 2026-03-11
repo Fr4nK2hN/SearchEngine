@@ -295,7 +295,7 @@ class RankingEvaluator:
         ax.set_title(title, fontsize=14, fontweight='bold')
         ax.set_xticks(x + width * (len(ranker_names) - 1) / 2)
         ax.set_xticklabels(list(metric_data.keys()))
-        ax.legend()
+        ax.legend(loc='lower right')
         ax.grid(axis='y', alpha=0.3)
         ax.set_ylim([0, 1.0])
     

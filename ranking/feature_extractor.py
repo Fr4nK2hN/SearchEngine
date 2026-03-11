@@ -1,5 +1,7 @@
 import re
 import math
+import json
+import os
 import numpy as np
 from collections import Counter
 from sentence_transformers import SentenceTransformer
@@ -25,12 +27,32 @@ class FeatureExtractor:
     包含文本匹配、语义相似度、统计特征等多个维度
     """
     
-    def __init__(self):
+    # IDF 字典的默认路径
+    DEFAULT_IDF_PATH = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        'models', 'idf_dict.json'
+    )
+
+    def __init__(self, idf_path=None):
         self.semantic_model = SentenceTransformer('all-MiniLM-L6-v2')
         self.stop_words = set(stopwords.words('english'))
-        self.idf_cache = {}
+        self._emb_cache = {}
+
+        # 加载预计算的 IDF 字典
+        idf_file = idf_path or self.DEFAULT_IDF_PATH
+        if os.path.exists(idf_file):
+            with open(idf_file, 'r', encoding='utf-8') as f:
+                self.idf_cache = json.load(f)
+            # 使用语料库大小推算未登录词的默认 IDF
+            # IDF 字典中最大值近似 log(N), 作为未登录词的默认值
+            self._default_idf = max(self.idf_cache.values()) if self.idf_cache else 3.0
+            print(f"✓ IDF 字典已加载: {len(self.idf_cache)} 个词项 (默认 IDF={self._default_idf:.2f})")
+        else:
+            self.idf_cache = {}
+            self._default_idf = 3.0
+            print(f"⚠ IDF 字典未找到 ({idf_file})，使用默认 IDF={self._default_idf}")
         
-    def extract_all_features(self, query, document, es_score=None):
+    def extract_all_features(self, query, document, es_score=None, query_emb=None):
         """
         提取所有特征，返回特征字典
         
@@ -60,9 +82,16 @@ class FeatureExtractor:
             query_terms, doc_content, doc_title
         ))
         
-        # ========== 3. 语义特征 ==========
+        if query_emb is None:
+            query_emb = self._encode_text(query)
+        content_emb = None
+        title_emb = None
+        if isinstance(document.get('content_emb'), (list, tuple)):
+            content_emb = np.array(document.get('content_emb'))
+        if isinstance(document.get('title_emb'), (list, tuple)):
+            title_emb = np.array(document.get('title_emb'))
         features.update(self._extract_semantic_features(
-            query, doc_content, doc_title
+            query, doc_content, doc_title, query_emb=query_emb, content_emb=content_emb, title_emb=title_emb
         ))
         
         # ========== 4. 统计特征 ==========
@@ -220,29 +249,29 @@ class FeatureExtractor:
     
     # ==================== 语义特征 ====================
     
-    def _extract_semantic_features(self, query, doc_content, doc_title):
+    def _extract_semantic_features(self, query, doc_content, doc_title, query_emb=None, content_emb=None, title_emb=None):
         """基于语义嵌入的特征"""
         features = {}
         
         try:
-            # 1. 查询-内容语义相似度
-            query_emb = self.semantic_model.encode(query)
-            content_emb = self.semantic_model.encode(doc_content[:512])  # 限制长度
+            if query_emb is None:
+                query_emb = self._encode_text(query)
+            if content_emb is None:
+                content_emb = self._encode_text(doc_content[:512])
             
             features['semantic_sim_content'] = float(
                 cosine_similarity([query_emb], [content_emb])[0][0]
             )
             
-            # 2. 查询-标题语义相似度
             if doc_title:
-                title_emb = self.semantic_model.encode(doc_title)
+                if title_emb is None:
+                    title_emb = self._encode_text(doc_title)
                 features['semantic_sim_title'] = float(
                     cosine_similarity([query_emb], [title_emb])[0][0]
                 )
             else:
                 features['semantic_sim_title'] = 0.0
             
-            # 3. 标题-内容一致性
             if doc_title:
                 features['title_content_consistency'] = float(
                     cosine_similarity([title_emb], [content_emb])[0][0]
@@ -257,6 +286,15 @@ class FeatureExtractor:
             features['title_content_consistency'] = 0.0
         
         return features
+
+    def _encode_text(self, text):
+        key = (text or '')
+        h = hash(key)
+        if h in self._emb_cache:
+            return self._emb_cache[h]
+        emb = self.semantic_model.encode(key)
+        self._emb_cache[h] = emb
+        return emb
     
     # ==================== 统计特征 ====================
     
@@ -327,15 +365,14 @@ class FeatureExtractor:
         return features
     
     def _get_idf(self, term):
-        """获取词的 IDF 值（简化版本）"""
-        # 在实际应用中，应该从预计算的 IDF 字典中获取
+        """获取词的 IDF 值
+
+        从预计算的 IDF 字典中查询；如果词项未登录，
+        返回 _default_idf（近似 log(N)，比语料库中任何词的 IDF 都高）。
+        """
         if term in self.idf_cache:
-            return self.idf_cache[term]
-        
-        # 默认 IDF 值
-        default_idf = 3.0
-        self.idf_cache[term] = default_idf
-        return default_idf
+            return float(self.idf_cache[term])
+        return self._default_idf
     
     # ==================== BM25 特征 ====================
     
