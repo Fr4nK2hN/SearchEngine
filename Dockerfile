@@ -5,6 +5,7 @@ FROM docker.m.daocloud.io/library/python:3.13.7-slim as builder
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     g++ \
+    zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
