@@ -4,6 +4,7 @@ from elasticsearch.helpers import bulk
 import json
 import logging
 import os
+import math
 from sentence_transformers import CrossEncoder
 from pythonjsonlogger import jsonlogger
 import uuid
@@ -12,6 +13,7 @@ import time
 # 导入 LTR 相关模块
 from ranking.feature_extractor import FeatureExtractor
 from ranking.ranker import LTRRanker
+from ranking.query_router import QueryRouter
 
 app = Flask(__name__)
 es = Elasticsearch([{'host': 'elasticsearch', 'port': 9200, 'scheme': 'http'}])
@@ -36,6 +38,18 @@ if os.path.exists(LTR_MODEL_PATH):
 else:
     print(f"✗ LTR model not found at {LTR_MODEL_PATH}")
     ltr_ranker = None
+
+# ========== 初始化 Query Router ==========
+ROUTER_MODEL_PATH = 'models/query_router.pkl'
+query_router = QueryRouter(
+    model_path=ROUTER_MODEL_PATH,
+    default_easy_mode='ltr',
+    default_hard_mode='hybrid',
+)
+if query_router.loaded:
+    print(f"✓ Query router loaded from {ROUTER_MODEL_PATH}")
+else:
+    print("✗ Query router model unavailable, fallback to heuristic routing")
 
 # ========== Structured Logging Setup ==========
 # Configure structured logging
@@ -120,6 +134,33 @@ def _to_positive_int(value):
     return iv if iv > 0 else None
 
 
+def _to_non_negative_float(value):
+    """将值转换为非负浮点数，失败返回 None。"""
+    try:
+        fv = float(value)
+    except (TypeError, ValueError):
+        return None
+    if not math.isfinite(fv) or fv < 0:
+        return None
+    return fv
+
+
+def _percentile(values, p):
+    """计算分位数（线性插值）。"""
+    if not values:
+        return 0.0
+    arr = sorted(float(v) for v in values)
+    if len(arr) == 1:
+        return arr[0]
+    pos = (len(arr) - 1) * (p / 100.0)
+    lo = int(math.floor(pos))
+    hi = int(math.ceil(pos))
+    if lo == hi:
+        return arr[lo]
+    weight = pos - lo
+    return arr[lo] * (1 - weight) + arr[hi] * weight
+
+
 def _build_event_summary(events_data):
     """构建导出/仪表盘共用的事件汇总。"""
     session_ids = {
@@ -154,6 +195,24 @@ def _build_event_summary(events_data):
             'median_click_rank': 0.0,
             'clicks_per_query': 0.0,
             'abandonment_rate': 0.0
+        },
+        'latency_stats': {
+            'sample_count': 0,
+            'avg_total_ms': 0.0,
+            'p95_total_ms': 0.0,
+            'avg_retrieval_ms': 0.0,
+            'avg_feature_ms': 0.0,
+            'avg_inference_ms': 0.0,
+            'by_ranking_method': {}
+        },
+        'adaptive_stats': {
+            'total_routed': 0,
+            'easy_count': 0,
+            'hard_count': 0,
+            'hard_rate': 0.0,
+            'avg_confidence': 0.0,
+            'model_routed': 0,
+            'heuristic_routed': 0
         }
     }
 
@@ -161,6 +220,12 @@ def _build_event_summary(events_data):
     completed_search_ids = []
     click_ranks_by_search = {}
     all_click_ranks = []
+    latency_total = []
+    latency_retrieval = []
+    latency_feature = []
+    latency_inference = []
+    latency_by_method = {}
+    adaptive_confidence = []
 
     for event in events_data:
         if not isinstance(event, dict):
@@ -168,6 +233,40 @@ def _build_event_summary(events_data):
 
         event_type = event.get('type') or event.get('event') or 'unknown'
         summary['event_types'][event_type] = summary['event_types'].get(event_type, 0) + 1
+
+        total_ms = _to_non_negative_float(event.get('total_ms'))
+        if total_ms is not None:
+            latency_total.append(total_ms)
+            method = str(event.get('rankingMethod') or 'unknown')
+            latency_by_method.setdefault(method, []).append(total_ms)
+
+            retrieval_ms = _to_non_negative_float(event.get('retrieval_ms'))
+            feature_ms = _to_non_negative_float(event.get('feature_ms'))
+            inference_ms = _to_non_negative_float(event.get('inference_ms'))
+            if retrieval_ms is not None:
+                latency_retrieval.append(retrieval_ms)
+            if feature_ms is not None:
+                latency_feature.append(feature_ms)
+            if inference_ms is not None:
+                latency_inference.append(inference_ms)
+
+        route_label = str(event.get('route_label') or '').strip().lower()
+        if route_label in ('easy', 'hard'):
+            summary['adaptive_stats']['total_routed'] += 1
+            if route_label == 'easy':
+                summary['adaptive_stats']['easy_count'] += 1
+            else:
+                summary['adaptive_stats']['hard_count'] += 1
+
+            route_confidence = _to_non_negative_float(event.get('route_confidence'))
+            if route_confidence is not None:
+                adaptive_confidence.append(min(1.0, route_confidence))
+
+            route_source = str(event.get('route_source') or '').strip().lower()
+            if route_source == 'model':
+                summary['adaptive_stats']['model_routed'] += 1
+            elif route_source == 'heuristic':
+                summary['adaptive_stats']['heuristic_routed'] += 1
 
         if event_type == 'query_submitted' and event.get('sessionId'):
             summary['query_stats']['total_queries'] += 1
@@ -261,6 +360,37 @@ def _build_event_summary(events_data):
                 ranks_sorted[mid - 1] + ranks_sorted[mid]
             ) / 2.0
 
+    if latency_total:
+        summary['latency_stats']['sample_count'] = len(latency_total)
+        summary['latency_stats']['avg_total_ms'] = sum(latency_total) / len(latency_total)
+        summary['latency_stats']['p95_total_ms'] = _percentile(latency_total, 95)
+    if latency_retrieval:
+        summary['latency_stats']['avg_retrieval_ms'] = (
+            sum(latency_retrieval) / len(latency_retrieval)
+        )
+    if latency_feature:
+        summary['latency_stats']['avg_feature_ms'] = sum(latency_feature) / len(latency_feature)
+    if latency_inference:
+        summary['latency_stats']['avg_inference_ms'] = (
+            sum(latency_inference) / len(latency_inference)
+        )
+    for method, vals in latency_by_method.items():
+        summary['latency_stats']['by_ranking_method'][method] = {
+            'count': len(vals),
+            'avg_total_ms': sum(vals) / len(vals),
+            'p95_total_ms': _percentile(vals, 95),
+        }
+
+    routed = summary['adaptive_stats']['total_routed']
+    if routed > 0:
+        summary['adaptive_stats']['hard_rate'] = (
+            summary['adaptive_stats']['hard_count'] / routed
+        )
+        if adaptive_confidence:
+            summary['adaptive_stats']['avg_confidence'] = (
+                sum(adaptive_confidence) / len(adaptive_confidence)
+            )
+
     return summary
 
 
@@ -285,6 +415,88 @@ def create_index_and_bulk_index():
     else:
         count = es.count(index=index_name)['count']
         print(f"✓ 索引 '{index_name}' 已存在，包含 {count} 个文档")
+
+
+def _is_ltr_available():
+    return bool(ltr_ranker and ltr_ranker.is_trained)
+
+
+def _apply_ranking_mode(query, results, mode, rerank_top_n=None):
+    """
+    统一执行排序模式。
+
+    Returns:
+        tuple: (results, ranking_method, feature_ms, inference_ms)
+    """
+    if mode == 'ltr' and _is_ltr_available():
+        results = ltr_ranker.rerank(query, results)
+        return (
+            results,
+            'LTR',
+            float(ltr_ranker.last_timing.get('feature_ms', 0.0)),
+            float(ltr_ranker.last_timing.get('inference_ms', 0.0)),
+        )
+
+    if mode == 'cross_encoder':
+        t0 = time.perf_counter()
+        results = cross_encoder_rerank(query, results, top_n=rerank_top_n)
+        t1 = time.perf_counter()
+        return (results, 'Cross-Encoder', 0.0, (t1 - t0) * 1000.0)
+
+    if mode == 'hybrid':
+        if _is_ltr_available():
+            top_n = rerank_top_n if rerank_top_n is not None else 10
+            results, timing = hybrid_rerank(query, results, top_n=top_n)
+            return (
+                results,
+                f'Hybrid (LTR + Cross-Encoder, top-{int(top_n)})',
+                float(timing.get('feature_ms', 0.0)),
+                float(timing.get('inference_ms', 0.0)),
+            )
+        # LTR 不可用时 hard 模式退化为 CE
+        t0 = time.perf_counter()
+        results = cross_encoder_rerank(query, results, top_n=rerank_top_n)
+        t1 = time.perf_counter()
+        return (results, 'Cross-Encoder (LTR unavailable)', 0.0, (t1 - t0) * 1000.0)
+
+    if mode == 'baseline':
+        return (results, 'Baseline (ES only)', 0.0, 0.0)
+
+    # 默认回退：优先 LTR，其次 Cross-Encoder
+    if _is_ltr_available():
+        results = ltr_ranker.rerank(query, results)
+        return (
+            results,
+            'LTR',
+            float(ltr_ranker.last_timing.get('feature_ms', 0.0)),
+            float(ltr_ranker.last_timing.get('inference_ms', 0.0)),
+        )
+    t0 = time.perf_counter()
+    results = cross_encoder_rerank(query, results, top_n=rerank_top_n)
+    t1 = time.perf_counter()
+    return (results, 'Cross-Encoder', 0.0, (t1 - t0) * 1000.0)
+
+
+def _resolve_adaptive_route(query):
+    """
+    根据 router 判定 easy/hard，并映射为最终可执行模式。
+    """
+    route = query_router.route(query)
+    selected_mode = route.get('selected_mode') or 'baseline'
+    route_label = route.get('route_label', 'easy')
+    hard_top_k = _to_positive_int(route.get('hard_top_k')) or 30
+
+    if selected_mode in ('ltr', 'hybrid') and not _is_ltr_available():
+        selected_mode = 'cross_encoder' if route_label == 'hard' else 'baseline'
+
+    route['selected_mode'] = selected_mode
+    route['hard_top_k'] = hard_top_k
+    route['rerank_top_n'] = (
+        hard_top_k
+        if route_label == 'hard' and selected_mode in ('cross_encoder', 'hybrid')
+        else None
+    )
+    return route
 
 
 @app.route('/')
@@ -376,58 +588,31 @@ def search():
             return jsonify({"results": [], "search_id": search_id})
         
         # ========== Stage 2: 选择排序策略 ==========
-        
-        if mode == 'ltr' and ltr_ranker and ltr_ranker.is_trained:
-            # 使用 LTR 模型重排序
-            results = ltr_ranker.rerank(query, results)
-            ranking_method = 'LTR'
-            feature_ms = float(ltr_ranker.last_timing.get('feature_ms', 0.0))
-            inference_ms = float(ltr_ranker.last_timing.get('inference_ms', 0.0))
-            
-        elif mode == 'cross_encoder':
-            # 使用 Cross-Encoder 重排序
-            t_ce0 = time.perf_counter()
-            results = cross_encoder_rerank(query, results)
-            t_ce1 = time.perf_counter()
-            ranking_method = 'Cross-Encoder'
-            feature_ms = 0.0
-            inference_ms = (t_ce1 - t_ce0) * 1000.0
-            
-        elif mode == 'hybrid':
-            # 混合方法：LTR + Cross-Encoder
-            if ltr_ranker and ltr_ranker.is_trained:
-                results, hybrid_timing = hybrid_rerank(query, results)
-                ranking_method = 'Hybrid (LTR + Cross-Encoder)'
-                feature_ms = float(hybrid_timing.get('feature_ms', 0.0))
-                inference_ms = float(hybrid_timing.get('inference_ms', 0.0))
-            else:
-                t_ce0 = time.perf_counter()
-                results = cross_encoder_rerank(query, results)
-                t_ce1 = time.perf_counter()
-                ranking_method = 'Cross-Encoder (LTR unavailable)'
-                feature_ms = 0.0
-                inference_ms = (t_ce1 - t_ce0) * 1000.0
-                
-        elif mode == 'baseline':
-            # 仅使用 Elasticsearch 分数
-            ranking_method = 'Baseline (ES only)'
-            feature_ms = 0.0
-            inference_ms = 0.0
-            
-        else:
-            # 默认：如果有 LTR 就用 LTR，否则用 Cross-Encoder
-            if ltr_ranker and ltr_ranker.is_trained:
-                results = ltr_ranker.rerank(query, results)
-                ranking_method = 'LTR'
-                feature_ms = float(ltr_ranker.last_timing.get('feature_ms', 0.0))
-                inference_ms = float(ltr_ranker.last_timing.get('inference_ms', 0.0))
-            else:
-                t_ce0 = time.perf_counter()
-                results = cross_encoder_rerank(query, results)
-                t_ce1 = time.perf_counter()
-                ranking_method = 'Cross-Encoder'
-                feature_ms = 0.0
-                inference_ms = (t_ce1 - t_ce0) * 1000.0
+        route_info = None
+        exec_mode = mode
+        rerank_top_n = None
+
+        if mode == 'adaptive':
+            route_info = _resolve_adaptive_route(query)
+            exec_mode = route_info.get('selected_mode', 'baseline')
+            rerank_top_n = route_info.get('rerank_top_n')
+
+        results, ranking_method, feature_ms, inference_ms = _apply_ranking_mode(
+            query,
+            results,
+            exec_mode,
+            rerank_top_n=rerank_top_n,
+        )
+
+        if route_info:
+            ranking_method = f"Adaptive ({route_info.get('route_label')} -> {exec_mode}) | {ranking_method}"
+            log_entry.update({
+                "route_label": route_info.get('route_label'),
+                "route_confidence": float(route_info.get('route_confidence', 0.0)),
+                "route_source": route_info.get('route_source'),
+                "route_selected_mode": exec_mode,
+                "route_rerank_top_n": rerank_top_n,
+            })
         
         # ========== Stage 3: 返回结果 ==========
         final_results = results[:10]
@@ -448,8 +633,11 @@ def search():
             "inference_ms": inference_ms
         })
         logger.info("Search successful", extra=log_entry)
-        
-        return jsonify({"results": final_results, "search_id": search_id})
+
+        response_payload = {"results": final_results, "search_id": search_id}
+        if route_info:
+            response_payload["routing"] = route_info
+        return jsonify(response_payload)
         
     except Exception as e:
         import traceback
@@ -459,33 +647,40 @@ def search():
         return jsonify({"error": "Search failed", "details": str(e), "search_id": search_id}), 500
 
 
-def cross_encoder_rerank(query, results):
-    """使用 Cross-Encoder 重排序（带分数归一化）"""
-    passages = [hit['_source']['content'] for hit in results]
+def cross_encoder_rerank(query, results, top_n=None):
+    """使用 Cross-Encoder 重排序（带分数归一化），支持仅重排前 N 条。"""
+    if not results:
+        return results
+
+    if top_n is None:
+        top_n = len(results)
+    top_n = max(1, min(int(top_n), len(results)))
+
+    head = results[:top_n]
+    passages = [hit['_source']['content'] for hit in head]
     pairs = [[query, passage] for passage in passages]
-    
     cross_scores = cross_encoder_model.predict(pairs)
-    
-    # 分别归一化 ES 分数和 CE 分数到 [0, 1]
-    es_scores = [hit['_score'] for hit in results]
+
+    es_scores = [hit['_score'] for hit in head]
     es_norm = _normalize_scores(es_scores)
     ce_norm = _normalize_scores([float(s) for s in cross_scores])
-    
-    for i, hit in enumerate(results):
+
+    for i, hit in enumerate(head):
         hit['_cross_score'] = float(cross_scores[i])
-        # 归一化后再混合，解决量纲不一致问题
         hit['_score'] = 0.3 * es_norm[i] + 0.7 * ce_norm[i]
-    
-    results.sort(key=lambda x: x['_score'], reverse=True)
+
+    head.sort(key=lambda x: x['_score'], reverse=True)
+    results[:top_n] = head
     return results
 
 
-def hybrid_rerank(query, results):
-    """LTR + Cross-Encoder 混合重排序（带分数归一化）"""
+def hybrid_rerank(query, results, top_n=10):
+    """LTR + Cross-Encoder 混合重排序（带分数归一化）。"""
     results = ltr_ranker.rerank(query, results)
     ltr_feat_ms = float(ltr_ranker.last_timing.get('feature_ms', 0.0))
     ltr_inf_ms = float(ltr_ranker.last_timing.get('inference_ms', 0.0))
-    top_results = results[:10]
+    top_n = max(1, min(int(top_n), len(results)))
+    top_results = results[:top_n]
     passages = [hit['_source']['content'] for hit in top_results]
     pairs = [[query, passage] for passage in passages]
     t0 = time.perf_counter()
@@ -504,10 +699,11 @@ def hybrid_rerank(query, results):
         }
         hit['_score'] = 0.6 * ltr_norm[i] + 0.4 * ce_norm[i]
     top_results.sort(key=lambda x: x['_score'], reverse=True)
-    results[:10] = top_results
+    results[:top_n] = top_results
     timing = {
         'feature_ms': ltr_feat_ms,
-        'inference_ms': ltr_inf_ms + (t1 - t0) * 1000.0
+        'inference_ms': ltr_inf_ms + (t1 - t0) * 1000.0,
+        'rerank_top_n': top_n,
     }
     return results, timing
 
@@ -565,6 +761,8 @@ def research_dashboard():
     try:
         events_data = _load_events_from_log(limit=100)
         summary = _build_event_summary(events_data)
+        latency_stats = summary.get('latency_stats', {})
+        adaptive_stats = summary.get('adaptive_stats', {})
         
         sessions = {}
         for event in events_data:
@@ -649,8 +847,24 @@ def research_dashboard():
                             <div class="stat-label">Abandonment Rate</div>
                         </div>
                         <div class="stat-card">
+                            <div class="stat-value">{latency_stats.get('avg_total_ms', 0.0):.1f}</div>
+                            <div class="stat-label">Avg Latency (ms)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">{latency_stats.get('p95_total_ms', 0.0):.1f}</div>
+                            <div class="stat-label">P95 Latency (ms)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">{adaptive_stats.get('hard_rate', 0.0) * 100:.1f}%</div>
+                            <div class="stat-label">Adaptive Hard Rate</div>
+                        </div>
+                        <div class="stat-card">
                             <div class="stat-value">{'✓' if ltr_ranker and ltr_ranker.is_trained else '✗'}</div>
                             <div class="stat-label">LTR Model Status</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">{'✓' if query_router.loaded else 'Heuristic'}</div>
+                            <div class="stat-label">Router Status</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-value">{len(feature_extractor.get_feature_names())}</div>
@@ -765,10 +979,21 @@ def train_ltr_endpoint():
 @app.route('/model_info')
 def model_info():
     """获取 LTR 模型信息"""
+    router_info = {
+        "status": "loaded" if query_router.loaded else "heuristic_fallback",
+        "model_path": ROUTER_MODEL_PATH,
+        "easy_mode": query_router.easy_mode,
+        "hard_mode": query_router.hard_mode,
+        "hard_threshold": query_router.hard_threshold,
+        "hard_top_k": query_router.hard_top_k,
+        "load_error": query_router.load_error,
+    }
+
     if not ltr_ranker or not ltr_ranker.is_trained:
         return jsonify({
             "status": "not_trained",
-            "message": "LTR model not available"
+            "message": "LTR model not available",
+            "router": router_info,
         })
     
     # 获取特征重要性
@@ -794,7 +1019,8 @@ def model_info():
             "n_estimators": ltr_ranker.model.n_estimators,
             "max_depth": ltr_ranker.model.max_depth,
             "learning_rate": ltr_ranker.model.learning_rate
-        }
+        },
+        "router": router_info,
     })
 
 

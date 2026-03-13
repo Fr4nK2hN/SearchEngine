@@ -25,6 +25,7 @@
         />
         <!-- Hidden mode selector for internal logic -->
         <select id="mode-selector" hidden>
+          <option value="adaptive">Adaptive Router</option>
           <option value="ltr">LTR</option>
           <option value="cross_encoder">Cross Encoder</option>
           <option value="hybrid">Hybrid</option>
@@ -44,9 +45,18 @@
         <input
           type="radio"
           name="mode"
+          value="adaptive"
+          id="mode-adaptive"
+          checked
+          style="display: none"
+        />
+        <label for="mode-adaptive"> Adaptive Router</label>
+
+        <input
+          type="radio"
+          name="mode"
           value="ltr"
           id="mode-ltr"
-          checked
           style="display: none"
         />
         <label for="mode-ltr"> LTR Ranking</label>
@@ -100,6 +110,7 @@
         <h3>Research Console</h3>
         <label for="visible-mode-selector">Experiment Mode:</label>
         <select id="visible-mode-selector">
+          <option value="adaptive">Adaptive Router</option>
           <option value="ltr">LTR</option>
           <option value="cross_encoder">Cross Encoder</option>
           <option value="hybrid">Hybrid</option>
