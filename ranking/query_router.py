@@ -65,6 +65,56 @@ def expert_to_mode(expert_name, default_mode):
     return EXPERT_TO_MODE.get(expert_name, default_mode)
 
 
+def parse_hard_topk_policy(raw):
+    """
+    Parse hard top-k policy to sorted (delta_bound, topk) pairs.
+
+    Supported formats:
+    - str: "0.08:30,0.10:20,1.00:30"
+    - list of [bound, topk] / (bound, topk) / {"delta":..., "top_k":...}
+    """
+    if not raw:
+        return []
+
+    pairs = []
+    if isinstance(raw, str):
+        for part in raw.split(","):
+            item = part.strip()
+            if not item:
+                continue
+            if ":" not in item:
+                continue
+            delta_s, topk_s = item.split(":", 1)
+            try:
+                delta = float(delta_s.strip())
+                topk = int(topk_s.strip())
+            except (TypeError, ValueError):
+                continue
+            if delta < 0 or topk <= 0:
+                continue
+            pairs.append((delta, topk))
+    elif isinstance(raw, list):
+        for item in raw:
+            delta = None
+            topk = None
+            if isinstance(item, (list, tuple)) and len(item) >= 2:
+                delta, topk = item[0], item[1]
+            elif isinstance(item, dict):
+                delta = item.get("delta")
+                topk = item.get("top_k", item.get("topk"))
+            try:
+                delta = float(delta)
+                topk = int(topk)
+            except (TypeError, ValueError):
+                continue
+            if delta < 0 or topk <= 0:
+                continue
+            pairs.append((delta, topk))
+
+    pairs = sorted(pairs, key=lambda x: x[0])
+    return pairs
+
+
 class QueryRouter:
     """
     轻量查询路由器:
@@ -87,6 +137,7 @@ class QueryRouter:
         self.scaler = None
         self.hard_threshold = 0.5
         self.hard_top_k = self.default_hard_top_k
+        self.hard_topk_policy = []
         self.easy_mode = default_easy_mode
         self.hard_mode = default_hard_mode
         self.loaded = False
@@ -105,6 +156,7 @@ class QueryRouter:
             self.scaler = payload.get("scaler")
             self.hard_threshold = float(payload.get("hard_threshold", 0.5))
             self.hard_top_k = int(payload.get("hard_top_k", self.default_hard_top_k))
+            self.hard_topk_policy = parse_hard_topk_policy(payload.get("hard_topk_policy"))
             self.easy_mode = payload.get("easy_mode", self.default_easy_mode)
             self.hard_mode = payload.get("hard_mode", self.default_hard_mode)
             self.model_meta = payload.get("meta", {})
@@ -112,6 +164,16 @@ class QueryRouter:
         except Exception as e:
             self.loaded = False
             self.load_error = str(e)
+
+    def _resolve_hard_top_k(self, hard_prob):
+        base_top_k = max(1, int(self.hard_top_k))
+        if not self.hard_topk_policy:
+            return base_top_k
+        delta = max(0.0, float(hard_prob) - float(self.hard_threshold))
+        for bound, top_k in self.hard_topk_policy:
+            if delta <= float(bound):
+                return max(1, int(top_k))
+        return base_top_k
 
     def _heuristic_route(self, query):
         tokens = tokenize_query(query)
@@ -132,7 +194,7 @@ class QueryRouter:
                 "route_confidence": hard_score,
                 "route_source": "heuristic",
                 "selected_mode": self.hard_mode,
-                "hard_top_k": self.hard_top_k,
+                "hard_top_k": self._resolve_hard_top_k(hard_score),
             }
         return {
             "route_label": "easy",
@@ -157,7 +219,7 @@ class QueryRouter:
                     "route_confidence": hard_prob,
                     "route_source": "model",
                     "selected_mode": self.hard_mode,
-                    "hard_top_k": self.hard_top_k,
+                    "hard_top_k": self._resolve_hard_top_k(hard_prob),
                 }
             return {
                 "route_label": "easy",

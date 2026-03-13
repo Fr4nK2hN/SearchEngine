@@ -28,6 +28,7 @@ from ranking.query_router import (
     FEATURE_NAMES,
     expert_to_mode,
     is_prefix_like_query,
+    parse_hard_topk_policy,
     query_feature_vector,
     stopword_ratio,
     tokenize_query,
@@ -50,6 +51,7 @@ class RouterConfig:
     hard_mode: str
     hard_threshold: float
     hard_top_k: int
+    hard_topk_policy: list
     label_policy: str
     ndcg_margin: float
 
@@ -230,6 +232,11 @@ def parse_args():
     parser.add_argument("--hard-threshold", type=float, default=0.5)
     parser.add_argument("--hard-top-k", type=int, default=30)
     parser.add_argument(
+        "--hard-topk-policy",
+        default="",
+        help='Optional dynamic hard top-k policy, e.g. "0.08:30,0.10:20,1.00:30"',
+    )
+    parser.add_argument(
         "--easy-mode",
         choices=["auto", "baseline", "ltr", "cross_encoder", "hybrid"],
         default="ltr",
@@ -371,6 +378,7 @@ def main():
         hard_mode=hard_mode,
         hard_threshold=float(args.hard_threshold),
         hard_top_k=max(1, int(args.hard_top_k)),
+        hard_topk_policy=parse_hard_topk_policy(args.hard_topk_policy),
         label_policy=args.label_policy,
         ndcg_margin=float(args.ndcg_margin),
     )
@@ -397,6 +405,7 @@ def main():
             "hard_mode": router_cfg.hard_mode,
             "hard_threshold": router_cfg.hard_threshold,
             "hard_top_k": router_cfg.hard_top_k,
+            "hard_topk_policy": router_cfg.hard_topk_policy,
             "label_policy": router_cfg.label_policy,
             "ndcg_margin": router_cfg.ndcg_margin,
         },
@@ -451,6 +460,7 @@ def main():
             "feature_names": FEATURE_NAMES,
             "hard_threshold": router_cfg.hard_threshold,
             "hard_top_k": router_cfg.hard_top_k,
+            "hard_topk_policy": router_cfg.hard_topk_policy,
             "easy_mode": router_cfg.easy_mode,
             "hard_mode": router_cfg.hard_mode,
             "meta": {
@@ -480,7 +490,8 @@ def main():
     )
     print(
         f"- router modes: {router_cfg.easy_mode}/{router_cfg.hard_mode} "
-        f"(threshold={router_cfg.hard_threshold:.2f}, hard_top_k={router_cfg.hard_top_k})"
+        f"(threshold={router_cfg.hard_threshold:.2f}, hard_top_k={router_cfg.hard_top_k}, "
+        f"hard_topk_policy={router_cfg.hard_topk_policy})"
     )
     print(
         f"- test ndcg (router / policy_best / pair_oracle / global_best): "

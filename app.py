@@ -986,6 +986,7 @@ def model_info():
         "hard_mode": query_router.hard_mode,
         "hard_threshold": query_router.hard_threshold,
         "hard_top_k": query_router.hard_top_k,
+        "hard_topk_policy": query_router.hard_topk_policy,
         "load_error": query_router.load_error,
     }
 

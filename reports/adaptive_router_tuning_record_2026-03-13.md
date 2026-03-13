@@ -61,3 +61,16 @@ Constrained recommendation (`max-hard-rate=0.60`):
 - This tuning used offline replay-like evaluation, not online live traffic A/B.
 - `threshold=0.35` has the highest nDCG but routes 95% queries to hard path; not ideal for adaptive behavior.
 - Current deployment uses the constrained recommendation (`threshold=0.45`) to preserve routing diversity and latency.
+
+## Round 2 (Adaptive Top-K Policy)
+
+- Added runtime `hard_topk_policy` support in router model/application.
+- Selected policy: `0.08:30,0.10:20,1.00:30`
+  - Means for hard queries:
+    - `delta = hard_prob - threshold <= 0.08`: use top-30
+    - `0.08 < delta <= 0.10`: use top-20
+    - `delta > 0.10`: use top-30
+- Offline multi-seed ablation (see `models/adaptive_ablation_eval_v2_quantile_round3`):
+  - `Router + Fixed Top-K`: nDCG@10 `0.8576`, avg latency `369.77ms`
+  - `Router + Adaptive Top-K`: nDCG@10 `0.8576`, avg latency `368.75ms`
+  - This round achieved non-inferior quality with a small latency reduction.
