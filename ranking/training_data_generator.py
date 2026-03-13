@@ -1,5 +1,5 @@
 import json
-import random
+import re
 from elasticsearch import Elasticsearch
 from sentence_transformers import CrossEncoder
 
@@ -17,61 +17,138 @@ class TrainingDataGenerator:
     def __init__(self, es_client, cross_encoder_model):
         self.es = es_client
         self.cross_encoder = cross_encoder_model
+
+        self._stopwords = {
+            "a", "an", "and", "are", "as", "at", "be", "by", "for", "from",
+            "how", "in", "is", "it", "of", "on", "or", "that", "the", "to",
+            "was", "were", "what", "when", "where", "which", "who", "why",
+            "will", "with", "you", "your",
+        }
+        self._query_token_pattern = re.compile(r"[a-z0-9]+")
+
+    def _normalize_query(self, query):
+        return " ".join((query or "").strip().split())
+
+    def _query_tokens(self, query):
+        text = (query or "").lower()
+        return self._query_token_pattern.findall(text)
+
+    def _stopword_ratio(self, tokens):
+        if not tokens:
+            return 1.0
+        stop_count = sum(1 for t in tokens if t in self._stopwords)
+        return stop_count / len(tokens)
+
+    def _is_high_quality_query(self, query, min_terms=3, min_chars=8, max_stopword_ratio=0.85):
+        normalized = self._normalize_query(query)
+        tokens = self._query_tokens(normalized)
+        if len(normalized) < min_chars:
+            return False
+        if len(tokens) < min_terms:
+            return False
+        if len(set(tokens)) <= 1:
+            return False
+        if self._stopword_ratio(tokens) > max_stopword_ratio:
+            return False
+        return True
         
-    def generate_training_queries(self, num_queries=100):
+    def generate_training_queries(
+        self,
+        num_queries=100,
+        min_terms=3,
+        min_chars=8,
+        max_stopword_ratio=0.85,
+        use_prefix_queries=False,
+    ):
         """
         从文档集合中生成训练查询
         
         策略：
-        1. 从文档标题提取关键短语
-        2. 从文档内容提取问题型查询
-        3. 使用 related_queries 字段
+        1. 优先使用完整标题和 related_queries，减少残缺前缀查询
+        2. 基于长度、词数、停用词比例过滤低质量查询
+        3. 可选地补充标题前缀查询（默认关闭）
         """
         queries = []
+        fallback_queries = []
         
-        # 从 Elasticsearch 获取随机文档
+        # 从 Elasticsearch 获取候选文档
         response = self.es.search(
             index="documents",
             body={
                 "query": {"match_all": {}},
-                "size": 100
+                "size": max(100, num_queries * 4)
             }
         )
         
         documents = response['hits']['hits']
-        
-        for doc in documents[:num_queries]:
+
+        for doc in documents:
             source = doc['_source']
-            
-            # 策略 1: 使用标题的部分作为查询
-            title = source.get('title', '')
+
+            candidates = []
+
+            title = self._normalize_query(source.get('title', ''))
             if title:
-                title_words = title.split()
-                if len(title_words) >= 3:
-                    # 取标题的前几个词
-                    query = ' '.join(title_words[:random.randint(2, min(5, len(title_words)))])
-                    queries.append(query)
-            
-            # 策略 2: 使用 related_queries
-            related = source.get('related_queries', [])
-            if related:
-                queries.extend(related[:2])
-            
-            # 策略 3: 从内容中提取关键短语
-            content = source.get('content', '')
-            if content:
-                # 简单策略：提取前几个实体词
-                words = content.split()[:50]
-                important_words = [w for w in words if len(w) > 4 and w[0].isupper()]
-                if len(important_words) >= 2:
-                    query = ' '.join(important_words[:3])
-                    queries.append(query)
-        
-        # 去重
-        queries = list(set(queries))
+                candidates.append(title)
+                if use_prefix_queries:
+                    title_words = title.split()
+                    if len(title_words) >= 4:
+                        candidates.append(' '.join(title_words[:4]))
+
+            related = source.get('related_queries', []) or []
+            for q in related[:3]:
+                normalized = self._normalize_query(q)
+                if normalized:
+                    candidates.append(normalized)
+
+            keywords = source.get('keywords', []) or []
+            if len(keywords) >= 3:
+                keyword_query = self._normalize_query(" ".join(keywords[:4]))
+                if keyword_query:
+                    candidates.append(keyword_query)
+
+            for candidate in candidates:
+                fallback_queries.append(candidate)
+                if self._is_high_quality_query(
+                    candidate,
+                    min_terms=min_terms,
+                    min_chars=min_chars,
+                    max_stopword_ratio=max_stopword_ratio,
+                ):
+                    queries.append(candidate)
+
+            if len(queries) >= num_queries:
+                break
+
+        # 去重且保持顺序
+        def dedupe_keep_order(items):
+            seen = set()
+            out = []
+            for item in items:
+                if item in seen:
+                    continue
+                seen.add(item)
+                out.append(item)
+            return out
+
+        queries = dedupe_keep_order(queries)
+        if len(queries) < num_queries:
+            for candidate in dedupe_keep_order(fallback_queries):
+                if candidate not in queries:
+                    queries.append(candidate)
+                if len(queries) >= num_queries:
+                    break
+
         return queries[:num_queries]
     
-    def generate_training_data(self, queries, docs_per_query=50):
+    def generate_training_data(
+        self,
+        queries,
+        docs_per_query=50,
+        apply_heuristics=True,
+        drop_all_zero_queries=True,
+        min_relevant_docs=1,
+    ):
         """
         为每个查询生成训练数据
         
@@ -84,6 +161,9 @@ class TrainingDataGenerator:
         training_data = []
         
         for query in queries:
+            query = self._normalize_query(query)
+            if not query:
+                continue
             print(f"Processing query: {query}")
             
             # 从 Elasticsearch 检索文档
@@ -94,15 +174,11 @@ class TrainingDataGenerator:
             
             # 使用 Cross-Encoder 生成伪标签
             documents = []
-            relevance_scores = []
-            
+            pairs = []
             for result in es_results:
                 doc = result['_source']
                 content = doc.get('content', '')
-                
-                # Cross-Encoder 打分
-                score = self.cross_encoder.predict([[query, content]])[0]
-                
+                pairs.append([query, content])
                 documents.append({
                     'id': result['_id'],
                     'title': doc.get('title', ''),
@@ -110,16 +186,23 @@ class TrainingDataGenerator:
                     'related_queries': doc.get('related_queries', []),
                     'es_score': result['_score']
                 })
-                
-                relevance_scores.append(float(score))
+
+            # Cross-Encoder 批量打分
+            relevance_scores = [float(s) for s in self.cross_encoder.predict(pairs)]
             
             # 将连续分数转换为离散标签 (0-4)
             relevance_labels = self._score_to_label(relevance_scores)
             
-            # 应用启发式规则调整标签
-            relevance_labels = self._apply_heuristic_rules(
-                query, documents, relevance_labels
-            )
+            if apply_heuristics:
+                relevance_labels = self._apply_heuristic_rules(
+                    query, documents, relevance_labels
+                )
+
+            relevant_count = sum(1 for x in relevance_labels if x > 0)
+            if drop_all_zero_queries and relevant_count == 0:
+                continue
+            if relevant_count < max(0, int(min_relevant_docs)):
+                continue
             
             training_data.append({
                 'query': query,

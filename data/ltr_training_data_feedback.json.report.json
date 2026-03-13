@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-03-13T13:33:40.415786+00:00",
+  "export_json": "models/feedback_oracle_run/export_data.json",
+  "trace_json": "models/feedback_oracle_run/replay_trace.json",
+  "output": "data/ltr_training_data_feedback.json",
+  "input_event_count": 148,
+  "search_stats": {
+    "search_count": 25,
+    "searches_with_confirmed_click": 24,
+    "searches_with_raw_click": 24
+  },
+  "sample_count": 24,
+  "label_distribution": {
+    "0": 192,
+    "2": 11,
+    "3": 24,
+    "4": 13
+  },
+  "dropped_counts": {
+    "not_enough_clicks": 1
+  },
+  "args": {
+    "use_confirmed_only": true,
+    "min_clicks_per_search": 1,
+    "fallback_mode": "baseline",
+    "base_url": "http://127.0.0.1:5000"
+  }
+}

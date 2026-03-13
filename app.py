@@ -538,10 +538,17 @@ def export_data():
     try:
         from datetime import datetime
         events_data = _load_events_from_log()
+        session_id_filter = request.args.get('session_id', '').strip()
+        if session_id_filter:
+            events_data = [
+                event for event in events_data
+                if isinstance(event, dict) and event.get('sessionId') == session_id_filter
+            ]
         summary = _build_event_summary(events_data)
         
         export_data = {
             'export_timestamp': datetime.now().isoformat(),
+            'session_id_filter': session_id_filter or None,
             'summary': summary,
             'raw_events': events_data
         }

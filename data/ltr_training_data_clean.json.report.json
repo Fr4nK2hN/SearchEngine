@@ -1,0 +1,48 @@
+{
+  "generated_at": "2026-03-13T13:17:54.813462+00:00",
+  "input": "data/ltr_training_data.json",
+  "output": "data/ltr_training_data_clean.json",
+  "seed": 42,
+  "raw_count": 7,
+  "dropped_invalid": 0,
+  "sampled_count": 7,
+  "clean_count": 4,
+  "dropped_quality_count": 3,
+  "label_distribution": {
+    "0": 28,
+    "4": 4
+  },
+  "quality_args": {
+    "min_query_terms": 3,
+    "min_query_chars": 8,
+    "max_stopword_ratio": 0.8,
+    "drop_prefix_queries": true,
+    "min_relevant_docs": 1
+  },
+  "relabel_mode": "cross-only",
+  "dropped_quality_examples": [
+    {
+      "query": "was ronald",
+      "reasons": [
+        "terms<3",
+        "prefix_like",
+        "relevant<1"
+      ]
+    },
+    {
+      "query": "why conversion observed in body",
+      "reasons": [
+        "relevant<1"
+      ]
+    },
+    {
+      "query": "what is",
+      "reasons": [
+        "terms<3",
+        "chars<8",
+        "stop_ratio>0.8",
+        "prefix_like"
+      ]
+    }
+  ]
+}

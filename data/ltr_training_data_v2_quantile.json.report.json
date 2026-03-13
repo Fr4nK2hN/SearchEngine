@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-03-13T13:22:19.024366+00:00",
+  "input": "data/ltr_training_data_v2_clean.json",
+  "output": "data/ltr_training_data_v2_quantile.json",
+  "seed": 42,
+  "raw_count": 75,
+  "dropped_invalid": 0,
+  "sampled_count": 75,
+  "clean_count": 75,
+  "dropped_quality_count": 0,
+  "label_distribution": {
+    "0": 1125,
+    "1": 450,
+    "2": 375,
+    "3": 225,
+    "4": 75
+  },
+  "quality_args": {
+    "min_query_terms": 3,
+    "min_query_chars": 8,
+    "max_stopword_ratio": 0.8,
+    "drop_prefix_queries": true,
+    "min_relevant_docs": 5
+  },
+  "relabel_mode": "cross-only",
+  "labeling_strategy": "quantile",
+  "dropped_quality_examples": []
+}
