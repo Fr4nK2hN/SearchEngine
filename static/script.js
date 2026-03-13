@@ -321,10 +321,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function displayResults(data) {
     const results = data.results;
+    const routing = data.routing || null;
+
+    const renderRoutingSummary = () => {
+      if (!routing) return;
+      const summary = document.createElement("div");
+      summary.className = "routing-summary";
+
+      const chips = [];
+      if (routing.route_label) chips.push(`route: ${routing.route_label}`);
+      if (routing.selected_mode) chips.push(`mode: ${routing.selected_mode}`);
+      if (routing.rerank_top_n) chips.push(`top-k: ${routing.rerank_top_n}`);
+      if (routing.route_confidence !== undefined) {
+        const conf = Number(routing.route_confidence);
+        if (!Number.isNaN(conf)) chips.push(`confidence: ${(conf * 100).toFixed(1)}%`);
+      }
+      if (routing.route_source) chips.push(`source: ${routing.route_source}`);
+
+      chips.forEach((text) => {
+        const chip = document.createElement("span");
+        chip.className = "routing-chip";
+        chip.textContent = text;
+        summary.appendChild(chip);
+      });
+
+      resultsContainer.appendChild(summary);
+    };
 
     if (!Array.isArray(results) || results.length === 0) {
       resultsContainer.innerHTML =
         '<div class="results-empty">No results found. Try refining your query.</div>';
+      renderRoutingSummary();
       logEvent("serp_impression", {
         query: lastQuery,
         results: [],
@@ -440,7 +467,7 @@ document.addEventListener("DOMContentLoaded", () => {
         hasClickedResult = true;
 
         // Simulate navigation with more realistic behavior
-        titleLink.style.color = "#551A8B"; // Visited link color
+        titleLink.style.color = "#14532d"; // Visited link color
         setTimeout(() => {
           alert(
             `Opening document: ${result._source.title.substring(0, 50)}...`
@@ -495,6 +522,9 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       observer.observe(resultElement);
+      if (index === 0) {
+        renderRoutingSummary();
+      }
       resultsContainer.appendChild(resultElement);
     });
   }
