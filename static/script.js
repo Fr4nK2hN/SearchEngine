@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let lastSearchTime = null;
   let pageVisibilityStart = Date.now();
   let currentSearchId = null;
+  let isSendingEvents = false;
 
   // Check URL parameters for research mode
   const urlParams = new URLSearchParams(window.location.search);
@@ -160,21 +161,28 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Function to send events to the server
-  const sendEvents = () => {
-    if (events.length > 0) {
-      fetch("/log", {
+  const sendEvents = async () => {
+    if (isSendingEvents || events.length === 0) return;
+
+    const batch = events.slice();
+    isSendingEvents = true;
+    try {
+      const response = await fetch("/log", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(events),
+        body: JSON.stringify(batch),
         keepalive: true,
-      }).catch((error) => {
-        console.error("Error sending events:", error);
-        // If sending fails, put events back into the buffer
-        console.error("Failed to send events:", error);
       });
-      events = []; // Clear events after sending
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+      events = events.slice(batch.length);
+    } catch (error) {
+      console.error("Failed to send events:", error);
+    } finally {
+      isSendingEvents = false;
     }
   };
 
@@ -189,6 +197,15 @@ document.addEventListener("DOMContentLoaded", () => {
       finalQueryCount: queryCount,
       finalClickCount: clickCount,
     });
+    if (events.length > 0 && navigator.sendBeacon) {
+      const payload = new Blob([JSON.stringify(events)], {
+        type: "application/json",
+      });
+      if (navigator.sendBeacon("/log", payload)) {
+        events = [];
+        return;
+      }
+    }
     sendEvents();
   });
 
@@ -211,8 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const searchStartTime = Date.now();
       lastSearchTime = searchStartTime;
-      currentSearchId =
-        Date.now().toString(36) + Math.random().toString(36).slice(2);
+      currentSearchId = null;
 
       logEvent("query_submitted", {
         query,
@@ -244,11 +260,13 @@ document.addEventListener("DOMContentLoaded", () => {
           resultsContainer.removeAttribute("aria-busy");
           searchButton.disabled = false;
           searchButton.textContent = "Search";
+          currentSearchId = data.search_id || null;
 
           logEvent("search_completed", {
             query,
             mode,
-            resultCount: data.length,
+            searchId: currentSearchId,
+            resultCount: Array.isArray(data.results) ? data.results.length : 0,
             searchDuration: searchEndTime - searchStartTime,
           });
 
@@ -410,6 +428,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         logEvent("result_clicked", {
           query: lastQuery,
+          searchId: currentSearchId,
           docId: result._id,
           rank: index + 1,
           score: result._score,
@@ -435,7 +454,7 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ search_id, doc_id, rank, query }),
+          body: JSON.stringify({ session_id: sessionId, search_id, doc_id, rank, query }),
         });
       }
 

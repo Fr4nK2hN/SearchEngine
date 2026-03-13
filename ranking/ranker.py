@@ -23,8 +23,9 @@ class LTRRanker:
         self.is_trained = False
         self.last_timing = {}
         
-    def train(self, training_data, validation_data=None, 
-              n_estimators=200, learning_rate=0.05, max_depth=6):
+    def train(self, training_data, validation_data=None,
+              n_estimators=200, learning_rate=0.05, max_depth=6,
+              random_state=42, n_jobs=-1, deterministic=False):
         """
         训练 LTR 模型
         
@@ -34,6 +35,9 @@ class LTRRanker:
             n_estimators: 树的数量
             learning_rate: 学习率
             max_depth: 树的最大深度
+            random_state: 随机种子
+            n_jobs: 并行线程数
+            deterministic: 是否启用 LightGBM 确定性模式
         """
         print("Preparing training data...")
         X_train, y_train, groups_train = self._prepare_data(training_data)
@@ -56,8 +60,9 @@ class LTRRanker:
             min_child_samples=20,
             subsample=0.8,
             colsample_bytree=0.8,
-            random_state=42,
-            n_jobs=-1,
+            random_state=random_state,
+            n_jobs=n_jobs,
+            deterministic=bool(deterministic),
             importance_type='gain'
         )
         

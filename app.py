@@ -51,6 +51,219 @@ logger.addHandler(log_handler)
 logger.setLevel(logging.INFO)
 
 
+def _parse_log_line_events(line):
+    """从一行 JSON 日志中提取事件对象（兼容旧/新日志格式）。"""
+    line = (line or '').strip()
+    if not line:
+        return []
+
+    try:
+        record = json.loads(line)
+    except json.JSONDecodeError:
+        return []
+
+    if isinstance(record, list):
+        return [item for item in record if isinstance(item, dict)]
+    if not isinstance(record, dict):
+        return []
+
+    events = []
+
+    # 兼容历史写法: logger.info(json.dumps(event))
+    message = record.get('message')
+    if isinstance(message, str):
+        message_str = message.strip()
+        if message_str[:1] in ('{', '['):
+            try:
+                parsed = json.loads(message_str)
+                if isinstance(parsed, dict):
+                    events.append(parsed)
+                elif isinstance(parsed, list):
+                    events.extend(item for item in parsed if isinstance(item, dict))
+            except json.JSONDecodeError:
+                pass
+
+    # 当前结构化日志（/search、/track_click 等）直接读取顶层字段
+    event_keys = {
+        'type', 'event', 'searchId', 'search_id', 'sessionId',
+        'query', 'rankingMethod', 'results_count', 'result_ids'
+    }
+    if any(k in record for k in event_keys):
+        events.append(record)
+
+    return events
+
+
+def _load_events_from_log(limit=None):
+    """读取并解析事件日志。limit 为只取最后 N 行。"""
+    if not os.path.exists(log_file):
+        return []
+
+    with open(log_file, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+
+    if limit and limit > 0:
+        lines = lines[-limit:]
+
+    events = []
+    for line in lines:
+        events.extend(_parse_log_line_events(line))
+    return events
+
+
+def _to_positive_int(value):
+    """将值转换为正整数，失败返回 None。"""
+    try:
+        iv = int(value)
+    except (TypeError, ValueError):
+        return None
+    return iv if iv > 0 else None
+
+
+def _build_event_summary(events_data):
+    """构建导出/仪表盘共用的事件汇总。"""
+    session_ids = {
+        event.get('sessionId')
+        for event in events_data
+        if isinstance(event, dict) and event.get('sessionId')
+    }
+
+    summary = {
+        'total_sessions': len(session_ids),
+        'total_events': len(events_data),
+        'event_types': {},
+        'query_stats': {
+            'total_queries': 0,
+            'unique_queries': set(),
+            'abandoned_queries': 0
+        },
+        'interaction_stats': {
+            'total_clicks': 0,
+            'confirmed_clicks': 0,
+            'total_scrolls': 0,
+            'average_session_duration': 0
+        },
+        'feedback_stats': {
+            'total_searches': 0,
+            'searches_with_click': 0,
+            'ctr': 0.0,
+            'ctr_at_1': 0.0,
+            'ctr_at_3': 0.0,
+            'ctr_at_10': 0.0,
+            'avg_click_rank': 0.0,
+            'median_click_rank': 0.0,
+            'clicks_per_query': 0.0,
+            'abandonment_rate': 0.0
+        }
+    }
+
+    session_durations = []
+    completed_search_ids = []
+    click_ranks_by_search = {}
+    all_click_ranks = []
+
+    for event in events_data:
+        if not isinstance(event, dict):
+            continue
+
+        event_type = event.get('type') or event.get('event') or 'unknown'
+        summary['event_types'][event_type] = summary['event_types'].get(event_type, 0) + 1
+
+        if event_type == 'query_submitted' and event.get('sessionId'):
+            summary['query_stats']['total_queries'] += 1
+            summary['query_stats']['unique_queries'].add(event.get('query', ''))
+
+        elif event_type == 'query_abandoned':
+            summary['query_stats']['abandoned_queries'] += 1
+
+        elif event_type == 'search_completed' and event.get('sessionId'):
+            summary['feedback_stats']['total_searches'] += 1
+            search_id = event.get('searchId') or event.get('search_id')
+            if search_id:
+                completed_search_ids.append(str(search_id))
+
+        elif event_type == 'result_clicked':
+            summary['interaction_stats']['total_clicks'] += 1
+
+            rank = _to_positive_int(event.get('rank'))
+            if rank is not None:
+                all_click_ranks.append(rank)
+
+                search_id = event.get('searchId') or event.get('search_id')
+                if search_id:
+                    sid = str(search_id)
+                    if sid not in click_ranks_by_search:
+                        click_ranks_by_search[sid] = []
+                    click_ranks_by_search[sid].append(rank)
+
+        elif event_type == 'result_click_confirmed':
+            summary['interaction_stats']['confirmed_clicks'] += 1
+
+        elif event_type == 'scroll_action':
+            summary['interaction_stats']['total_scrolls'] += 1
+
+        elif event_type == 'session_end':
+            duration = event.get('totalDuration', 0)
+            if isinstance(duration, (int, float)) and duration > 0:
+                session_durations.append(duration)
+
+    summary['query_stats']['unique_queries'] = len(summary['query_stats']['unique_queries'])
+
+    if session_durations:
+        summary['interaction_stats']['average_session_duration'] = (
+            sum(session_durations) / len(session_durations)
+        )
+
+    total_queries = summary['query_stats']['total_queries']
+    total_clicks = summary['interaction_stats']['total_clicks']
+    abandoned_queries = summary['query_stats']['abandoned_queries']
+
+    if total_queries > 0:
+        summary['feedback_stats']['clicks_per_query'] = total_clicks / total_queries
+        summary['feedback_stats']['abandonment_rate'] = abandoned_queries / total_queries
+
+    if completed_search_ids:
+        clicked = 0
+        clicked_at_1 = 0
+        clicked_at_3 = 0
+        clicked_at_10 = 0
+
+        for search_id in completed_search_ids:
+            ranks = click_ranks_by_search.get(search_id, [])
+            if not ranks:
+                continue
+
+            clicked += 1
+            min_rank = min(ranks)
+            if min_rank <= 1:
+                clicked_at_1 += 1
+            if min_rank <= 3:
+                clicked_at_3 += 1
+            if min_rank <= 10:
+                clicked_at_10 += 1
+
+        denom = len(completed_search_ids)
+        summary['feedback_stats']['searches_with_click'] = clicked
+        summary['feedback_stats']['ctr'] = clicked / denom
+        summary['feedback_stats']['ctr_at_1'] = clicked_at_1 / denom
+        summary['feedback_stats']['ctr_at_3'] = clicked_at_3 / denom
+        summary['feedback_stats']['ctr_at_10'] = clicked_at_10 / denom
+
+    if all_click_ranks:
+        ranks_sorted = sorted(all_click_ranks)
+        n = len(ranks_sorted)
+        summary['feedback_stats']['avg_click_rank'] = sum(ranks_sorted) / n
+        if n % 2 == 1:
+            summary['feedback_stats']['median_click_rank'] = float(ranks_sorted[n // 2])
+        else:
+            mid = n // 2
+            summary['feedback_stats']['median_click_rank'] = (
+                ranks_sorted[mid - 1] + ranks_sorted[mid]
+            ) / 2.0
+
+    return summary
+
+
 def _normalize_scores(scores):
     """Min-Max 归一化分数到 [0, 1]，解决不同模型输出量纲不一致的问题"""
     if not scores:
@@ -301,12 +514,20 @@ def hybrid_rerank(query, results):
 
 @app.route('/log', methods=['POST'])
 def log_event():
-    events = request.get_json()
+    events = request.get_json(silent=True)
     if not events:
         return jsonify({"status": "error", "message": "No data provided"}), 400
 
+    if isinstance(events, dict):
+        events = [events]
+    if not isinstance(events, list):
+        return jsonify({"status": "error", "message": "Invalid payload format"}), 400
+
     for event in events:
-        logger.info(json.dumps(event))
+        if not isinstance(event, dict):
+            continue
+        # 结构化写入，避免在 message 字段嵌套 JSON 字符串。
+        logger.info("client_event", extra=event)
 
     return jsonify({"status": "success"}), 200
 
@@ -316,59 +537,8 @@ def export_data():
     """导出用户交互数据"""
     try:
         from datetime import datetime
-        events_data = []
-        if os.path.exists('logs/events.log'):
-            with open('logs/events.log', 'r') as f:
-                for line in f:
-                    try:
-                        # 每行可能是单个事件或事件数组
-                        line_data = json.loads(line.strip().split(' ', 1)[1])  # 跳过时间戳
-                        if isinstance(line_data, list):
-                            events_data.extend(line_data)
-                        else:
-                            events_data.append(line_data)
-                    except (json.JSONDecodeError, IndexError):
-                        continue
-        
-        summary = {
-            'total_sessions': len(set(event.get('sessionId', '') for event in events_data)),
-            'total_events': len(events_data),
-            'event_types': {},
-            'query_stats': {
-                'total_queries': 0,
-                'unique_queries': set(),
-                'abandoned_queries': 0
-            },
-            'interaction_stats': {
-                'total_clicks': 0,
-                'total_scrolls': 0,
-                'average_session_duration': 0
-            }
-        }
-        
-        session_durations = []
-        
-        for event in events_data:
-            event_type = event.get('type', 'unknown')
-            summary['event_types'][event_type] = summary['event_types'].get(event_type, 0) + 1
-            
-            if event_type == 'query_submitted':
-                summary['query_stats']['total_queries'] += 1
-                summary['query_stats']['unique_queries'].add(event.get('query', ''))
-            elif event_type == 'query_abandoned':
-                summary['query_stats']['abandoned_queries'] += 1
-            elif event_type == 'result_clicked':
-                summary['interaction_stats']['total_clicks'] += 1
-            elif event_type == 'scroll_action':
-                summary['interaction_stats']['total_scrolls'] += 1
-            elif event_type == 'session_end':
-                duration = event.get('totalDuration', 0)
-                if duration > 0:
-                    session_durations.append(duration)
-        
-        summary['query_stats']['unique_queries'] = len(summary['query_stats']['unique_queries'])
-        if session_durations:
-            summary['interaction_stats']['average_session_duration'] = sum(session_durations) / len(session_durations)
+        events_data = _load_events_from_log()
+        summary = _build_event_summary(events_data)
         
         export_data = {
             'export_timestamp': datetime.now().isoformat(),
@@ -386,22 +556,17 @@ def export_data():
 def research_dashboard():
     """研究仪表盘"""
     try:
-        events_data = []
-        if os.path.exists('logs/events.log'):
-            with open('logs/events.log', 'r') as f:
-                for line in f.readlines()[-100:]:
-                    try:
-                        line_data = json.loads(line.strip().split(' ', 1)[1])
-                        if isinstance(line_data, list):
-                            events_data.extend(line_data)
-                        else:
-                            events_data.append(line_data)
-                    except (json.JSONDecodeError, IndexError):
-                        continue
+        events_data = _load_events_from_log(limit=100)
+        summary = _build_event_summary(events_data)
         
         sessions = {}
         for event in events_data:
-            session_id = event.get('sessionId', 'unknown')
+            session_id = (
+                event.get('sessionId')
+                or event.get('searchId')
+                or event.get('search_id')
+                or 'unknown'
+            )
             if session_id not in sessions:
                 sessions[session_id] = []
             sessions[session_id].append(event)
@@ -453,8 +618,28 @@ def research_dashboard():
                             <div class="stat-label">Total Sessions</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value">{len(events_data)}</div>
+                            <div class="stat-value">{summary['total_events']}</div>
                             <div class="stat-label">Total Events</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">{summary['query_stats']['total_queries']}</div>
+                            <div class="stat-label">Total Queries</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">{summary['interaction_stats']['total_clicks']}</div>
+                            <div class="stat-label">Result Clicks</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">{summary['feedback_stats']['ctr_at_3'] * 100:.1f}%</div>
+                            <div class="stat-label">CTR@3</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">{summary['feedback_stats']['avg_click_rank']:.2f}</div>
+                            <div class="stat-label">Avg Click Rank</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">{summary['feedback_stats']['abandonment_rate'] * 100:.1f}%</div>
+                            <div class="stat-label">Abandonment Rate</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-value">{'✓' if ltr_ranker and ltr_ranker.is_trained else '✗'}</div>
@@ -479,8 +664,8 @@ def research_dashboard():
             """
             
             for event in session_events[-5:]:
-                event_type = event.get('type', 'unknown')
-                timestamp = event.get('timestamp', 'no timestamp')
+                event_type = event.get('type') or event.get('event') or 'unknown'
+                timestamp = event.get('timestamp') or event.get('asctime') or 'no timestamp'
                 query = event.get('query', '')
                 ranking_method = event.get('rankingMethod', 'N/A')
                 
@@ -608,9 +793,10 @@ def model_info():
 
 @app.route('/track_click', methods=['POST'])
 def track_click():
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
     log_entry = {
-        "event": "click",
+        "event": "result_click_confirmed",
+        "sessionId": data.get("session_id"),
         "search_id": data.get("search_id"),
         "doc_id": data.get("doc_id"),
         "rank": data.get("rank"),
