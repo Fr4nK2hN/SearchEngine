@@ -1,0 +1,209 @@
+{
+  "dataset": "/Users/frank/Develop/SearchEngine/data/ltr_training_data_feedback_combined.json",
+  "query_count": 42,
+  "generated_at": "2026-03-14T03:55:47.423631",
+  "warmup_queries": [
+    "what is rba",
+    "tile shower install cost",
+    "vitamins health benefits",
+    "what is diabetes",
+    "python tutorial"
+  ],
+  "threshold_sweep": {
+    "0.35": {
+      "router": {
+        "easy_mode": "baseline",
+        "hard_mode": "hybrid",
+        "hard_threshold": 0.35,
+        "hard_threshold_override": 0.35,
+        "hard_top_k": 30,
+        "hard_top_k_cap": null,
+        "hard_topk_policy": [
+          [
+            0.08,
+            30
+          ],
+          [
+            0.1,
+            20
+          ],
+          [
+            1.0,
+            30
+          ]
+        ],
+        "load_error": null,
+        "model_path": "models/query_router.pkl",
+        "status": "loaded"
+      },
+      "metrics": {
+        "queries": 42,
+        "ndcg@10": 0.7497290729378457,
+        "mrr@10": 0.701984126984127,
+        "recall@10": 0.9880952380952381,
+        "latency_ms_avg": 306.5902023332629,
+        "latency_ms_p95": 1075.4415420014993,
+        "route_easy": 23,
+        "route_hard": 19
+      }
+    },
+    "0.45": {
+      "router": {
+        "easy_mode": "baseline",
+        "hard_mode": "hybrid",
+        "hard_threshold": 0.45,
+        "hard_threshold_override": 0.45,
+        "hard_top_k": 30,
+        "hard_top_k_cap": null,
+        "hard_topk_policy": [
+          [
+            0.08,
+            30
+          ],
+          [
+            0.1,
+            20
+          ],
+          [
+            1.0,
+            30
+          ]
+        ],
+        "load_error": null,
+        "model_path": "models/query_router.pkl",
+        "status": "loaded"
+      },
+      "metrics": {
+        "queries": 42,
+        "ndcg@10": 0.7387765991004362,
+        "mrr@10": 0.694047619047619,
+        "recall@10": 0.9880952380952381,
+        "latency_ms_avg": 311.71552088164304,
+        "latency_ms_p95": 1166.8373749998864,
+        "route_easy": 25,
+        "route_hard": 17
+      }
+    },
+    "0.55": {
+      "router": {
+        "easy_mode": "baseline",
+        "hard_mode": "hybrid",
+        "hard_threshold": 0.55,
+        "hard_threshold_override": 0.55,
+        "hard_top_k": 30,
+        "hard_top_k_cap": null,
+        "hard_topk_policy": [
+          [
+            0.08,
+            30
+          ],
+          [
+            0.1,
+            20
+          ],
+          [
+            1.0,
+            30
+          ]
+        ],
+        "load_error": null,
+        "model_path": "models/query_router.pkl",
+        "status": "loaded"
+      },
+      "metrics": {
+        "queries": 42,
+        "ndcg@10": 0.7387765991004362,
+        "mrr@10": 0.694047619047619,
+        "recall@10": 0.9880952380952381,
+        "latency_ms_avg": 306.733262905341,
+        "latency_ms_p95": 1195.8073749992764,
+        "route_easy": 25,
+        "route_hard": 17
+      }
+    },
+    "0.65": {
+      "router": {
+        "easy_mode": "baseline",
+        "hard_mode": "hybrid",
+        "hard_threshold": 0.65,
+        "hard_threshold_override": 0.65,
+        "hard_top_k": 30,
+        "hard_top_k_cap": null,
+        "hard_topk_policy": [
+          [
+            0.08,
+            30
+          ],
+          [
+            0.1,
+            20
+          ],
+          [
+            1.0,
+            30
+          ]
+        ],
+        "load_error": null,
+        "model_path": "models/query_router.pkl",
+        "status": "loaded"
+      },
+      "metrics": {
+        "queries": 42,
+        "ndcg@10": 0.7407384633261161,
+        "mrr@10": 0.6861111111111111,
+        "recall@10": 1.0,
+        "latency_ms_avg": 187.80435911875907,
+        "latency_ms_p95": 1227.8691660030745,
+        "route_easy": 36,
+        "route_hard": 6
+      }
+    },
+    "0.75": {
+      "router": {
+        "easy_mode": "baseline",
+        "hard_mode": "hybrid",
+        "hard_threshold": 0.75,
+        "hard_threshold_override": 0.75,
+        "hard_top_k": 30,
+        "hard_top_k_cap": null,
+        "hard_topk_policy": [
+          [
+            0.08,
+            30
+          ],
+          [
+            0.1,
+            20
+          ],
+          [
+            1.0,
+            30
+          ]
+        ],
+        "load_error": null,
+        "model_path": "models/query_router.pkl",
+        "status": "loaded"
+      },
+      "metrics": {
+        "queries": 42,
+        "ndcg@10": 0.7349271074609515,
+        "mrr@10": 0.678968253968254,
+        "recall@10": 1.0,
+        "latency_ms_avg": 169.3570684288889,
+        "latency_ms_p95": 1224.8146670026472,
+        "route_easy": 37,
+        "route_hard": 5
+      }
+    }
+  },
+  "baseline_reference": {
+    "queries": 42,
+    "ndcg@10": 0.7380388378233229,
+    "mrr@10": 0.6861111111111111,
+    "recall@10": 1.0,
+    "latency_ms_avg": 9.39387885747627,
+    "latency_ms_p95": 16.628790996037424,
+    "route_easy": 0,
+    "route_hard": 0
+  }
+}

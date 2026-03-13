@@ -1,0 +1,48 @@
+{
+  "dataset": "/app/data/ltr_training_data_feedback_combined.json",
+  "query_count": 42,
+  "results": {
+    "baseline": {
+      "queries": 42,
+      "ndcg@10": 0.7380388378233229,
+      "mrr@10": 0.6861111111111111,
+      "recall@10": 1.0,
+      "latency_ms_avg": 8.734061475912487,
+      "latency_ms_p95": 14.821290998952463
+    },
+    "ltr": {
+      "queries": 42,
+      "ndcg@10": 0.6498909156349318,
+      "mrr@10": 0.6108654572940286,
+      "recall@10": 0.8571428571428571,
+      "latency_ms_avg": 359.3810091427994,
+      "latency_ms_p95": 786.59833400161
+    },
+    "hybrid": {
+      "queries": 42,
+      "ndcg@10": 0.6731015686808719,
+      "mrr@10": 0.6391534391534391,
+      "recall@10": 0.8571428571428571,
+      "latency_ms_avg": 116.58888792841199,
+      "latency_ms_p95": 142.3536670008616
+    },
+    "adaptive": {
+      "queries": 42,
+      "ndcg@10": 0.7387765991004362,
+      "mrr@10": 0.694047619047619,
+      "recall@10": 0.9880952380952381,
+      "latency_ms_avg": 95.20225692895544,
+      "latency_ms_p95": 270.62191699951654
+    },
+    "adaptive_old_sim_easy_ltr": {
+      "queries": 42,
+      "route_easy": 25,
+      "route_hard": 17,
+      "ndcg@10": 0.6531861274939081,
+      "mrr@10": 0.609448223733938,
+      "recall@10": 0.8571428571428571,
+      "latency_ms_avg": 73.93964095224094,
+      "latency_ms_p95": 133.12029100052314
+    }
+  }
+}

@@ -183,7 +183,12 @@ class LTRRanker:
         if not search_results:
             return []
         
-        documents = [hit['_source'] for hit in search_results]
+        documents = []
+        for hit in search_results:
+            source = dict(hit.get('_source') or {})
+            # 线上推理阶段补齐 ES 原始分，避免训练/推理特征分布不一致。
+            source['es_score'] = float(hit.get('_score', source.get('es_score', 0.0)) or 0.0)
+            documents.append(source)
         
         # 预测分数
         scores = self.predict(query, documents)

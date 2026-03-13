@@ -1,0 +1,166 @@
+{
+  "dataset": "/Users/frank/Develop/SearchEngine/data/ltr_training_data_feedback_combined.json",
+  "query_count": 42,
+  "generated_at": "2026-03-14T03:33:29.188698",
+  "adaptive_hard_topk_cap_sweep": {
+    "none": {
+      "router": {
+        "easy_mode": "baseline",
+        "hard_mode": "hybrid",
+        "hard_threshold": 0.45,
+        "hard_top_k": 30,
+        "hard_top_k_cap": null,
+        "hard_topk_policy": [
+          [
+            0.08,
+            30
+          ],
+          [
+            0.1,
+            20
+          ],
+          [
+            1.0,
+            30
+          ]
+        ],
+        "load_error": null,
+        "model_path": "models/query_router.pkl",
+        "status": "loaded"
+      },
+      "metrics": {
+        "queries": 42,
+        "ndcg@10": 0.7387765991004362,
+        "mrr@10": 0.694047619047619,
+        "recall@10": 0.9880952380952381,
+        "latency_ms_avg": 331.1225347622115,
+        "latency_ms_p95": 1218.0042920008418,
+        "route_easy": 25,
+        "route_hard": 17,
+        "avg_hard_top_k": 30.0
+      }
+    },
+    "10": {
+      "router": {
+        "easy_mode": "baseline",
+        "hard_mode": "hybrid",
+        "hard_threshold": 0.45,
+        "hard_top_k": 30,
+        "hard_top_k_cap": 10,
+        "hard_topk_policy": [
+          [
+            0.08,
+            30
+          ],
+          [
+            0.1,
+            20
+          ],
+          [
+            1.0,
+            30
+          ]
+        ],
+        "load_error": null,
+        "model_path": "models/query_router.pkl",
+        "status": "loaded"
+      },
+      "metrics": {
+        "queries": 42,
+        "ndcg@10": 0.7322011384289328,
+        "mrr@10": 0.694047619047619,
+        "recall@10": 0.9761904761904762,
+        "latency_ms_avg": 284.2549891189438,
+        "latency_ms_p95": 988.765666999825,
+        "route_easy": 25,
+        "route_hard": 17,
+        "avg_hard_top_k": 10.0
+      }
+    },
+    "15": {
+      "router": {
+        "easy_mode": "baseline",
+        "hard_mode": "hybrid",
+        "hard_threshold": 0.45,
+        "hard_top_k": 30,
+        "hard_top_k_cap": 15,
+        "hard_topk_policy": [
+          [
+            0.08,
+            30
+          ],
+          [
+            0.1,
+            20
+          ],
+          [
+            1.0,
+            30
+          ]
+        ],
+        "load_error": null,
+        "model_path": "models/query_router.pkl",
+        "status": "loaded"
+      },
+      "metrics": {
+        "queries": 42,
+        "ndcg@10": 0.7387765991004362,
+        "mrr@10": 0.694047619047619,
+        "recall@10": 0.9880952380952381,
+        "latency_ms_avg": 293.26271826167135,
+        "latency_ms_p95": 1026.8297080001503,
+        "route_easy": 25,
+        "route_hard": 17,
+        "avg_hard_top_k": 15.0
+      }
+    },
+    "20": {
+      "router": {
+        "easy_mode": "baseline",
+        "hard_mode": "hybrid",
+        "hard_threshold": 0.45,
+        "hard_top_k": 30,
+        "hard_top_k_cap": 20,
+        "hard_topk_policy": [
+          [
+            0.08,
+            30
+          ],
+          [
+            0.1,
+            20
+          ],
+          [
+            1.0,
+            30
+          ]
+        ],
+        "load_error": null,
+        "model_path": "models/query_router.pkl",
+        "status": "loaded"
+      },
+      "metrics": {
+        "queries": 42,
+        "ndcg@10": 0.7387765991004362,
+        "mrr@10": 0.694047619047619,
+        "recall@10": 0.9880952380952381,
+        "latency_ms_avg": 323.0101566908464,
+        "latency_ms_p95": 1101.9700830001966,
+        "route_easy": 25,
+        "route_hard": 17,
+        "avg_hard_top_k": 20.0
+      }
+    }
+  },
+  "baseline_reference": {
+    "queries": 42,
+    "ndcg@10": 0.7380388378233229,
+    "mrr@10": 0.6861111111111111,
+    "recall@10": 1.0,
+    "latency_ms_avg": 8.780908785411157,
+    "latency_ms_p95": 14.85720799973933,
+    "route_easy": 0,
+    "route_hard": 0,
+    "avg_hard_top_k": 0.0
+  }
+}

@@ -40,16 +40,60 @@ else:
     ltr_ranker = None
 
 # ========== 初始化 Query Router ==========
+ALLOWED_ROUTER_MODES = {'baseline', 'ltr', 'cross_encoder', 'hybrid'}
+ADAPTIVE_EASY_MODE = (os.getenv('ADAPTIVE_EASY_MODE', 'baseline') or 'baseline').strip().lower()
+if ADAPTIVE_EASY_MODE not in ALLOWED_ROUTER_MODES:
+    ADAPTIVE_EASY_MODE = 'baseline'
+ADAPTIVE_HARD_MODE = (os.getenv('ADAPTIVE_HARD_MODE', 'hybrid') or 'hybrid').strip().lower()
+if ADAPTIVE_HARD_MODE not in ALLOWED_ROUTER_MODES:
+    ADAPTIVE_HARD_MODE = 'hybrid'
+
+try:
+    RECALL_RELAX_THRESHOLD = int(os.getenv('RECALL_RELAX_THRESHOLD', '5'))
+except ValueError:
+    RECALL_RELAX_THRESHOLD = 5
+RECALL_RELAX_THRESHOLD = max(1, RECALL_RELAX_THRESHOLD)
+
+_hard_topk_cap_raw = os.getenv('ADAPTIVE_HARD_TOP_K_CAP')
+ADAPTIVE_HARD_TOP_K_CAP = None
+if _hard_topk_cap_raw is not None and str(_hard_topk_cap_raw).strip() != '':
+    try:
+        cap_value = int(str(_hard_topk_cap_raw).strip())
+        if cap_value > 0:
+            ADAPTIVE_HARD_TOP_K_CAP = cap_value
+    except ValueError:
+        ADAPTIVE_HARD_TOP_K_CAP = None
+
+_hard_threshold_raw = os.getenv('ADAPTIVE_HARD_THRESHOLD')
+ADAPTIVE_HARD_THRESHOLD = None
+if _hard_threshold_raw is not None and str(_hard_threshold_raw).strip() != '':
+    try:
+        threshold_value = float(str(_hard_threshold_raw).strip())
+        if 0.0 <= threshold_value <= 1.0:
+            ADAPTIVE_HARD_THRESHOLD = threshold_value
+    except ValueError:
+        ADAPTIVE_HARD_THRESHOLD = None
+
 ROUTER_MODEL_PATH = 'models/query_router.pkl'
 query_router = QueryRouter(
     model_path=ROUTER_MODEL_PATH,
-    default_easy_mode='ltr',
-    default_hard_mode='hybrid',
+    default_easy_mode=ADAPTIVE_EASY_MODE,
+    default_hard_mode=ADAPTIVE_HARD_MODE,
 )
+# 运行时强制当前策略，避免旧模型 payload 覆盖默认模式导致线上行为漂移。
+query_router.easy_mode = ADAPTIVE_EASY_MODE
+query_router.hard_mode = ADAPTIVE_HARD_MODE
+if ADAPTIVE_HARD_THRESHOLD is not None:
+    query_router.hard_threshold = ADAPTIVE_HARD_THRESHOLD
 if query_router.loaded:
     print(f"✓ Query router loaded from {ROUTER_MODEL_PATH}")
 else:
     print("✗ Query router model unavailable, fallback to heuristic routing")
+print(
+    "✓ Router runtime mode override: "
+    f"easy={query_router.easy_mode}, hard={query_router.hard_mode}, "
+    f"hard_threshold={query_router.hard_threshold:.3f}"
+)
 
 # ========== Structured Logging Setup ==========
 # Configure structured logging
@@ -485,6 +529,8 @@ def _resolve_adaptive_route(query):
     selected_mode = route.get('selected_mode') or 'baseline'
     route_label = route.get('route_label', 'easy')
     hard_top_k = _to_positive_int(route.get('hard_top_k')) or 30
+    if ADAPTIVE_HARD_TOP_K_CAP is not None:
+        hard_top_k = min(hard_top_k, ADAPTIVE_HARD_TOP_K_CAP)
 
     if selected_mode in ('ltr', 'hybrid') and not _is_ltr_available():
         selected_mode = 'cross_encoder' if route_label == 'hard' else 'baseline'
@@ -499,6 +545,63 @@ def _resolve_adaptive_route(query):
     return route
 
 
+def _build_es_query(query, relaxed=False, hl=False, size=50):
+    """
+    构建两阶段召回查询：
+    - strict: 关闭 fuzzy，强调 AND/短语匹配，优先精确相关性
+    - relaxed: strict 结果不足时回退，开启更宽松匹配补召回
+    """
+    tokens = [t for t in query.strip().split() if t]
+    is_short_single_term = len(tokens) == 1 and len(tokens[0]) <= 4
+    fields = ["title^4", "content^2.5", "combined_text^1.5", "related_queries^2"]
+
+    multi_match = {
+        "query": query,
+        "fields": fields,
+        "type": "best_fields",
+        "operator": "and" if len(tokens) >= 2 else "or",
+    }
+    if relaxed:
+        multi_match["operator"] = "or"
+        if len(tokens) >= 2:
+            multi_match["minimum_should_match"] = "60%"
+        if not is_short_single_term:
+            multi_match["fuzziness"] = "AUTO"
+
+    content_phrase = {
+        "query": query,
+        "slop": 2 if relaxed else 1,
+        "boost": 1.2 if relaxed else 2.0,
+    }
+    title_phrase = {
+        "query": query,
+        "slop": 1,
+        "boost": 1.8 if relaxed else 3.0,
+    }
+    related_query_match = {
+        "query": query,
+        "boost": 1.4 if relaxed else 2.2,
+    }
+
+    es_query = {
+        "query": {
+            "bool": {
+                "should": [
+                    {"multi_match": {**multi_match, "boost": 2.0 if relaxed else 4.0}},
+                    {"match_phrase": {"title": title_phrase}},
+                    {"match_phrase": {"content": content_phrase}},
+                    {"match": {"related_queries": related_query_match}},
+                ],
+                "minimum_should_match": 1,
+            }
+        },
+        "size": size,
+    }
+    if hl:
+        es_query["highlight"] = {"fields": {"title": {}, "content": {}}}
+    return es_query
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -507,7 +610,9 @@ def index():
 @app.route('/search')
 def search():
     query = request.args.get('q', '')
-    mode = request.args.get('mode', 'ltr')  # 默认使用 LTR
+    mode = request.args.get('mode', 'adaptive')
+    if mode not in {'adaptive', 'baseline', 'ltr', 'cross_encoder', 'hybrid'}:
+        mode = 'adaptive'
     search_id = str(uuid.uuid4())
 
     log_entry = {
@@ -524,53 +629,22 @@ def search():
     try:
         t_start = time.perf_counter()
         # ========== Stage 1: Elasticsearch 召回 ==========
-        # 对短单词禁用模糊匹配，避免 "java" 命中 "lava" 等错误召回
-        tokens = query.strip().split()
-        is_short_single_term = len(tokens) == 1 and len(tokens[0]) <= 4
-
-        multi_match = {
-            "query": query,
-            "fields": ["title^3", "content^2", "combined_text^1.5"],
-            "type": "best_fields"
-        }
-        if not is_short_single_term:
-            multi_match["fuzziness"] = "AUTO"
-
         hl = request.args.get('hl', 'false').lower() == 'true'
-        es_query = {
-            "query": {
-                "bool": {
-                    "should": [
-                        {"multi_match": multi_match},
-                        {
-                            "match_phrase": {
-                                "content": {
-                                    "query": query,
-                                    "boost": 2
-                                }
-                            }
-                        },
-                        {
-                            "match": {
-                                "related_queries": {
-                                    "query": query,
-                                    "boost": 2
-                                }
-                            }
-                        }
-                    ],
-                    "minimum_should_match": 1
-                }
-            },
-            "size": 50
-        }
-        if hl:
-            es_query["highlight"] = {"fields": {"title": {}, "content": {}}}
-        
         t_es0 = time.perf_counter()
-        response = es.search(index="documents", body=es_query)
-        t_es1 = time.perf_counter()
+        strict_query = _build_es_query(query, relaxed=False, hl=hl, size=50)
+        response = es.search(index="documents", body=strict_query)
         results = response['hits']['hits']
+        retrieval_strategy = 'strict'
+
+        if len(results) < RECALL_RELAX_THRESHOLD:
+            relaxed_query = _build_es_query(query, relaxed=True, hl=hl, size=50)
+            relaxed_response = es.search(index="documents", body=relaxed_query)
+            relaxed_results = relaxed_response['hits']['hits']
+            if len(relaxed_results) > len(results):
+                results = relaxed_results
+                retrieval_strategy = 'relaxed_fallback'
+
+        t_es1 = time.perf_counter()
         
         if not results:
             total_ms = (time.perf_counter() - t_start) * 1000.0
@@ -582,7 +656,8 @@ def search():
                 "total_ms": total_ms,
                 "retrieval_ms": retrieval_ms,
                 "feature_ms": 0.0,
-                "inference_ms": 0.0
+                "inference_ms": 0.0,
+                "retrieval_strategy": retrieval_strategy,
             })
             logger.info("No results found", extra=log_entry)
             return jsonify({"results": [], "search_id": search_id})
@@ -630,7 +705,8 @@ def search():
             "total_ms": total_ms,
             "retrieval_ms": retrieval_ms,
             "feature_ms": feature_ms,
-            "inference_ms": inference_ms
+            "inference_ms": inference_ms,
+            "retrieval_strategy": retrieval_strategy,
         })
         logger.info("Search successful", extra=log_entry)
 
@@ -1207,7 +1283,9 @@ def model_info():
         "easy_mode": query_router.easy_mode,
         "hard_mode": query_router.hard_mode,
         "hard_threshold": query_router.hard_threshold,
+        "hard_threshold_override": ADAPTIVE_HARD_THRESHOLD,
         "hard_top_k": query_router.hard_top_k,
+        "hard_top_k_cap": ADAPTIVE_HARD_TOP_K_CAP,
         "hard_topk_policy": query_router.hard_topk_policy,
         "load_error": query_router.load_error,
     }
