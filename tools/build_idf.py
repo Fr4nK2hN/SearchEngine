@@ -6,8 +6,9 @@
     python tools/build_idf.py --input data/msmarco_100k_processed.json --output models/idf_dict.json
 
 算法:
-    IDF(t) = log(N / (df(t) + 1))
+    IDF(t) = log((N + 1) / (df(t) + 1)) + 1
     其中 N 为文档总数, df(t) 为包含词 t 的文档数
+    该平滑形式保证 IDF 始终为正值，避免高频词特征被压成 0
 """
 
 import os
@@ -58,10 +59,10 @@ def build_idf(input_path, output_path):
 
     print(f"唯一词项数: {len(df_counter)}")
 
-    # 计算 IDF: log(N / (df + 1))
+    # 计算平滑 IDF，保证所有词项的权重保持正值
     idf_dict = {}
     for term, df in df_counter.items():
-        idf_dict[term] = round(math.log(N / (df + 1)), 4)
+        idf_dict[term] = round(math.log((N + 1) / (df + 1)) + 1.0, 4)
 
     # 保存
     os.makedirs(os.path.dirname(output_path), exist_ok=True)

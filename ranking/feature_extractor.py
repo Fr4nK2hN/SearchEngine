@@ -3,7 +3,7 @@ import math
 import json
 import os
 import numpy as np
-from collections import Counter
+from collections import Counter, OrderedDict
 from sentence_transformers import SentenceTransformer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -36,7 +36,11 @@ class FeatureExtractor:
     def __init__(self, idf_path=None):
         self.semantic_model = SentenceTransformer('all-MiniLM-L6-v2')
         self.stop_words = set(stopwords.words('english'))
-        self._emb_cache = {}
+        try:
+            self._emb_cache_limit = max(0, int(os.getenv('FEATURE_EMBED_CACHE_SIZE', '2048')))
+        except ValueError:
+            self._emb_cache_limit = 2048
+        self._emb_cache = OrderedDict()
 
         # 加载预计算的 IDF 字典
         idf_file = idf_path or self.DEFAULT_IDF_PATH
@@ -289,11 +293,15 @@ class FeatureExtractor:
 
     def _encode_text(self, text):
         key = (text or '')
-        h = hash(key)
-        if h in self._emb_cache:
-            return self._emb_cache[h]
+        if key in self._emb_cache:
+            self._emb_cache.move_to_end(key)
+            return self._emb_cache[key]
         emb = self.semantic_model.encode(key)
-        self._emb_cache[h] = emb
+        if self._emb_cache_limit > 0:
+            self._emb_cache[key] = emb
+            self._emb_cache.move_to_end(key)
+            while len(self._emb_cache) > self._emb_cache_limit:
+                self._emb_cache.popitem(last=False)
         return emb
     
     # ==================== 统计特征 ====================

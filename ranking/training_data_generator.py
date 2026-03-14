@@ -1,7 +1,10 @@
 import json
+import os
 import re
 from elasticsearch import Elasticsearch
 from sentence_transformers import CrossEncoder
+
+from retrieval import DEFAULT_RECALL_RELAX_THRESHOLD, search_documents_with_fallback
 
 
 class TrainingDataGenerator:
@@ -17,6 +20,12 @@ class TrainingDataGenerator:
     def __init__(self, es_client, cross_encoder_model):
         self.es = es_client
         self.cross_encoder = cross_encoder_model
+        try:
+            self.recall_relax_threshold = max(
+                1, int(os.getenv("RECALL_RELAX_THRESHOLD", str(DEFAULT_RECALL_RELAX_THRESHOLD)))
+            )
+        except ValueError:
+            self.recall_relax_threshold = DEFAULT_RECALL_RELAX_THRESHOLD
 
         self._stopwords = {
             "a", "an", "and", "are", "as", "at", "be", "by", "for", "from",
@@ -215,21 +224,15 @@ class TrainingDataGenerator:
     def _search_documents(self, query, size=50):
         """使用 Elasticsearch 检索文档"""
         try:
-            response = self.es.search(
-                index="documents",
-                body={
-                    "query": {
-                        "multi_match": {
-                            "query": query,
-                            "fields": ["title^3", "content^2", "combined_text"],
-                            "type": "best_fields",
-                            "fuzziness": "AUTO"
-                        }
-                    },
-                    "size": size
-                }
+            results, _ = search_documents_with_fallback(
+                self.es,
+                query,
+                size=size,
+                hl=False,
+                relax_threshold=self.recall_relax_threshold,
+                index_name="documents",
             )
-            return response['hits']['hits']
+            return results
         except Exception as e:
             print(f"Search error for query '{query}': {e}")
             return []

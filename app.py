@@ -9,6 +9,7 @@ from sentence_transformers import CrossEncoder
 from pythonjsonlogger import jsonlogger
 import uuid
 import time
+from retrieval import search_documents_with_fallback
 
 # 导入 LTR 相关模块
 from ranking.feature_extractor import FeatureExtractor
@@ -545,63 +546,6 @@ def _resolve_adaptive_route(query):
     return route
 
 
-def _build_es_query(query, relaxed=False, hl=False, size=50):
-    """
-    构建两阶段召回查询：
-    - strict: 关闭 fuzzy，强调 AND/短语匹配，优先精确相关性
-    - relaxed: strict 结果不足时回退，开启更宽松匹配补召回
-    """
-    tokens = [t for t in query.strip().split() if t]
-    is_short_single_term = len(tokens) == 1 and len(tokens[0]) <= 4
-    fields = ["title^4", "content^2.5", "combined_text^1.5", "related_queries^2"]
-
-    multi_match = {
-        "query": query,
-        "fields": fields,
-        "type": "best_fields",
-        "operator": "and" if len(tokens) >= 2 else "or",
-    }
-    if relaxed:
-        multi_match["operator"] = "or"
-        if len(tokens) >= 2:
-            multi_match["minimum_should_match"] = "60%"
-        if not is_short_single_term:
-            multi_match["fuzziness"] = "AUTO"
-
-    content_phrase = {
-        "query": query,
-        "slop": 2 if relaxed else 1,
-        "boost": 1.2 if relaxed else 2.0,
-    }
-    title_phrase = {
-        "query": query,
-        "slop": 1,
-        "boost": 1.8 if relaxed else 3.0,
-    }
-    related_query_match = {
-        "query": query,
-        "boost": 1.4 if relaxed else 2.2,
-    }
-
-    es_query = {
-        "query": {
-            "bool": {
-                "should": [
-                    {"multi_match": {**multi_match, "boost": 2.0 if relaxed else 4.0}},
-                    {"match_phrase": {"title": title_phrase}},
-                    {"match_phrase": {"content": content_phrase}},
-                    {"match": {"related_queries": related_query_match}},
-                ],
-                "minimum_should_match": 1,
-            }
-        },
-        "size": size,
-    }
-    if hl:
-        es_query["highlight"] = {"fields": {"title": {}, "content": {}}}
-    return es_query
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -631,18 +575,14 @@ def search():
         # ========== Stage 1: Elasticsearch 召回 ==========
         hl = request.args.get('hl', 'false').lower() == 'true'
         t_es0 = time.perf_counter()
-        strict_query = _build_es_query(query, relaxed=False, hl=hl, size=50)
-        response = es.search(index="documents", body=strict_query)
-        results = response['hits']['hits']
-        retrieval_strategy = 'strict'
-
-        if len(results) < RECALL_RELAX_THRESHOLD:
-            relaxed_query = _build_es_query(query, relaxed=True, hl=hl, size=50)
-            relaxed_response = es.search(index="documents", body=relaxed_query)
-            relaxed_results = relaxed_response['hits']['hits']
-            if len(relaxed_results) > len(results):
-                results = relaxed_results
-                retrieval_strategy = 'relaxed_fallback'
+        results, retrieval_strategy = search_documents_with_fallback(
+            es,
+            query,
+            size=50,
+            hl=hl,
+            relax_threshold=RECALL_RELAX_THRESHOLD,
+            index_name="documents",
+        )
 
         t_es1 = time.perf_counter()
         

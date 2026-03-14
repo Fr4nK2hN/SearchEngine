@@ -122,12 +122,13 @@ def build_from_feedback(
             continue
 
         results = trace_by_search_id.get(sid) if candidate_source == "trace" else None
+        actual_candidate_source = "trace" if results is not None else "search"
         if results is None:
             if not base_url:
                 dropped["missing_results_no_base_url"] += 1
                 continue
             try:
-                results = fetch_search_results(base_url, query, mode=fallback_mode)
+                results = fetch_search_results(base_url, query, mode=mode)
             except Exception:
                 dropped["fetch_failed"] += 1
                 continue
@@ -169,6 +170,7 @@ def build_from_feedback(
                 "meta": {
                     "search_id": sid,
                     "mode": mode,
+                    "candidate_source": actual_candidate_source,
                     "session_id": search.get("session_id"),
                     "click_count": len(click_events),
                 },

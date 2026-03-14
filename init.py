@@ -1,116 +1,125 @@
+import os
 import time
+
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
-import json
 
-# Give Elasticsearch time to start
-time.sleep(30)
+from index_setup import (
+    INDEX_NAME,
+    get_current_index_meta,
+    get_expected_index_spec,
+    index_meta_matches,
+    load_documents,
+)
 
-es = Elasticsearch([{'host': 'elasticsearch', 'port': 9200, 'scheme': 'http'}])
+
+ES_CLIENT = Elasticsearch([{'host': 'elasticsearch', 'port': 9200, 'scheme': 'http'}])
+
+
+def wait_for_elasticsearch(timeout=180, interval=2):
+    deadline = time.time() + timeout
+    last_error = None
+    while time.time() < deadline:
+        try:
+            if ES_CLIENT.ping():
+                print("✓ Elasticsearch is reachable.")
+                return
+            last_error = RuntimeError("Elasticsearch ping returned false")
+        except Exception as exc:
+            last_error = exc
+        print(f"Waiting for Elasticsearch: {last_error}")
+        time.sleep(interval)
+    raise RuntimeError(f"Timed out waiting for Elasticsearch: {last_error}")
+
+
+def _should_force_rebuild():
+    return os.getenv("FORCE_REBUILD_INDEX", "").strip().lower() in {"1", "true", "yes"}
+
+
+def _build_source_document(doc, processed):
+    if processed:
+        src = {
+            "title": doc.get("title", ""),
+            "content": doc.get("content", ""),
+            "content_full": doc.get("content_full", doc.get("content", "")),
+            "keywords": doc.get("keywords", []),
+            "related_queries": doc.get("related_queries", []),
+            "combined_text": doc.get(
+                "combined_text",
+                f"{doc.get('title', '')} {doc.get('content', '')}",
+            ),
+        }
+        if "quality" in doc:
+            src["quality"] = doc.get("quality")
+        return src
+
+    combined_text = f"{doc.get('title', '')} {doc.get('content', '')}"
+    if doc.get("related_queries"):
+        combined_text += " " + " ".join(doc["related_queries"])
+    return {
+        "title": doc.get("title", ""),
+        "content": doc.get("content", ""),
+        "content_full": doc.get("content", ""),
+        "related_queries": doc.get("related_queries", []),
+        "combined_text": combined_text,
+    }
+
 
 def create_index_and_bulk_index():
     """
-    Create (or recreate) the 'documents' index and bulk index data.
-    If the index already exists and has documents, skip to avoid redundant rebuilds.
-    Prefer using processed dataset if available to match app.py mappings.
+    Create or rebuild the 'documents' index when the expected mapping/data
+    fingerprint changes, then bulk index the current dataset.
     """
-    index_name = "documents"
+    wait_for_elasticsearch()
+    dataset, mappings, expected_meta = get_expected_index_spec()
+    force_rebuild = _should_force_rebuild()
 
-    # 幂等守卫：如果索引已存在且有文档，跳过重建
-    if es.indices.exists(index=index_name):
-        count = es.count(index=index_name)['count']
-        if count > 0:
-            print(f"✓ Index '{index_name}' already exists with {count} documents. Skipping rebuild.")
+    if ES_CLIENT.indices.exists(index=INDEX_NAME):
+        count = ES_CLIENT.count(index=INDEX_NAME)["count"]
+        current_meta = get_current_index_meta(ES_CLIENT, INDEX_NAME)
+        if count > 0 and not force_rebuild and index_meta_matches(current_meta, expected_meta):
+            print(
+                f"✓ Index '{INDEX_NAME}' already matches expected fingerprint "
+                f"{expected_meta['index_fingerprint'][:12]} with {count} documents. Skipping rebuild."
+            )
             return
-        print(f"Index '{index_name}' exists but is empty. Deleting and recreating...")
-        es.indices.delete(index=index_name)
 
-    print(f"Creating index '{index_name}' with unified mappings...")
-    mappings = {
-        "properties": {
-            "title": {
-                "type": "text",
-                "analyzer": "standard",
-                "fields": {"keyword": {"type": "keyword"}}
-            },
-            "content": {"type": "text", "analyzer": "standard"},
-            "content_full": {"type": "text", "analyzer": "standard"},
-            "keywords": {"type": "keyword"},
-            "related_queries": {"type": "text", "analyzer": "standard"},
-            "combined_text": {"type": "text", "analyzer": "standard"},
-            "quality": {"type": "keyword"}
-        }
-    }
-    es.indices.create(index=index_name, mappings=mappings)
-    print(f"Index '{index_name}' created.")
+        rebuild_reason = "force rebuild requested"
+        if not force_rebuild:
+            if count <= 0:
+                rebuild_reason = "existing index is empty"
+            else:
+                rebuild_reason = (
+                    "fingerprint mismatch "
+                    f"(current={current_meta.get('index_fingerprint')}, "
+                    f"expected={expected_meta['index_fingerprint']})"
+                )
+        print(f"Rebuilding index '{INDEX_NAME}': {rebuild_reason}")
+        ES_CLIENT.indices.delete(index=INDEX_NAME)
 
-    # Prefer processed data, fallback to raw (兼容 100k 命名)
-    data_paths_processed = [
-        "data/msmarco_100k_processed.json",
-        "data/msmarco_docs_processed.json"
-    ]
-    data_paths_raw = [
-        "data/msmarco_100k.json",
-        "data/msmarco_docs.json"
-    ]
+    print(
+        f"Creating index '{INDEX_NAME}' from dataset {dataset['path']} "
+        f"(processed={dataset['processed']})..."
+    )
+    ES_CLIENT.indices.create(index=INDEX_NAME, mappings=mappings)
+    print(f"Index '{INDEX_NAME}' created.")
 
-    documents = None
-    processed = False
-    for p in data_paths_processed:
-        try:
-            with open(p, "r", encoding="utf-8") as f:
-                documents = json.load(f)
-            print(f"✓ Using processed dataset: {p}")
-            processed = True
-            break
-        except FileNotFoundError:
-            continue
-    if documents is None:
-        for p in data_paths_raw:
-            try:
-                with open(p, "r", encoding="utf-8") as f:
-                    documents = json.load(f)
-                print(f"⚠ Processed dataset not found, using raw dataset: {p}")
-                processed = False
-                break
-            except FileNotFoundError:
-                continue
-    if documents is None:
-        raise FileNotFoundError("No dataset found. Please download or preprocess MS MARCO first.")
-
-    actions = []
-    for doc in documents:
-        if processed:
-            src = {
-                "title": doc.get("title", ""),
-                "content": doc.get("content", ""),
-                "content_full": doc.get("content_full", doc.get("content", "")),
-                "keywords": doc.get("keywords", []),
-                "related_queries": doc.get("related_queries", []),
-                "combined_text": doc.get("combined_text", f"{doc.get('title','')} {doc.get('content','')}")
-            }
-            if "quality" in doc:
-                src["quality"] = doc.get("quality")
-        else:
-            combined_text = f"{doc.get('title','')} {doc.get('content','')}"
-            if doc.get('related_queries'):
-                combined_text += " " + " ".join(doc['related_queries'])
-            src = {
-                "title": doc.get("title", ""),
-                "content": doc.get("content", ""),
-                "content_full": doc.get("content", ""),
-                "related_queries": doc.get("related_queries", []),
-                "combined_text": combined_text
-            }
-
-        actions.append({
-            "_index": index_name,
+    documents = load_documents(dataset["path"])
+    actions = [
+        {
+            "_index": INDEX_NAME,
             "_id": doc.get("id", ""),
-            "_source": src
-        })
+            "_source": _build_source_document(doc, dataset["processed"]),
+        }
+        for doc in documents
+    ]
 
-    bulk(es, actions, refresh=True)
-    print(f"Bulk indexing completed. Indexed {len(actions)} documents.")
+    bulk(ES_CLIENT, actions, refresh=True)
+    print(
+        f"Bulk indexing completed. Indexed {len(actions)} documents with fingerprint "
+        f"{expected_meta['index_fingerprint'][:12]}."
+    )
+
 
 if __name__ == '__main__':
     create_index_and_bulk_index()
