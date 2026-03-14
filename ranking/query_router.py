@@ -126,7 +126,7 @@ class QueryRouter:
         self,
         model_path="models/query_router.pkl",
         default_easy_mode="ltr",
-        default_hard_mode="hybrid",
+        default_hard_mode="cross_encoder",
         default_hard_top_k=30,
     ):
         self.model_path = model_path

@@ -1,0 +1,58 @@
+{
+  "dataset": "/Users/frank/Develop/SearchEngine/data/ltr_training_data_feedback_combined.json",
+  "metric": "nDCG@10",
+  "strategies": {
+    "baseline": 0.1719,
+    "cross_encoder": 0.1764,
+    "adaptive_previous_easy_baseline_hard_hybrid": 0.1618,
+    "adaptive_current_easy_baseline_hard_cross_encoder": 0.1816
+  },
+  "route_counts": {
+    "easy->baseline": 25,
+    "hard->cross_encoder": 17
+  },
+  "top_remaining_gaps": [
+    {
+      "query": "who coined the",
+      "adaptive": 0.2575,
+      "best_mode": "baseline",
+      "best_ndcg@10": 0.6677,
+      "gap": 0.4102
+    },
+    {
+      "query": "james madison",
+      "adaptive": 0.3863,
+      "best_mode": "ltr",
+      "best_ndcg@10": 0.7725,
+      "gap": 0.3862
+    },
+    {
+      "query": "home gardening vegetables",
+      "adaptive": 0.0,
+      "best_mode": "ltr",
+      "best_ndcg@10": 0.301,
+      "gap": 0.301
+    },
+    {
+      "query": "machine learning algorithms",
+      "adaptive": 0.0,
+      "best_mode": "ltr",
+      "best_ndcg@10": 0.2801,
+      "gap": 0.2801
+    },
+    {
+      "query": "investment strategies",
+      "adaptive": 0.0,
+      "best_mode": "cross_encoder",
+      "best_ndcg@10": 0.2641,
+      "gap": 0.2641
+    },
+    {
+      "query": "day subutex",
+      "adaptive": 0.0,
+      "best_mode": "hybrid",
+      "best_ndcg@10": 0.1934,
+      "gap": 0.1934
+    }
+  ]
+}

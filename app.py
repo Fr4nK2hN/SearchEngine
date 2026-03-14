@@ -45,9 +45,9 @@ ALLOWED_ROUTER_MODES = {'baseline', 'ltr', 'cross_encoder', 'hybrid'}
 ADAPTIVE_EASY_MODE = (os.getenv('ADAPTIVE_EASY_MODE', 'baseline') or 'baseline').strip().lower()
 if ADAPTIVE_EASY_MODE not in ALLOWED_ROUTER_MODES:
     ADAPTIVE_EASY_MODE = 'baseline'
-ADAPTIVE_HARD_MODE = (os.getenv('ADAPTIVE_HARD_MODE', 'hybrid') or 'hybrid').strip().lower()
+ADAPTIVE_HARD_MODE = (os.getenv('ADAPTIVE_HARD_MODE', 'cross_encoder') or 'cross_encoder').strip().lower()
 if ADAPTIVE_HARD_MODE not in ALLOWED_ROUTER_MODES:
-    ADAPTIVE_HARD_MODE = 'hybrid'
+    ADAPTIVE_HARD_MODE = 'cross_encoder'
 
 try:
     RECALL_RELAX_THRESHOLD = int(os.getenv('RECALL_RELAX_THRESHOLD', '5'))
