@@ -37,7 +37,7 @@ services:
     command:
       - sh
       - -c
-      - python wait_for_index.py && gunicorn --bind 0.0.0.0:5000 app:app
+      - python init.py && python wait_for_index.py && gunicorn --no-control-socket --bind 0.0.0.0:5000 app:app
 
 volumes:
   es_data:

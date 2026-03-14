@@ -451,15 +451,10 @@ def _normalize_scores(scores):
 
 
 def create_index_and_bulk_index():
-    """Check if index exists (used only when running app.py directly for dev)"""
-    index_name = "documents"
-    if not es.indices.exists(index=index_name):
-        print(f"⚠ 索引 '{index_name}' 不存在。请先运行 init.py 初始化索引。")
-        print("  docker-compose 部署时由 init 服务自动完成。")
-        print("  本地开发时请执行: python init.py")
-    else:
-        count = es.count(index=index_name)['count']
-        print(f"✓ 索引 '{index_name}' 已存在，包含 {count} 个文档")
+    """Use the same initialization path in direct-run dev mode and Docker."""
+    from init import create_index_and_bulk_index as init_create_index_and_bulk_index
+
+    init_create_index_and_bulk_index()
 
 
 def _is_ltr_available():
@@ -555,6 +550,7 @@ def index():
 def search():
     query = request.args.get('q', '')
     mode = request.args.get('mode', 'adaptive')
+    session_id = request.args.get('session_id', '').strip()
     if mode not in {'adaptive', 'baseline', 'ltr', 'cross_encoder', 'hybrid'}:
         mode = 'adaptive'
     search_id = str(uuid.uuid4())
@@ -565,6 +561,8 @@ def search():
         "query": query,
         "mode": mode,
     }
+    if session_id:
+        log_entry["sessionId"] = session_id
     
     if not query:
         logger.info("Empty query received", extra=log_entry)
@@ -572,6 +570,7 @@ def search():
     
     try:
         t_start = time.perf_counter()
+        requested_rerank_top_n = _to_positive_int(request.args.get('rerank_top_n'))
         # ========== Stage 1: Elasticsearch 召回 ==========
         hl = request.args.get('hl', 'false').lower() == 'true'
         t_es0 = time.perf_counter()
@@ -611,6 +610,8 @@ def search():
             route_info = _resolve_adaptive_route(query)
             exec_mode = route_info.get('selected_mode', 'baseline')
             rerank_top_n = route_info.get('rerank_top_n')
+        elif mode in {'cross_encoder', 'hybrid'}:
+            rerank_top_n = requested_rerank_top_n
 
         results, ranking_method, feature_ms, inference_ms = _apply_ranking_mode(
             query,
@@ -642,6 +643,7 @@ def search():
             "rankingMethod": ranking_method,
             "results_count": len(final_results),
             "result_ids": [r['_id'] for r in final_results],
+            "result_scores": [float(r.get('_score', 0.0) or 0.0) for r in final_results],
             "total_ms": total_ms,
             "retrieval_ms": retrieval_ms,
             "feature_ms": feature_ms,
@@ -653,6 +655,8 @@ def search():
         response_payload = {"results": final_results, "search_id": search_id}
         if route_info:
             response_payload["routing"] = route_info
+        if requested_rerank_top_n is not None:
+            response_payload["requested_rerank_top_n"] = requested_rerank_top_n
         return jsonify(response_payload)
         
     except Exception as e:
@@ -769,6 +773,26 @@ def export_data():
         
     except Exception as e:
         return jsonify({"error": f"Export failed: {str(e)}"}), 500
+
+
+@app.route('/documents_by_ids')
+def documents_by_ids():
+    raw_ids = request.args.getlist('id')
+    doc_ids = [str(doc_id).strip() for doc_id in raw_ids if str(doc_id).strip()]
+    if not doc_ids:
+        return jsonify({"documents": []})
+
+    response = es.mget(index="documents", body={"ids": doc_ids})
+    docs_by_id = {}
+    for item in response.get("docs", []):
+        if item.get("found"):
+            docs_by_id[str(item.get("_id"))] = {
+                "_id": item.get("_id"),
+                "_source": item.get("_source", {}),
+            }
+
+    ordered_docs = [docs_by_id[doc_id] for doc_id in doc_ids if doc_id in docs_by_id]
+    return jsonify({"documents": ordered_docs})
 
 
 @app.route('/research_dashboard')

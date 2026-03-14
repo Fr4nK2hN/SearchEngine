@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("session-id-display").textContent = sessionId;
 
   let events = [];
+  let eventHistory = [];
   let lastQuery = null;
   let hasClickedResult = false;
   let isTrackingEnabled = true;
@@ -30,6 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let pageVisibilityStart = Date.now();
   let currentSearchId = null;
   let isSendingEvents = false;
+  let activeSendPromise = null;
+  const pendingTrackClicks = new Set();
 
   // Check URL parameters for research mode
   const urlParams = new URLSearchParams(window.location.search);
@@ -65,16 +68,42 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Export data functionality
-  exportDataBtn.addEventListener("click", () => {
-    const sessionData = {
-      sessionId,
-      sessionDuration: Date.now() - sessionStartTime,
-      totalQueries: queryCount,
-      totalClicks: clickCount,
-      events: events,
-      userAgent: navigator.userAgent,
-      timestamp: new Date().toISOString(),
-    };
+  exportDataBtn.addEventListener("click", async () => {
+    await sendEvents();
+    if (pendingTrackClicks.size > 0) {
+      await Promise.allSettled(Array.from(pendingTrackClicks));
+    }
+
+    let sessionData;
+    try {
+      const response = await fetch(
+        `/export_data?session_id=${encodeURIComponent(sessionId)}`,
+        { cache: "no-store" }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+      sessionData = await response.json();
+      sessionData.client_session = {
+        sessionId,
+        sessionDuration: Date.now() - sessionStartTime,
+        totalQueries: queryCount,
+        totalClicks: clickCount,
+        userAgent: navigator.userAgent,
+      };
+    } catch (error) {
+      console.error("Failed to export server-side session data:", error);
+      sessionData = {
+        sessionId,
+        sessionDuration: Date.now() - sessionStartTime,
+        totalQueries: queryCount,
+        totalClicks: clickCount,
+        raw_events: eventHistory.slice(),
+        userAgent: navigator.userAgent,
+        timestamp: new Date().toISOString(),
+        export_source: "client_fallback",
+      };
+    }
 
     const dataStr = JSON.stringify(sessionData, null, 2);
     const dataBlob = new Blob([dataStr], { type: "application/json" });
@@ -124,6 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     events.push(event);
+    eventHistory.push(event);
 
     // Update UI counters
     if (type === "query_submitted") {
@@ -162,28 +192,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Function to send events to the server
   const sendEvents = async () => {
-    if (isSendingEvents || events.length === 0) return;
+    if (isSendingEvents) return activeSendPromise;
+    if (events.length === 0) return;
 
     const batch = events.slice();
     isSendingEvents = true;
-    try {
-      const response = await fetch("/log", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(batch),
-        keepalive: true,
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+    activeSendPromise = (async () => {
+      try {
+        const response = await fetch("/log", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(batch),
+          keepalive: true,
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        events = events.slice(batch.length);
+      } catch (error) {
+        console.error("Failed to send events:", error);
+      } finally {
+        isSendingEvents = false;
+        activeSendPromise = null;
       }
-      events = events.slice(batch.length);
-    } catch (error) {
-      console.error("Failed to send events:", error);
-    } finally {
-      isSendingEvents = false;
-    }
+    })();
+
+    return activeSendPromise;
   };
 
   // Send events periodically
@@ -248,11 +284,13 @@ document.addEventListener("DOMContentLoaded", () => {
       searchButton.disabled = true;
       searchButton.textContent = "Searching...";
 
-      fetch(
-        `/search?q=${encodeURIComponent(query)}&mode=${encodeURIComponent(
-          mode
-        )}`
-      )
+      const searchParams = new URLSearchParams({
+        q: query,
+        mode,
+        session_id: sessionId,
+      });
+
+      fetch(`/search?${searchParams.toString()}`)
         .then((response) => response.json())
         .then((data) => {
           const searchEndTime = Date.now();
@@ -268,9 +306,18 @@ document.addEventListener("DOMContentLoaded", () => {
             searchId: currentSearchId,
             resultCount: Array.isArray(data.results) ? data.results.length : 0,
             searchDuration: searchEndTime - searchStartTime,
+            route_label: data.routing?.route_label || null,
+            route_selected_mode: data.routing?.selected_mode || null,
+            route_rerank_top_n: data.routing?.rerank_top_n || null,
+            route_source: data.routing?.route_source || null,
+            route_confidence:
+              data.routing?.route_confidence !== undefined
+                ? Number(data.routing.route_confidence)
+                : null,
           });
 
           displayResults(data);
+          void sendEvents();
         })
         .catch((error) => {
           console.error("Error fetching search results:", error);
@@ -354,8 +401,13 @@ document.addEventListener("DOMContentLoaded", () => {
       renderRoutingSummary();
       logEvent("serp_impression", {
         query: lastQuery,
+        searchId: currentSearchId,
         results: [],
         resultCount: 0,
+        route_label: routing?.route_label || null,
+        route_selected_mode: routing?.selected_mode || null,
+        route_rerank_top_n: routing?.rerank_top_n || null,
+        route_source: routing?.route_source || null,
       });
       return;
     }
@@ -366,10 +418,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     logEvent("serp_impression", {
       query: lastQuery,
+      searchId: currentSearchId,
       results: resultIds,
       resultCount: results.length,
       averageScore:
         resultScores.reduce((a, b) => a + b, 0) / resultScores.length,
+      result_scores: resultScores,
+      route_label: routing?.route_label || null,
+      route_selected_mode: routing?.selected_mode || null,
+      route_rerank_top_n: routing?.rerank_top_n || null,
+      route_source: routing?.route_source || null,
     });
 
     // Function to optimize title display
@@ -463,6 +521,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         trackClick(currentSearchId, result._id, index + 1, lastQuery);
+        void sendEvents();
 
         hasClickedResult = true;
 
@@ -476,12 +535,19 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       function trackClick(search_id, doc_id, rank, query) {
-        fetch("/track_click", {
+        const clickPromise = fetch("/track_click", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
+          keepalive: true,
           body: JSON.stringify({ session_id: sessionId, search_id, doc_id, rank, query }),
+        }).catch((error) => {
+          console.error("Failed to confirm click:", error);
+        });
+        pendingTrackClicks.add(clickPromise);
+        clickPromise.finally(() => {
+          pendingTrackClicks.delete(clickPromise);
         });
       }
 

@@ -1,6 +1,14 @@
 DEFAULT_RECALL_RELAX_THRESHOLD = 5
 
 
+def to_positive_int(value):
+    try:
+        parsed = int(value)
+    except (TypeError, ValueError):
+        return None
+    return parsed if parsed > 0 else None
+
+
 def build_es_query(query, relaxed=False, hl=False, size=50):
     """
     Build the shared Elasticsearch retrieval query used by both online search

@@ -65,7 +65,7 @@ def build_idf(input_path, output_path):
         idf_dict[term] = round(math.log((N + 1) / (df + 1)) + 1.0, 4)
 
     # 保存
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(idf_dict, f, ensure_ascii=False)
 
