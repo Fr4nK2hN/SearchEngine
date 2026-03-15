@@ -1,0 +1,32 @@
+{
+  "dataset": "/Users/frank/Develop/SearchEngine/data/ltr_training_data_feedback_combined.json",
+  "metric": "nDCG@10",
+  "adaptive_after_hard_mode_fix": 0.1816,
+  "adaptive_after_topical_guardrail": 0.1962,
+  "baseline": 0.1719,
+  "latency_ms": {
+    "baseline_avg": 4.2,
+    "baseline_p95": 7.6,
+    "adaptive_avg": 113.0,
+    "adaptive_p95": 228.7
+  },
+  "route_counts": {
+    "easy->ltr|topical_easy_ltr": 22,
+    "hard->cross_encoder|None": 17,
+    "easy->baseline|None": 3
+  },
+  "examples": [
+    {
+      "query": "machine learning algorithms",
+      "route_label": "easy",
+      "selected_mode": "ltr",
+      "route_guardrail": "topical_easy_ltr"
+    },
+    {
+      "query": "home gardening vegetables",
+      "route_label": "easy",
+      "selected_mode": "ltr",
+      "route_guardrail": "topical_easy_ltr"
+    }
+  ]
+}

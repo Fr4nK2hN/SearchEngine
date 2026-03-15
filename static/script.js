@@ -308,6 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
             searchDuration: searchEndTime - searchStartTime,
             route_label: data.routing?.route_label || null,
             route_selected_mode: data.routing?.selected_mode || null,
+            route_guardrail: data.routing?.route_guardrail || null,
             route_rerank_top_n: data.routing?.rerank_top_n || null,
             route_source: data.routing?.route_source || null,
             route_confidence:
@@ -406,6 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
         resultCount: 0,
         route_label: routing?.route_label || null,
         route_selected_mode: routing?.selected_mode || null,
+        route_guardrail: routing?.route_guardrail || null,
         route_rerank_top_n: routing?.rerank_top_n || null,
         route_source: routing?.route_source || null,
       });
@@ -426,6 +428,7 @@ document.addEventListener("DOMContentLoaded", () => {
       result_scores: resultScores,
       route_label: routing?.route_label || null,
       route_selected_mode: routing?.selected_mode || null,
+      route_guardrail: routing?.route_guardrail || null,
       route_rerank_top_n: routing?.rerank_top_n || null,
       route_source: routing?.route_source || null,
     });

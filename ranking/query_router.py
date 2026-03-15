@@ -10,6 +10,7 @@ STOPWORDS = {
     "was", "were", "what", "when", "where", "which", "who", "why",
     "will", "with", "you", "your",
 }
+QUESTION_WORDS = {"what", "when", "where", "which", "who", "why", "how"}
 
 FEATURE_NAMES = [
     "query_len_chars",
@@ -59,6 +60,67 @@ def query_feature_vector(query):
         1.0 if is_prefix_like_query(tokens) else 0.0,
         float((len(uniq) / len(tokens)) if tokens else 0.0),
     ]
+
+
+def adaptive_guardrail(query, route_label, selected_mode, ltr_available, enabled_guardrails=None):
+    """
+    Apply lightweight runtime overrides on top of the learned easy/hard route.
+
+    Returns a dict with override info or None when no guardrail should fire.
+    """
+    enabled = None
+    if enabled_guardrails is not None:
+        enabled = {str(name) for name in enabled_guardrails}
+
+    def is_enabled(name):
+        return enabled is None or name in enabled
+
+    tokens = tokenize_query(query)
+    ratio = stopword_ratio(tokens)
+    prefix_like = is_prefix_like_query(tokens)
+    non_stop_terms = [t for t in tokens if t not in STOPWORDS]
+
+    if route_label == "hard":
+        # Incomplete question-style prefixes are better served by lexical baseline.
+        if (
+            tokens
+            and tokens[0] in QUESTION_WORDS
+            and ratio >= 0.34
+            and len(non_stop_terms) <= 1
+            and is_enabled("hard_question_prefix_baseline")
+        ):
+            return {
+                "selected_mode": "baseline",
+                "route_guardrail": "hard_question_prefix_baseline",
+            }
+
+        # Longer mixed-intent informational queries benefit more from LTR.
+        if (
+            ltr_available
+            and not prefix_like
+            and len(non_stop_terms) >= 5
+            and 0.25 <= ratio <= 0.40
+            and is_enabled("hard_long_mix_ltr")
+        ):
+            return {
+                "selected_mode": "ltr",
+                "route_guardrail": "hard_long_mix_ltr",
+            }
+
+    if route_label == "easy" and selected_mode == "baseline" and ltr_available:
+        # Topical multi-term easy queries are usually too broad for pure ES ranking.
+        if (
+            len(non_stop_terms) >= 3
+            and ratio <= 0.34
+            and not prefix_like
+            and is_enabled("topical_easy_ltr")
+        ):
+            return {
+                "selected_mode": "ltr",
+                "route_guardrail": "topical_easy_ltr",
+            }
+
+    return None
 
 
 def expert_to_mode(expert_name, default_mode):

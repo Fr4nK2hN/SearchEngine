@@ -14,7 +14,7 @@ from retrieval import search_documents_with_fallback
 # 导入 LTR 相关模块
 from ranking.feature_extractor import FeatureExtractor
 from ranking.ranker import LTRRanker
-from ranking.query_router import QueryRouter
+from ranking.query_router import QueryRouter, adaptive_guardrail
 
 app = Flask(__name__)
 es = Elasticsearch([{'host': 'elasticsearch', 'port': 9200, 'scheme': 'http'}])
@@ -42,6 +42,8 @@ else:
 
 # ========== 初始化 Query Router ==========
 ALLOWED_ROUTER_MODES = {'baseline', 'ltr', 'cross_encoder', 'hybrid'}
+DEFAULT_ADAPTIVE_HARD_THRESHOLD = 0.61
+DEFAULT_ADAPTIVE_HARD_TOP_K_CAP = 20
 ADAPTIVE_EASY_MODE = (os.getenv('ADAPTIVE_EASY_MODE', 'baseline') or 'baseline').strip().lower()
 if ADAPTIVE_EASY_MODE not in ALLOWED_ROUTER_MODES:
     ADAPTIVE_EASY_MODE = 'baseline'
@@ -56,24 +58,24 @@ except ValueError:
 RECALL_RELAX_THRESHOLD = max(1, RECALL_RELAX_THRESHOLD)
 
 _hard_topk_cap_raw = os.getenv('ADAPTIVE_HARD_TOP_K_CAP')
-ADAPTIVE_HARD_TOP_K_CAP = None
+ADAPTIVE_HARD_TOP_K_CAP = DEFAULT_ADAPTIVE_HARD_TOP_K_CAP
 if _hard_topk_cap_raw is not None and str(_hard_topk_cap_raw).strip() != '':
     try:
         cap_value = int(str(_hard_topk_cap_raw).strip())
         if cap_value > 0:
             ADAPTIVE_HARD_TOP_K_CAP = cap_value
     except ValueError:
-        ADAPTIVE_HARD_TOP_K_CAP = None
+        ADAPTIVE_HARD_TOP_K_CAP = DEFAULT_ADAPTIVE_HARD_TOP_K_CAP
 
 _hard_threshold_raw = os.getenv('ADAPTIVE_HARD_THRESHOLD')
-ADAPTIVE_HARD_THRESHOLD = None
+ADAPTIVE_HARD_THRESHOLD = DEFAULT_ADAPTIVE_HARD_THRESHOLD
 if _hard_threshold_raw is not None and str(_hard_threshold_raw).strip() != '':
     try:
         threshold_value = float(str(_hard_threshold_raw).strip())
         if 0.0 <= threshold_value <= 1.0:
             ADAPTIVE_HARD_THRESHOLD = threshold_value
     except ValueError:
-        ADAPTIVE_HARD_THRESHOLD = None
+        ADAPTIVE_HARD_THRESHOLD = DEFAULT_ADAPTIVE_HARD_THRESHOLD
 
 ROUTER_MODEL_PATH = 'models/query_router.pkl'
 query_router = QueryRouter(
@@ -84,8 +86,7 @@ query_router = QueryRouter(
 # 运行时强制当前策略，避免旧模型 payload 覆盖默认模式导致线上行为漂移。
 query_router.easy_mode = ADAPTIVE_EASY_MODE
 query_router.hard_mode = ADAPTIVE_HARD_MODE
-if ADAPTIVE_HARD_THRESHOLD is not None:
-    query_router.hard_threshold = ADAPTIVE_HARD_THRESHOLD
+query_router.hard_threshold = ADAPTIVE_HARD_THRESHOLD
 if query_router.loaded:
     print(f"✓ Query router loaded from {ROUTER_MODEL_PATH}")
 else:
@@ -461,6 +462,28 @@ def _is_ltr_available():
     return bool(ltr_ranker and ltr_ranker.is_trained)
 
 
+def _apply_adaptive_guardrails(query, route):
+    """
+    Apply lightweight runtime guardrails on top of the learned router.
+    """
+    if not isinstance(route, dict):
+        return route
+
+    selected_mode = route.get('selected_mode') or 'baseline'
+    override = adaptive_guardrail(
+        query=query,
+        route_label=route.get('route_label'),
+        selected_mode=selected_mode,
+        ltr_available=_is_ltr_available(),
+    )
+    if not override:
+        return route
+
+    guarded = dict(route)
+    guarded.update(override)
+    return guarded
+
+
 def _apply_ranking_mode(query, results, mode, rerank_top_n=None):
     """
     统一执行排序模式。
@@ -521,7 +544,10 @@ def _resolve_adaptive_route(query):
     """
     根据 router 判定 easy/hard，并映射为最终可执行模式。
     """
-    route = query_router.route(query)
+    route = _apply_adaptive_guardrails(
+        query,
+        query_router.route(query),
+    )
     selected_mode = route.get('selected_mode') or 'baseline'
     route_label = route.get('route_label', 'easy')
     hard_top_k = _to_positive_int(route.get('hard_top_k')) or 30
@@ -626,6 +652,7 @@ def search():
                 "route_label": route_info.get('route_label'),
                 "route_confidence": float(route_info.get('route_confidence', 0.0)),
                 "route_source": route_info.get('route_source'),
+                "route_guardrail": route_info.get('route_guardrail'),
                 "route_selected_mode": exec_mode,
                 "route_rerank_top_n": rerank_top_n,
             })

@@ -1,0 +1,159 @@
+{
+  "generated_at": "2026-03-15T09:58:59.871626+00:00",
+  "dataset": "data/ltr_training_data_feedback_combined.json",
+  "top_k": 10,
+  "retrieval_size": 50,
+  "warmup_queries": 1,
+  "guardrails": [
+    "topical_easy_ltr",
+    "hard_question_prefix_baseline",
+    "hard_long_mix_ltr"
+  ],
+  "results": {
+    "router_only": {
+      "ndcg@10": 0.18157496329907158,
+      "mrr@10": 0.20002834467120184,
+      "recall@10": 0.21428571428571427,
+      "latency_ms_avg": 104.23132642903337,
+      "latency_ms_p95": 267.72022180048225,
+      "hard_rate": 0.40476190476190477,
+      "guardrail_hit_rate": 0.0,
+      "route_counts": {
+        "easy": 25,
+        "hard": 17
+      },
+      "selected_mode_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      },
+      "guardrail_counts": {},
+      "retrieval_strategy_counts": {
+        "strict": 42
+      },
+      "enabled_guardrails": [],
+      "sample_count": 42
+    },
+    "all_guardrails": {
+      "ndcg@10": 0.20768341712158764,
+      "mrr@10": 0.21712962962962962,
+      "recall@10": 0.2619047619047619,
+      "latency_ms_avg": 111.95067271459959,
+      "latency_ms_p95": 258.473864546977,
+      "hard_rate": 0.40476190476190477,
+      "guardrail_hit_rate": 0.5952380952380952,
+      "route_counts": {
+        "easy": 25,
+        "hard": 17
+      },
+      "selected_mode_counts": {
+        "ltr": 23,
+        "cross_encoder": 14,
+        "baseline": 5
+      },
+      "guardrail_counts": {
+        "topical_easy_ltr": 22,
+        "hard_question_prefix_baseline": 2,
+        "hard_long_mix_ltr": 1
+      },
+      "retrieval_strategy_counts": {
+        "strict": 42
+      },
+      "enabled_guardrails": [
+        "hard_long_mix_ltr",
+        "hard_question_prefix_baseline",
+        "topical_easy_ltr"
+      ],
+      "sample_count": 42
+    },
+    "minus_topical_easy_ltr": {
+      "ndcg@10": 0.19304047760885326,
+      "mrr@10": 0.21031746031746032,
+      "recall@10": 0.2261904761904762,
+      "latency_ms_avg": 87.4632856430253,
+      "latency_ms_p95": 257.6430510940554,
+      "hard_rate": 0.40476190476190477,
+      "guardrail_hit_rate": 0.07142857142857142,
+      "route_counts": {
+        "easy": 25,
+        "hard": 17
+      },
+      "selected_mode_counts": {
+        "baseline": 27,
+        "cross_encoder": 14,
+        "ltr": 1
+      },
+      "guardrail_counts": {
+        "hard_question_prefix_baseline": 2,
+        "hard_long_mix_ltr": 1
+      },
+      "retrieval_strategy_counts": {
+        "strict": 42
+      },
+      "enabled_guardrails": [
+        "hard_long_mix_ltr",
+        "hard_question_prefix_baseline"
+      ],
+      "sample_count": 42
+    },
+    "minus_hard_question_prefix_baseline": {
+      "ndcg@10": 0.1979176154415396,
+      "mrr@10": 0.20862622826908542,
+      "recall@10": 0.25,
+      "latency_ms_avg": 123.67517861968649,
+      "latency_ms_p95": 260.88253125708434,
+      "hard_rate": 0.40476190476190477,
+      "guardrail_hit_rate": 0.5476190476190477,
+      "route_counts": {
+        "easy": 25,
+        "hard": 17
+      },
+      "selected_mode_counts": {
+        "ltr": 23,
+        "cross_encoder": 16,
+        "baseline": 3
+      },
+      "guardrail_counts": {
+        "topical_easy_ltr": 22,
+        "hard_long_mix_ltr": 1
+      },
+      "retrieval_strategy_counts": {
+        "strict": 42
+      },
+      "enabled_guardrails": [
+        "hard_long_mix_ltr",
+        "topical_easy_ltr"
+      ],
+      "sample_count": 42
+    },
+    "minus_hard_long_mix_ltr": {
+      "ndcg@10": 0.205983704491854,
+      "mrr@10": 0.21534391534391534,
+      "recall@10": 0.2619047619047619,
+      "latency_ms_avg": 118.5466905231546,
+      "latency_ms_p95": 269.7084877992893,
+      "hard_rate": 0.40476190476190477,
+      "guardrail_hit_rate": 0.5714285714285714,
+      "route_counts": {
+        "easy": 25,
+        "hard": 17
+      },
+      "selected_mode_counts": {
+        "ltr": 22,
+        "cross_encoder": 15,
+        "baseline": 5
+      },
+      "guardrail_counts": {
+        "topical_easy_ltr": 22,
+        "hard_question_prefix_baseline": 2
+      },
+      "retrieval_strategy_counts": {
+        "strict": 42
+      },
+      "enabled_guardrails": [
+        "hard_question_prefix_baseline",
+        "topical_easy_ltr"
+      ],
+      "sample_count": 42
+    }
+  }
+}

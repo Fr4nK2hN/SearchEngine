@@ -54,6 +54,7 @@ def test_feedback_builder_prefers_server_result_ids_and_route_metadata(monkeypat
             "query": "alpha",
             "mode": "adaptive",
             "route_selected_mode": "hybrid",
+            "route_guardrail": "guardrail-demo",
             "route_rerank_top_n": 30,
         },
         {
@@ -95,6 +96,7 @@ def test_feedback_builder_prefers_server_result_ids_and_route_metadata(monkeypat
     assert samples[0]["meta"]["mode"] == "hybrid"
     assert samples[0]["meta"]["requested_mode"] == "adaptive"
     assert samples[0]["meta"]["candidate_source"] == "server_result_ids_api"
+    assert samples[0]["meta"]["route_guardrail"] == "guardrail-demo"
     assert samples[0]["meta"]["route_rerank_top_n"] == 30
     assert samples[0]["relevance_labels"] == [3]
 

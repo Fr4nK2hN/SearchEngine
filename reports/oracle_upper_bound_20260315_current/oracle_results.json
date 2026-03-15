@@ -1,0 +1,108 @@
+{
+  "generated_at": "2026-03-15T09:55:33.402546+00:00",
+  "seed": 42,
+  "data_path": "data/ltr_training_data_feedback_combined.json",
+  "data_raw_count": 42,
+  "data_dropped_invalid": 0,
+  "data_sampled_count": 42,
+  "data_dropped_quality_count": 0,
+  "data_used_count": 42,
+  "sample_method": "head",
+  "max_queries": 42,
+  "data_sha256": "68f2670c1ce199cba8c8d481040c24afc2da9a608de1ea225d715b57c2c3a256",
+  "metrics": {
+    "ndcg_k": 10,
+    "mrr_k": 10,
+    "recall_k": 50
+  },
+  "quality_filter_args": {
+    "min_query_terms": 0,
+    "min_query_chars": 0,
+    "max_stopword_ratio": 1.0,
+    "drop_prefix_queries": false,
+    "min_relevant_docs": 0
+  },
+  "diagnostics": {
+    "data_profile": {
+      "query_count": 42,
+      "query_terms_avg": 3.4047619047619047,
+      "query_terms_p95": 8.849999999999987,
+      "query_stopword_ratio_avg": 0.12367724867724868,
+      "short_query_ratio": 0.23809523809523808,
+      "prefix_like_ratio": 0.30952380952380953,
+      "relevant_docs_avg": 1.7142857142857142,
+      "single_relevant_ratio": 0.2857142857142857,
+      "first_doc_is_max_ratio": 0.47619047619047616,
+      "label_distribution": {
+        "0": 348,
+        "2": 14,
+        "3": 36,
+        "4": 22
+      }
+    },
+    "warnings": [
+      "Prefix-like query ratio is 31.0%; evaluation may not reflect real search intent."
+    ],
+    "ltr_source": "pretrained"
+  },
+  "dropped_quality_examples": [],
+  "ltr_source": "pretrained",
+  "ltr_model_path": "models/ltr_model.pkl",
+  "ltr_model_meta": null,
+  "cross_status": "enabled",
+  "experts": {
+    "Baseline": {
+      "ndcg": 0.734213674115567,
+      "mrr": 0.6863095238095238,
+      "recall": 1.0,
+      "latency_avg_ms": 0.0023224525821639135,
+      "latency_p95_ms": 0.003912197280442339
+    },
+    "LTR": {
+      "ndcg": 0.7661296363121624,
+      "mrr": 0.7613756613756614,
+      "recall": 1.0,
+      "latency_avg_ms": 228.06018961862372,
+      "latency_p95_ms": 473.9252752966419
+    },
+    "Cross-Encoder": {
+      "ndcg": 0.6983779238726487,
+      "mrr": 0.6332199546485261,
+      "recall": 1.0,
+      "latency_avg_ms": 76.66508428519592,
+      "latency_p95_ms": 89.1583038483077
+    },
+    "Hybrid": {
+      "ndcg": 0.7623987995570543,
+      "mrr": 0.7178571428571429,
+      "recall": 1.0,
+      "latency_avg_ms": 92.58409519038867,
+      "latency_p95_ms": 105.1692829987587
+    }
+  },
+  "oracle": {
+    "summary": {
+      "ndcg": 0.8702979224939789,
+      "mrr": 0.8492063492063492,
+      "recall": 1.0,
+      "latency_avg_ms": 75.96738795265472,
+      "latency_p95_ms": 232.87202289902774
+    },
+    "selection_count": {
+      "Baseline": 18,
+      "Hybrid": 4,
+      "LTR": 9,
+      "Cross-Encoder": 11
+    },
+    "best_single_expert": "LTR",
+    "best_single_summary": {
+      "ndcg": 0.7661296363121624,
+      "mrr": 0.7613756613756614,
+      "recall": 1.0,
+      "latency_avg_ms": 228.06018961862372,
+      "latency_p95_ms": 473.9252752966419
+    },
+    "ndcg_gain_abs": 0.1041682861818165,
+    "ndcg_gain_rel": 0.13596691897110316
+  }
+}

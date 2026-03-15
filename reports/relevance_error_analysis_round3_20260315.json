@@ -1,0 +1,41 @@
+{
+  "dataset": "/Users/frank/Develop/SearchEngine/data/ltr_training_data_feedback_combined.json",
+  "metric": "nDCG@10",
+  "adaptive_round1_hard_cross": 0.1816,
+  "adaptive_round2_topical_easy_ltr": 0.1962,
+  "adaptive_round3_guardrails": 0.2077,
+  "baseline": 0.1719,
+  "warm_latency_ms": {
+    "baseline_avg": 4.2,
+    "baseline_p95": 7.6,
+    "adaptive_avg": 99.7,
+    "adaptive_p95": 230.7
+  },
+  "route_counts": {
+    "easy->ltr|topical_easy_ltr": 22,
+    "hard->cross_encoder|None": 14,
+    "hard->baseline|hard_question_prefix_baseline": 2,
+    "hard->ltr|hard_long_mix_ltr": 1,
+    "easy->baseline|None": 3
+  },
+  "examples": [
+    {
+      "query": "who coined the",
+      "route_label": "hard",
+      "selected_mode": "baseline",
+      "route_guardrail": "hard_question_prefix_baseline"
+    },
+    {
+      "query": "how long cooking chicken legs in the big easy",
+      "route_label": "hard",
+      "selected_mode": "ltr",
+      "route_guardrail": "hard_long_mix_ltr"
+    },
+    {
+      "query": "machine learning algorithms",
+      "route_label": "easy",
+      "selected_mode": "ltr",
+      "route_guardrail": "topical_easy_ltr"
+    }
+  ]
+}

@@ -183,6 +183,7 @@ def build_from_feedback(
                     "requested_mode": None,
                     "route_selected_mode": None,
                     "route_label": None,
+                    "route_guardrail": None,
                     "route_rerank_top_n": None,
                     "route_source": None,
                     "result_ids": None,
@@ -198,6 +199,10 @@ def build_from_feedback(
                 ev.get("selected_mode"),
             )
             search["route_label"] = _pick_first(search.get("route_label"), ev.get("route_label"))
+            search["route_guardrail"] = _pick_first(
+                search.get("route_guardrail"),
+                ev.get("route_guardrail"),
+            )
             search["route_source"] = _pick_first(
                 search.get("route_source"),
                 ev.get("route_source"),
@@ -341,6 +346,7 @@ def build_from_feedback(
                     "requested_mode": requested_mode,
                     "route_selected_mode": route_selected_mode,
                     "route_label": search.get("route_label"),
+                    "route_guardrail": search.get("route_guardrail"),
                     "route_rerank_top_n": search.get("route_rerank_top_n"),
                     "route_source": search.get("route_source"),
                     "candidate_source": actual_candidate_source,
