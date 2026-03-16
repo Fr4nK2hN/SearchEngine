@@ -4,7 +4,7 @@ import re
 from elasticsearch import Elasticsearch
 from sentence_transformers import CrossEncoder
 
-from retrieval import DEFAULT_RECALL_RELAX_THRESHOLD, search_documents_with_fallback
+from engine.retrieval import DEFAULT_RECALL_RELAX_THRESHOLD, search_documents_with_fallback
 
 
 class TrainingDataGenerator:

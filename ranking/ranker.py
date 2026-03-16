@@ -116,6 +116,7 @@ class LTRRanker:
             documents = item['documents']
             labels = item['relevance_labels']
             query_emb = self.feature_extractor._encode_text(query)
+            self.feature_extractor.hydrate_document_embeddings(documents)
             
             group_size = 0
             for doc, label in zip(documents, labels):
@@ -151,6 +152,7 @@ class LTRRanker:
         
         t0 = time.perf_counter()
         query_emb = self.feature_extractor._encode_text(query)
+        hydration_stats = self.feature_extractor.hydrate_document_embeddings(documents)
         X = []
         for doc in documents:
             features = self.feature_extractor.extract_all_features(
@@ -165,7 +167,8 @@ class LTRRanker:
         t2 = time.perf_counter()
         self.last_timing = {
             'feature_ms': (t1 - t0) * 1000.0,
-            'inference_ms': (t2 - t1) * 1000.0
+            'inference_ms': (t2 - t1) * 1000.0,
+            **hydration_stats,
         }
         return scores
     

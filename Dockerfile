@@ -22,6 +22,7 @@ RUN mkdir -p /root/.cache/torch
 # Download models and NLTK data
 RUN python -m nltk.downloader -d /root/nltk_data punkt stopwords punkt_tab
 COPY download_resources.py .
+COPY webapp ./webapp
 RUN python download_resources.py && rm download_resources.py
 
 # Production stage
