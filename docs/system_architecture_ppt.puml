@@ -1,0 +1,65 @@
+@startuml
+!pragma layout smetana
+
+title System Overall Architecture
+
+top to bottom direction
+
+skinparam backgroundColor #FFFDFA
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName "Arial"
+skinparam defaultTextAlignment center
+skinparam linetype ortho
+skinparam ArrowColor #334155
+skinparam ArrowThickness 1.2
+
+skinparam rectangle {
+  BorderColor #334155
+  FontColor #1F2937
+}
+
+skinparam package {
+  BorderColor #CBD5E1
+  FontColor #334155
+  BackgroundColor #F8FAFC
+}
+
+rectangle "User" as User #F8FAFC
+
+package "Presentation Layer" {
+  rectangle "Web Frontend\nSearch UI & Result View" as Frontend #E6F5EF
+}
+
+package "Application Layer" {
+  rectangle "Flask API Layer\n/search / log / model info" as Api #DBEAFE
+  rectangle "Business Service\nRequest Handling & Logging" as Service #DBEAFE
+}
+
+package "Search Core Layer" {
+  rectangle "Query Processing\nMode & Parameter Handling" as Query #FEF3C7
+  rectangle "Retrieval Module\nStrict / Relaxed Recall" as Retrieval #FEF3C7
+  rectangle "Ranking Module\nBaseline / LTR / Semantic / Adaptive" as Ranking #FEF3C7
+  rectangle "Index Management\nMapping & Bulk Indexing" as Indexing #FEF3C7
+}
+
+package "Data Layer" {
+  rectangle "Elasticsearch Index\nDocuments & Inverted Index" as ES #F3E8FF
+  rectangle "MS MARCO Dataset\nProcessed Documents" as Dataset #F3E8FF
+  rectangle "Event Logs & Reports\nFeedback / Performance / Survey" as Reports #F3E8FF
+}
+
+User -down-> Frontend : Search
+Frontend -down-> Api : HTTP Request
+Api -down-> Service : Dispatch
+Service -down-> Query : Execute Search
+Query -down-> Retrieval : Candidate Recall
+Retrieval -down-> ES : Query Index
+Retrieval -right-> Ranking : Candidate Set
+Ranking -up-> Service : Ranked Results
+Service -left-> Reports : Logs & Metrics
+
+Dataset -right-> Indexing : Offline Data
+Indexing -up-> ES : Build Index
+
+@enduml

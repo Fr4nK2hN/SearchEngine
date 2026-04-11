@@ -113,7 +113,7 @@ class SearchService:
             rerank_limit = None
 
             if mode == "adaptive":
-                route_info = self.search_pipeline.resolve_adaptive_route(query)
+                route_info = self.search_pipeline.resolve_adaptive_route(query, results=results)
                 exec_mode = route_info.get("selected_mode", "baseline")
                 rerank_limit = route_info.get("rerank_top_n")
             elif mode in {"cross_encoder", "hybrid"}:

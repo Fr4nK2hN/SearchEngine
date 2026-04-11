@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420">
+  <defs>
+    <style>
+      text {
+        font-family: Arial, Helvetica, sans-serif;
+        fill: #1f2937;
+      }
+      .box-text {
+        font-size: 22px;
+        font-weight: 600;
+      }
+      .node {
+        fill: #eef4fa;
+        stroke: #cbd8e3;
+        stroke-width: 1.6;
+      }
+      .line {
+        fill: none;
+        stroke: #334155;
+        stroke-width: 1.6;
+        stroke-linecap: square;
+        stroke-linejoin: miter;
+      }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="720" height="420" fill="none"/>
+
+  <!-- Top source node -->
+  <rect x="145" y="28" width="430" height="58" rx="8" class="node"/>
+  <text x="360" y="65" text-anchor="middle" class="box-text">MS MARCO dataset</text>
+
+  <!-- Second row -->
+  <rect x="80" y="136" width="250" height="62" rx="8" class="node"/>
+  <text x="205" y="174" text-anchor="middle" class="box-text">Text cleaning</text>
+
+  <rect x="390" y="136" width="250" height="62" rx="8" class="node"/>
+  <text x="515" y="160" text-anchor="middle" class="box-text">Title</text>
+  <text x="515" y="186" text-anchor="middle" class="box-text">normalization</text>
+
+  <!-- Third row -->
+  <rect x="80" y="252" width="250" height="62" rx="8" class="node"/>
+  <text x="205" y="276" text-anchor="middle" class="box-text">Summary</text>
+  <text x="205" y="302" text-anchor="middle" class="box-text">generation</text>
+
+  <rect x="390" y="252" width="250" height="62" rx="8" class="node"/>
+  <text x="515" y="276" text-anchor="middle" class="box-text">Keyword</text>
+  <text x="515" y="302" text-anchor="middle" class="box-text">extraction</text>
+
+  <!-- Bottom combined node -->
+  <rect x="210" y="350" width="300" height="58" rx="8" class="node"/>
+  <text x="360" y="374" text-anchor="middle" class="box-text">Combined field</text>
+  <text x="360" y="400" text-anchor="middle" class="box-text">construction</text>
+
+  <!-- Orthogonal connectors -->
+  <path d="M360 86 L360 116 L205 116 L205 136" class="line"/>
+  <path d="M360 116 L515 116 L515 136" class="line"/>
+  <path d="M205 198 L205 252" class="line"/>
+  <path d="M515 198 L515 252" class="line"/>
+  <path d="M205 314 L205 332 L360 332 L360 350" class="line"/>
+  <path d="M515 314 L515 332 L360 332" class="line"/>
+</svg>

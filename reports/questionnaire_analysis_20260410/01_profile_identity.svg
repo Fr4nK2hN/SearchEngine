@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680">
+<style>
+text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; fill:#1f2a37; }
+.small { font-size:14px; fill:#5f6a75; }
+.label { font-size:16px; }
+.title { font-size:28px; font-weight:700; }
+.subtitle { font-size:15px; fill:#5f6a75; }
+.axis { stroke:#cbd5e1; stroke-width:1; }
+.grid { stroke:#e5e7eb; stroke-width:1; }
+</style>
+<rect x="0" y="0" width="1200" height="680" fill="#fffdfa"/><text x="60" y="60" class="title">问卷样本身份分布</text><text x="60" y="92" class="subtitle">样本量 n=65</text><text x="60" y="178" class="label">本科生</text><rect x="260" y="150" width="700" height="34" rx="8" fill="#eef2f7"/><rect x="260" y="150" width="700.0" height="34" rx="8" fill="#0b6e4f"/><text x="980" y="174" class="label">50 人</text><text x="1060" y="174" class="small">76.92%</text><text x="60" y="288" class="label">研究生</text><rect x="260" y="260" width="700" height="34" rx="8" fill="#eef2f7"/><rect x="260" y="260" width="196.0" height="34" rx="8" fill="#0b6e4f"/><text x="980" y="284" class="label">14 人</text><text x="1060" y="284" class="small">21.54%</text><text x="60" y="398" class="label">教师</text><rect x="260" y="370" width="700" height="34" rx="8" fill="#eef2f7"/><rect x="260" y="370" width="14.0" height="34" rx="8" fill="#0b6e4f"/><text x="980" y="394" class="label">1 人</text><text x="1060" y="394" class="small">1.54%</text><text x="60" y="508" class="label">其他</text><rect x="260" y="480" width="700" height="34" rx="8" fill="#eef2f7"/><rect x="260" y="480" width="0.0" height="34" rx="8" fill="#0b6e4f"/><text x="980" y="504" class="label">0 人</text><text x="1060" y="504" class="small">0.00%</text>
+</svg>

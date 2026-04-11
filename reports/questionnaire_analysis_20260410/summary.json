@@ -1,0 +1,1044 @@
+{
+  "source_file": "/Users/frank/Downloads/搜索引擎系统用户反馈问卷-默认报告.xlsx",
+  "respondents": 65,
+  "questions_total": 24,
+  "likert_questions": 20,
+  "overall": {
+    "question_count": 20,
+    "mean": 3.683846153846154,
+    "agree_rate": 0.6415384615384615,
+    "neutral_rate": 0.16,
+    "disagree_rate": 0.19846153846153847
+  },
+  "best_questions": [
+    {
+      "question": "我能够较快学会如何使用该系统进行检索。[单选题]",
+      "mean": 4.0923,
+      "agree_rate": 0.7538
+    },
+    {
+      "question": "我认为这种“根据查询动态调整排序方式”的设计是有价值的。[单选题]",
+      "mean": 4.0462,
+      "agree_rate": 0.7077
+    },
+    {
+      "question": "我认为系统的响应时间在可接受范围内。[单选题]",
+      "mean": 3.9846,
+      "agree_rate": 0.7385
+    },
+    {
+      "question": "我认为该系统的使用方式容易理解。[单选题]",
+      "mean": 3.9692,
+      "agree_rate": 0.7538
+    },
+    {
+      "question": "我认为系统能够根据不同查询给出较合适的结果排序。[单选题]",
+      "mean": 3.8769,
+      "agree_rate": 0.7077
+    }
+  ],
+  "worst_questions": [
+    {
+      "question": "我能够较容易区分不同结果之间的内容差异。[单选题]",
+      "mean": 3.5231,
+      "agree_rate": 0.6308
+    },
+    {
+      "question": "搜索结果的标题、摘要等信息对我判断结果是否有用很有帮助。[单选题]",
+      "mean": 3.4923,
+      "agree_rate": 0.5538
+    },
+    {
+      "question": "该系统返回的结果与我的查询需求较为相关。[单选题]",
+      "mean": 3.4462,
+      "agree_rate": 0.5538
+    },
+    {
+      "question": "我认为系统在保证结果质量的同时，也兼顾了响应效率。[单选题]",
+      "mean": 3.4462,
+      "agree_rate": 0.5538
+    },
+    {
+      "question": "总体而言，我对该搜索引擎系统的表现感到满意。[单选题]",
+      "mean": 3.4308,
+      "agree_rate": 0.5385
+    }
+  ],
+  "dimensions": [
+    {
+      "name": "易用性",
+      "question_count": 4,
+      "mean": 3.8692307692307693,
+      "agree_rate": 0.7115384615384616,
+      "neutral_rate": 0.12307692307692308,
+      "disagree_rate": 0.16538461538461538,
+      "agree_count": 185,
+      "neutral_count": 32,
+      "disagree_count": 43,
+      "questions": [
+        "我认为该系统的使用方式容易理解。[单选题]",
+        "我能够较快学会如何使用该系统进行检索。[单选题]",
+        "我认为系统界面布局清晰、操作方便。[单选题]",
+        "我在使用该系统时不容易感到困惑。[单选题]"
+      ]
+    },
+    {
+      "name": "相关性与排序",
+      "question_count": 4,
+      "mean": 3.5923076923076924,
+      "agree_rate": 0.6346153846153846,
+      "neutral_rate": 0.15384615384615385,
+      "disagree_rate": 0.21153846153846154,
+      "agree_count": 165,
+      "neutral_count": 40,
+      "disagree_count": 55,
+      "questions": [
+        "该系统返回的结果与我的查询需求较为相关。[单选题]",
+        "我认为系统能够较好地理解我的查询意图。[单选题]",
+        "搜索结果中较靠前的位置通常能够出现我需要的信息。[单选题]",
+        "与一般搜索体验相比，我认为该系统的结果排序表现较好。[单选题]"
+      ]
+    },
+    {
+      "name": "性能体验",
+      "question_count": 3,
+      "mean": 3.7333333333333334,
+      "agree_rate": 0.6512820512820513,
+      "neutral_rate": 0.1641025641025641,
+      "disagree_rate": 0.18461538461538463,
+      "agree_count": 127,
+      "neutral_count": 32,
+      "disagree_count": 36,
+      "questions": [
+        "我认为系统返回搜索结果的速度较快。[单选题]",
+        "我认为系统的响应时间在可接受范围内。[单选题]",
+        "系统的响应速度不会明显影响我的使用体验。[单选题]"
+      ]
+    },
+    {
+      "name": "结果展示",
+      "question_count": 3,
+      "mean": 3.523076923076923,
+      "agree_rate": 0.5794871794871795,
+      "neutral_rate": 0.15384615384615385,
+      "disagree_rate": 0.26666666666666666,
+      "agree_count": 113,
+      "neutral_count": 30,
+      "disagree_count": 52,
+      "questions": [
+        "搜索结果页面的信息展示清晰明了。[单选题]",
+        "我能够较容易区分不同结果之间的内容差异。[单选题]",
+        "搜索结果的标题、摘要等信息对我判断结果是否有用很有帮助。[单选题]"
+      ]
+    },
+    {
+      "name": "总体满意度",
+      "question_count": 3,
+      "mean": 3.5641025641025643,
+      "agree_rate": 0.5948717948717949,
+      "neutral_rate": 0.19487179487179487,
+      "disagree_rate": 0.21025641025641026,
+      "agree_count": 116,
+      "neutral_count": 38,
+      "disagree_count": 41,
+      "questions": [
+        "总体而言，我对该搜索引擎系统的表现感到满意。[单选题]",
+        "如果需要，我愿意继续使用该系统进行信息检索。[单选题]",
+        "我愿意向他人推荐该系统。[单选题]"
+      ]
+    },
+    {
+      "name": "自适应策略认可",
+      "question_count": 3,
+      "mean": 3.7897435897435896,
+      "agree_rate": 0.6564102564102564,
+      "neutral_rate": 0.18461538461538463,
+      "disagree_rate": 0.15897435897435896,
+      "agree_count": 128,
+      "neutral_count": 36,
+      "disagree_count": 31,
+      "questions": [
+        "我认为系统能够根据不同查询给出较合适的结果排序。[单选题]",
+        "我认为系统在保证结果质量的同时，也兼顾了响应效率。[单选题]",
+        "我认为这种“根据查询动态调整排序方式”的设计是有价值的。[单选题]"
+      ]
+    }
+  ],
+  "profile_questions": [
+    {
+      "question": "您的身份是?[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "本科生",
+          "count": 50,
+          "ratio": "76.92%"
+        },
+        {
+          "option": "研究生",
+          "count": 14,
+          "ratio": "21.54%"
+        },
+        {
+          "option": "教师",
+          "count": 1,
+          "ratio": "1.54%"
+        },
+        {
+          "option": "其他",
+          "count": 0,
+          "ratio": "0%"
+        }
+      ]
+    },
+    {
+      "question": "您平时使用搜索引擎的频率是?[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "很少",
+          "count": 5,
+          "ratio": "7.69%"
+        },
+        {
+          "option": "偶尔",
+          "count": 10,
+          "ratio": "15.38%"
+        },
+        {
+          "option": "一般",
+          "count": 11,
+          "ratio": "16.92%"
+        },
+        {
+          "option": "经常",
+          "count": 20,
+          "ratio": "30.77%"
+        },
+        {
+          "option": "非常频繁",
+          "count": 19,
+          "ratio": "29.23%"
+        }
+      ]
+    },
+    {
+      "question": "您是否有使用学术检索、信息检索或搜索系统相关产品的经验?[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "有",
+          "count": 65,
+          "ratio": "100%"
+        },
+        {
+          "option": "没有",
+          "count": 0,
+          "ratio": "0%"
+        }
+      ]
+    },
+    {
+      "question": "您是否已经访问并体验过本系统？[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "是，已经体验过",
+          "count": 63,
+          "ratio": "96.92%"
+        },
+        {
+          "option": "否，尚未体验",
+          "count": 2,
+          "ratio": "3.08%"
+        }
+      ]
+    }
+  ],
+  "likert_questions_detail": [
+    {
+      "question": "我认为该系统的使用方式容易理解。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 6,
+          "ratio": "9.23%"
+        },
+        {
+          "option": "不同意",
+          "count": 5,
+          "ratio": "7.69%"
+        },
+        {
+          "option": "一般",
+          "count": 5,
+          "ratio": "7.69%"
+        },
+        {
+          "option": "同意",
+          "count": 18,
+          "ratio": "27.69%"
+        },
+        {
+          "option": "非常同意",
+          "count": 31,
+          "ratio": "47.69%"
+        }
+      ],
+      "mean": 3.9692307692307693,
+      "agree_rate": 0.7538461538461538,
+      "neutral_rate": 0.07692307692307693,
+      "disagree_rate": 0.16923076923076924,
+      "agree_count": 49,
+      "neutral_count": 5,
+      "disagree_count": 11
+    },
+    {
+      "question": "我能够较快学会如何使用该系统进行检索。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 3,
+          "ratio": "4.62%"
+        },
+        {
+          "option": "不同意",
+          "count": 5,
+          "ratio": "7.69%"
+        },
+        {
+          "option": "一般",
+          "count": 8,
+          "ratio": "12.31%"
+        },
+        {
+          "option": "同意",
+          "count": 16,
+          "ratio": "24.62%"
+        },
+        {
+          "option": "非常同意",
+          "count": 33,
+          "ratio": "50.77%"
+        }
+      ],
+      "mean": 4.092307692307692,
+      "agree_rate": 0.7538461538461538,
+      "neutral_rate": 0.12307692307692308,
+      "disagree_rate": 0.12307692307692308,
+      "agree_count": 49,
+      "neutral_count": 8,
+      "disagree_count": 8
+    },
+    {
+      "question": "我认为系统界面布局清晰、操作方便。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 3,
+          "ratio": "4.62%"
+        },
+        {
+          "option": "不同意",
+          "count": 7,
+          "ratio": "10.77%"
+        },
+        {
+          "option": "一般",
+          "count": 8,
+          "ratio": "12.31%"
+        },
+        {
+          "option": "同意",
+          "count": 28,
+          "ratio": "43.08%"
+        },
+        {
+          "option": "非常同意",
+          "count": 19,
+          "ratio": "29.23%"
+        }
+      ],
+      "mean": 3.8153846153846156,
+      "agree_rate": 0.7230769230769231,
+      "neutral_rate": 0.12307692307692308,
+      "disagree_rate": 0.15384615384615385,
+      "agree_count": 47,
+      "neutral_count": 8,
+      "disagree_count": 10
+    },
+    {
+      "question": "我在使用该系统时不容易感到困惑。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 6,
+          "ratio": "9.23%"
+        },
+        {
+          "option": "不同意",
+          "count": 8,
+          "ratio": "12.31%"
+        },
+        {
+          "option": "一般",
+          "count": 11,
+          "ratio": "16.92%"
+        },
+        {
+          "option": "同意",
+          "count": 21,
+          "ratio": "32.31%"
+        },
+        {
+          "option": "非常同意",
+          "count": 19,
+          "ratio": "29.23%"
+        }
+      ],
+      "mean": 3.6,
+      "agree_rate": 0.6153846153846154,
+      "neutral_rate": 0.16923076923076924,
+      "disagree_rate": 0.2153846153846154,
+      "agree_count": 40,
+      "neutral_count": 11,
+      "disagree_count": 14
+    },
+    {
+      "question": "该系统返回的结果与我的查询需求较为相关。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 7,
+          "ratio": "10.77%"
+        },
+        {
+          "option": "不同意",
+          "count": 11,
+          "ratio": "16.92%"
+        },
+        {
+          "option": "一般",
+          "count": 11,
+          "ratio": "16.92%"
+        },
+        {
+          "option": "同意",
+          "count": 18,
+          "ratio": "27.69%"
+        },
+        {
+          "option": "非常同意",
+          "count": 18,
+          "ratio": "27.69%"
+        }
+      ],
+      "mean": 3.4461538461538463,
+      "agree_rate": 0.5538461538461539,
+      "neutral_rate": 0.16923076923076924,
+      "disagree_rate": 0.27692307692307694,
+      "agree_count": 36,
+      "neutral_count": 11,
+      "disagree_count": 18
+    },
+    {
+      "question": "我认为系统能够较好地理解我的查询意图。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 7,
+          "ratio": "10.77%"
+        },
+        {
+          "option": "不同意",
+          "count": 2,
+          "ratio": "3.08%"
+        },
+        {
+          "option": "一般",
+          "count": 11,
+          "ratio": "16.92%"
+        },
+        {
+          "option": "同意",
+          "count": 23,
+          "ratio": "35.38%"
+        },
+        {
+          "option": "非常同意",
+          "count": 22,
+          "ratio": "33.85%"
+        }
+      ],
+      "mean": 3.7846153846153845,
+      "agree_rate": 0.6923076923076923,
+      "neutral_rate": 0.16923076923076924,
+      "disagree_rate": 0.13846153846153847,
+      "agree_count": 45,
+      "neutral_count": 11,
+      "disagree_count": 9
+    },
+    {
+      "question": "搜索结果中较靠前的位置通常能够出现我需要的信息。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 6,
+          "ratio": "9.23%"
+        },
+        {
+          "option": "不同意",
+          "count": 7,
+          "ratio": "10.77%"
+        },
+        {
+          "option": "一般",
+          "count": 13,
+          "ratio": "20%"
+        },
+        {
+          "option": "同意",
+          "count": 24,
+          "ratio": "36.92%"
+        },
+        {
+          "option": "非常同意",
+          "count": 15,
+          "ratio": "23.08%"
+        }
+      ],
+      "mean": 3.5384615384615383,
+      "agree_rate": 0.6,
+      "neutral_rate": 0.2,
+      "disagree_rate": 0.2,
+      "agree_count": 39,
+      "neutral_count": 13,
+      "disagree_count": 13
+    },
+    {
+      "question": "与一般搜索体验相比，我认为该系统的结果排序表现较好。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 8,
+          "ratio": "12.31%"
+        },
+        {
+          "option": "不同意",
+          "count": 7,
+          "ratio": "10.77%"
+        },
+        {
+          "option": "一般",
+          "count": 5,
+          "ratio": "7.69%"
+        },
+        {
+          "option": "同意",
+          "count": 28,
+          "ratio": "43.08%"
+        },
+        {
+          "option": "非常同意",
+          "count": 17,
+          "ratio": "26.15%"
+        }
+      ],
+      "mean": 3.6,
+      "agree_rate": 0.6923076923076923,
+      "neutral_rate": 0.07692307692307693,
+      "disagree_rate": 0.23076923076923078,
+      "agree_count": 45,
+      "neutral_count": 5,
+      "disagree_count": 15
+    },
+    {
+      "question": "我认为系统返回搜索结果的速度较快。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 6,
+          "ratio": "9.23%"
+        },
+        {
+          "option": "不同意",
+          "count": 7,
+          "ratio": "10.77%"
+        },
+        {
+          "option": "一般",
+          "count": 13,
+          "ratio": "20%"
+        },
+        {
+          "option": "同意",
+          "count": 21,
+          "ratio": "32.31%"
+        },
+        {
+          "option": "非常同意",
+          "count": 18,
+          "ratio": "27.69%"
+        }
+      ],
+      "mean": 3.5846153846153848,
+      "agree_rate": 0.6,
+      "neutral_rate": 0.2,
+      "disagree_rate": 0.2,
+      "agree_count": 39,
+      "neutral_count": 13,
+      "disagree_count": 13
+    },
+    {
+      "question": "我认为系统的响应时间在可接受范围内。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 3,
+          "ratio": "4.62%"
+        },
+        {
+          "option": "不同意",
+          "count": 6,
+          "ratio": "9.23%"
+        },
+        {
+          "option": "一般",
+          "count": 8,
+          "ratio": "12.31%"
+        },
+        {
+          "option": "同意",
+          "count": 20,
+          "ratio": "30.77%"
+        },
+        {
+          "option": "非常同意",
+          "count": 28,
+          "ratio": "43.08%"
+        }
+      ],
+      "mean": 3.9846153846153847,
+      "agree_rate": 0.7384615384615385,
+      "neutral_rate": 0.12307692307692308,
+      "disagree_rate": 0.13846153846153847,
+      "agree_count": 48,
+      "neutral_count": 8,
+      "disagree_count": 9
+    },
+    {
+      "question": "系统的响应速度不会明显影响我的使用体验。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 2,
+          "ratio": "3.08%"
+        },
+        {
+          "option": "不同意",
+          "count": 12,
+          "ratio": "18.46%"
+        },
+        {
+          "option": "一般",
+          "count": 11,
+          "ratio": "16.92%"
+        },
+        {
+          "option": "同意",
+          "count": 23,
+          "ratio": "35.38%"
+        },
+        {
+          "option": "非常同意",
+          "count": 17,
+          "ratio": "26.15%"
+        }
+      ],
+      "mean": 3.6307692307692307,
+      "agree_rate": 0.6153846153846154,
+      "neutral_rate": 0.16923076923076924,
+      "disagree_rate": 0.2153846153846154,
+      "agree_count": 40,
+      "neutral_count": 11,
+      "disagree_count": 14
+    },
+    {
+      "question": "搜索结果页面的信息展示清晰明了。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 2,
+          "ratio": "3.08%"
+        },
+        {
+          "option": "不同意",
+          "count": 12,
+          "ratio": "18.46%"
+        },
+        {
+          "option": "一般",
+          "count": 15,
+          "ratio": "23.08%"
+        },
+        {
+          "option": "同意",
+          "count": 20,
+          "ratio": "30.77%"
+        },
+        {
+          "option": "非常同意",
+          "count": 16,
+          "ratio": "24.62%"
+        }
+      ],
+      "mean": 3.5538461538461537,
+      "agree_rate": 0.5538461538461539,
+      "neutral_rate": 0.23076923076923078,
+      "disagree_rate": 0.2153846153846154,
+      "agree_count": 36,
+      "neutral_count": 15,
+      "disagree_count": 14
+    },
+    {
+      "question": "我能够较容易区分不同结果之间的内容差异。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 7,
+          "ratio": "10.77%"
+        },
+        {
+          "option": "不同意",
+          "count": 12,
+          "ratio": "18.46%"
+        },
+        {
+          "option": "一般",
+          "count": 5,
+          "ratio": "7.69%"
+        },
+        {
+          "option": "同意",
+          "count": 22,
+          "ratio": "33.85%"
+        },
+        {
+          "option": "非常同意",
+          "count": 19,
+          "ratio": "29.23%"
+        }
+      ],
+      "mean": 3.523076923076923,
+      "agree_rate": 0.6307692307692307,
+      "neutral_rate": 0.07692307692307693,
+      "disagree_rate": 0.2923076923076923,
+      "agree_count": 41,
+      "neutral_count": 5,
+      "disagree_count": 19
+    },
+    {
+      "question": "搜索结果的标题、摘要等信息对我判断结果是否有用很有帮助。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 6,
+          "ratio": "9.23%"
+        },
+        {
+          "option": "不同意",
+          "count": 13,
+          "ratio": "20%"
+        },
+        {
+          "option": "一般",
+          "count": 10,
+          "ratio": "15.38%"
+        },
+        {
+          "option": "同意",
+          "count": 15,
+          "ratio": "23.08%"
+        },
+        {
+          "option": "非常同意",
+          "count": 21,
+          "ratio": "32.31%"
+        }
+      ],
+      "mean": 3.4923076923076923,
+      "agree_rate": 0.5538461538461539,
+      "neutral_rate": 0.15384615384615385,
+      "disagree_rate": 0.2923076923076923,
+      "agree_count": 36,
+      "neutral_count": 10,
+      "disagree_count": 19
+    },
+    {
+      "question": "总体而言，我对该搜索引擎系统的表现感到满意。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 6,
+          "ratio": "9.23%"
+        },
+        {
+          "option": "不同意",
+          "count": 9,
+          "ratio": "13.85%"
+        },
+        {
+          "option": "一般",
+          "count": 15,
+          "ratio": "23.08%"
+        },
+        {
+          "option": "同意",
+          "count": 21,
+          "ratio": "32.31%"
+        },
+        {
+          "option": "非常同意",
+          "count": 14,
+          "ratio": "21.54%"
+        }
+      ],
+      "mean": 3.4307692307692306,
+      "agree_rate": 0.5384615384615384,
+      "neutral_rate": 0.23076923076923078,
+      "disagree_rate": 0.23076923076923078,
+      "agree_count": 35,
+      "neutral_count": 15,
+      "disagree_count": 15
+    },
+    {
+      "question": "如果需要，我愿意继续使用该系统进行信息检索。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 5,
+          "ratio": "7.69%"
+        },
+        {
+          "option": "不同意",
+          "count": 7,
+          "ratio": "10.77%"
+        },
+        {
+          "option": "一般",
+          "count": 11,
+          "ratio": "16.92%"
+        },
+        {
+          "option": "同意",
+          "count": 23,
+          "ratio": "35.38%"
+        },
+        {
+          "option": "非常同意",
+          "count": 19,
+          "ratio": "29.23%"
+        }
+      ],
+      "mean": 3.6769230769230767,
+      "agree_rate": 0.6461538461538462,
+      "neutral_rate": 0.16923076923076924,
+      "disagree_rate": 0.18461538461538463,
+      "agree_count": 42,
+      "neutral_count": 11,
+      "disagree_count": 12
+    },
+    {
+      "question": "我愿意向他人推荐该系统。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 6,
+          "ratio": "9.23%"
+        },
+        {
+          "option": "不同意",
+          "count": 8,
+          "ratio": "12.31%"
+        },
+        {
+          "option": "一般",
+          "count": 12,
+          "ratio": "18.46%"
+        },
+        {
+          "option": "同意",
+          "count": 20,
+          "ratio": "30.77%"
+        },
+        {
+          "option": "非常同意",
+          "count": 19,
+          "ratio": "29.23%"
+        }
+      ],
+      "mean": 3.5846153846153848,
+      "agree_rate": 0.6,
+      "neutral_rate": 0.18461538461538463,
+      "disagree_rate": 0.2153846153846154,
+      "agree_count": 39,
+      "neutral_count": 12,
+      "disagree_count": 14
+    },
+    {
+      "question": "我认为系统能够根据不同查询给出较合适的结果排序。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 4,
+          "ratio": "6.15%"
+        },
+        {
+          "option": "不同意",
+          "count": 5,
+          "ratio": "7.69%"
+        },
+        {
+          "option": "一般",
+          "count": 10,
+          "ratio": "15.38%"
+        },
+        {
+          "option": "同意",
+          "count": 22,
+          "ratio": "33.85%"
+        },
+        {
+          "option": "非常同意",
+          "count": 24,
+          "ratio": "36.92%"
+        }
+      ],
+      "mean": 3.876923076923077,
+      "agree_rate": 0.7076923076923077,
+      "neutral_rate": 0.15384615384615385,
+      "disagree_rate": 0.13846153846153847,
+      "agree_count": 46,
+      "neutral_count": 10,
+      "disagree_count": 9
+    },
+    {
+      "question": "我认为系统在保证结果质量的同时，也兼顾了响应效率。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 8,
+          "ratio": "12.31%"
+        },
+        {
+          "option": "不同意",
+          "count": 8,
+          "ratio": "12.31%"
+        },
+        {
+          "option": "一般",
+          "count": 13,
+          "ratio": "20%"
+        },
+        {
+          "option": "同意",
+          "count": 19,
+          "ratio": "29.23%"
+        },
+        {
+          "option": "非常同意",
+          "count": 17,
+          "ratio": "26.15%"
+        }
+      ],
+      "mean": 3.4461538461538463,
+      "agree_rate": 0.5538461538461539,
+      "neutral_rate": 0.2,
+      "disagree_rate": 0.24615384615384617,
+      "agree_count": 36,
+      "neutral_count": 13,
+      "disagree_count": 16
+    },
+    {
+      "question": "我认为这种“根据查询动态调整排序方式”的设计是有价值的。[单选题]",
+      "type": "single",
+      "valid": 65,
+      "options": [
+        {
+          "option": "非常不同意",
+          "count": 2,
+          "ratio": "3.08%"
+        },
+        {
+          "option": "不同意",
+          "count": 4,
+          "ratio": "6.15%"
+        },
+        {
+          "option": "一般",
+          "count": 13,
+          "ratio": "20%"
+        },
+        {
+          "option": "同意",
+          "count": 16,
+          "ratio": "24.62%"
+        },
+        {
+          "option": "非常同意",
+          "count": 30,
+          "ratio": "46.15%"
+        }
+      ],
+      "mean": 4.046153846153846,
+      "agree_rate": 0.7076923076923077,
+      "neutral_rate": 0.2,
+      "disagree_rate": 0.09230769230769231,
+      "agree_count": 46,
+      "neutral_count": 13,
+      "disagree_count": 6
+    }
+  ]
+}

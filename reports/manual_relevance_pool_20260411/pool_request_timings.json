@@ -1,0 +1,1052 @@
+[
+  {
+    "query": "vitamins health benefits",
+    "mode": "baseline",
+    "elapsed_ms": 52.70491703413427
+  },
+  {
+    "query": "vitamins health benefits",
+    "mode": "ltr",
+    "elapsed_ms": 29.941166983917356
+  },
+  {
+    "query": "vitamins health benefits",
+    "mode": "adaptive",
+    "elapsed_ms": 22.51241699559614
+  },
+  {
+    "query": "vitamins health benefits",
+    "mode": "hybrid",
+    "elapsed_ms": 117.30879097012803
+  },
+  {
+    "query": "vitamins health benefits",
+    "mode": "cross_encoder",
+    "elapsed_ms": 397.9717920301482
+  },
+  {
+    "query": "tesla battery technology",
+    "mode": "baseline",
+    "elapsed_ms": 20.83087502978742
+  },
+  {
+    "query": "tesla battery technology",
+    "mode": "ltr",
+    "elapsed_ms": 24.03283299645409
+  },
+  {
+    "query": "tesla battery technology",
+    "mode": "adaptive",
+    "elapsed_ms": 23.44404096947983
+  },
+  {
+    "query": "tesla battery technology",
+    "mode": "hybrid",
+    "elapsed_ms": 94.64658302022144
+  },
+  {
+    "query": "tesla battery technology",
+    "mode": "cross_encoder",
+    "elapsed_ms": 483.0514169880189
+  },
+  {
+    "query": "climate change effects",
+    "mode": "baseline",
+    "elapsed_ms": 23.403999977745116
+  },
+  {
+    "query": "climate change effects",
+    "mode": "ltr",
+    "elapsed_ms": 24.33204196859151
+  },
+  {
+    "query": "climate change effects",
+    "mode": "adaptive",
+    "elapsed_ms": 21.106707979924977
+  },
+  {
+    "query": "climate change effects",
+    "mode": "hybrid",
+    "elapsed_ms": 96.20104200439528
+  },
+  {
+    "query": "climate change effects",
+    "mode": "cross_encoder",
+    "elapsed_ms": 382.31979100964963
+  },
+  {
+    "query": "machine learning algorithms",
+    "mode": "baseline",
+    "elapsed_ms": 18.73800001339987
+  },
+  {
+    "query": "machine learning algorithms",
+    "mode": "ltr",
+    "elapsed_ms": 32.3050000006333
+  },
+  {
+    "query": "machine learning algorithms",
+    "mode": "adaptive",
+    "elapsed_ms": 26.0971249663271
+  },
+  {
+    "query": "machine learning algorithms",
+    "mode": "hybrid",
+    "elapsed_ms": 97.96174999792129
+  },
+  {
+    "query": "machine learning algorithms",
+    "mode": "cross_encoder",
+    "elapsed_ms": 423.0796250049025
+  },
+  {
+    "query": "cooking pasta recipes",
+    "mode": "baseline",
+    "elapsed_ms": 19.483416981529444
+  },
+  {
+    "query": "cooking pasta recipes",
+    "mode": "ltr",
+    "elapsed_ms": 24.6344999759458
+  },
+  {
+    "query": "cooking pasta recipes",
+    "mode": "adaptive",
+    "elapsed_ms": 29.09741597250104
+  },
+  {
+    "query": "cooking pasta recipes",
+    "mode": "hybrid",
+    "elapsed_ms": 119.5590830175206
+  },
+  {
+    "query": "cooking pasta recipes",
+    "mode": "cross_encoder",
+    "elapsed_ms": 496.9832919887267
+  },
+  {
+    "query": "investment strategies",
+    "mode": "baseline",
+    "elapsed_ms": 15.524499991443008
+  },
+  {
+    "query": "investment strategies",
+    "mode": "ltr",
+    "elapsed_ms": 18.582458957098424
+  },
+  {
+    "query": "investment strategies",
+    "mode": "adaptive",
+    "elapsed_ms": 63.69208300020546
+  },
+  {
+    "query": "investment strategies",
+    "mode": "hybrid",
+    "elapsed_ms": 86.67358302045614
+  },
+  {
+    "query": "investment strategies",
+    "mode": "cross_encoder",
+    "elapsed_ms": 282.6123330160044
+  },
+  {
+    "query": "quantum computing principles",
+    "mode": "baseline",
+    "elapsed_ms": 12.465792009606957
+  },
+  {
+    "query": "quantum computing principles",
+    "mode": "ltr",
+    "elapsed_ms": 14.375084021594375
+  },
+  {
+    "query": "quantum computing principles",
+    "mode": "adaptive",
+    "elapsed_ms": 14.41750000230968
+  },
+  {
+    "query": "quantum computing principles",
+    "mode": "hybrid",
+    "elapsed_ms": 105.66562501480803
+  },
+  {
+    "query": "quantum computing principles",
+    "mode": "cross_encoder",
+    "elapsed_ms": 158.65875000599772
+  },
+  {
+    "query": "exercise weight loss",
+    "mode": "baseline",
+    "elapsed_ms": 21.657916018739343
+  },
+  {
+    "query": "exercise weight loss",
+    "mode": "ltr",
+    "elapsed_ms": 24.173624988179654
+  },
+  {
+    "query": "exercise weight loss",
+    "mode": "adaptive",
+    "elapsed_ms": 22.920583025552332
+  },
+  {
+    "query": "exercise weight loss",
+    "mode": "hybrid",
+    "elapsed_ms": 112.35287500312552
+  },
+  {
+    "query": "exercise weight loss",
+    "mode": "cross_encoder",
+    "elapsed_ms": 473.20758301066235
+  },
+  {
+    "query": "renewable energy sources",
+    "mode": "baseline",
+    "elapsed_ms": 18.63087498350069
+  },
+  {
+    "query": "renewable energy sources",
+    "mode": "ltr",
+    "elapsed_ms": 23.276375024579465
+  },
+  {
+    "query": "renewable energy sources",
+    "mode": "adaptive",
+    "elapsed_ms": 22.145750001072884
+  },
+  {
+    "query": "renewable energy sources",
+    "mode": "hybrid",
+    "elapsed_ms": 99.57600000780076
+  },
+  {
+    "query": "renewable energy sources",
+    "mode": "cross_encoder",
+    "elapsed_ms": 386.46562601206824
+  },
+  {
+    "query": "smartphone photography tips",
+    "mode": "baseline",
+    "elapsed_ms": 13.41075001982972
+  },
+  {
+    "query": "smartphone photography tips",
+    "mode": "ltr",
+    "elapsed_ms": 15.398499963339418
+  },
+  {
+    "query": "smartphone photography tips",
+    "mode": "adaptive",
+    "elapsed_ms": 14.776790980249643
+  },
+  {
+    "query": "smartphone photography tips",
+    "mode": "hybrid",
+    "elapsed_ms": 137.59574998402968
+  },
+  {
+    "query": "smartphone photography tips",
+    "mode": "cross_encoder",
+    "elapsed_ms": 195.78029203694314
+  },
+  {
+    "query": "meditation stress relief",
+    "mode": "baseline",
+    "elapsed_ms": 16.550166008528322
+  },
+  {
+    "query": "meditation stress relief",
+    "mode": "ltr",
+    "elapsed_ms": 20.718833955470473
+  },
+  {
+    "query": "meditation stress relief",
+    "mode": "adaptive",
+    "elapsed_ms": 18.50354199996218
+  },
+  {
+    "query": "meditation stress relief",
+    "mode": "hybrid",
+    "elapsed_ms": 95.25249997386709
+  },
+  {
+    "query": "meditation stress relief",
+    "mode": "cross_encoder",
+    "elapsed_ms": 332.1606250246987
+  },
+  {
+    "query": "artificial intelligence ethics",
+    "mode": "baseline",
+    "elapsed_ms": 18.196457996964455
+  },
+  {
+    "query": "artificial intelligence ethics",
+    "mode": "ltr",
+    "elapsed_ms": 20.355792017653584
+  },
+  {
+    "query": "artificial intelligence ethics",
+    "mode": "adaptive",
+    "elapsed_ms": 19.24137503374368
+  },
+  {
+    "query": "artificial intelligence ethics",
+    "mode": "hybrid",
+    "elapsed_ms": 111.57925002044067
+  },
+  {
+    "query": "artificial intelligence ethics",
+    "mode": "cross_encoder",
+    "elapsed_ms": 333.8998329709284
+  },
+  {
+    "query": "travel budget planning",
+    "mode": "baseline",
+    "elapsed_ms": 18.45124998362735
+  },
+  {
+    "query": "travel budget planning",
+    "mode": "ltr",
+    "elapsed_ms": 23.593667021486908
+  },
+  {
+    "query": "travel budget planning",
+    "mode": "adaptive",
+    "elapsed_ms": 21.623375010676682
+  },
+  {
+    "query": "travel budget planning",
+    "mode": "hybrid",
+    "elapsed_ms": 91.2638750160113
+  },
+  {
+    "query": "travel budget planning",
+    "mode": "cross_encoder",
+    "elapsed_ms": 398.56508298544213
+  },
+  {
+    "query": "home gardening vegetables",
+    "mode": "baseline",
+    "elapsed_ms": 19.706875027623028
+  },
+  {
+    "query": "home gardening vegetables",
+    "mode": "ltr",
+    "elapsed_ms": 23.78979098284617
+  },
+  {
+    "query": "home gardening vegetables",
+    "mode": "adaptive",
+    "elapsed_ms": 31.964417023118585
+  },
+  {
+    "query": "home gardening vegetables",
+    "mode": "hybrid",
+    "elapsed_ms": 102.33124997466803
+  },
+  {
+    "query": "home gardening vegetables",
+    "mode": "cross_encoder",
+    "elapsed_ms": 436.39612500555813
+  },
+  {
+    "query": "sleep quality improvement",
+    "mode": "baseline",
+    "elapsed_ms": 19.20658303424716
+  },
+  {
+    "query": "sleep quality improvement",
+    "mode": "ltr",
+    "elapsed_ms": 23.1658749980852
+  },
+  {
+    "query": "sleep quality improvement",
+    "mode": "adaptive",
+    "elapsed_ms": 21.857667015865445
+  },
+  {
+    "query": "sleep quality improvement",
+    "mode": "hybrid",
+    "elapsed_ms": 97.2184159909375
+  },
+  {
+    "query": "sleep quality improvement",
+    "mode": "cross_encoder",
+    "elapsed_ms": 413.5488329920918
+  },
+  {
+    "query": "electric vehicle charging",
+    "mode": "baseline",
+    "elapsed_ms": 19.508874975144863
+  },
+  {
+    "query": "electric vehicle charging",
+    "mode": "ltr",
+    "elapsed_ms": 32.11633302271366
+  },
+  {
+    "query": "electric vehicle charging",
+    "mode": "adaptive",
+    "elapsed_ms": 22.248458000831306
+  },
+  {
+    "query": "electric vehicle charging",
+    "mode": "hybrid",
+    "elapsed_ms": 99.74325000075623
+  },
+  {
+    "query": "electric vehicle charging",
+    "mode": "cross_encoder",
+    "elapsed_ms": 441.14075001562014
+  },
+  {
+    "query": "online learning platforms",
+    "mode": "baseline",
+    "elapsed_ms": 19.480708986520767
+  },
+  {
+    "query": "online learning platforms",
+    "mode": "ltr",
+    "elapsed_ms": 26.615665992721915
+  },
+  {
+    "query": "online learning platforms",
+    "mode": "adaptive",
+    "elapsed_ms": 22.372416977304965
+  },
+  {
+    "query": "online learning platforms",
+    "mode": "hybrid",
+    "elapsed_ms": 95.64745798707008
+  },
+  {
+    "query": "online learning platforms",
+    "mode": "cross_encoder",
+    "elapsed_ms": 417.32112504541874
+  },
+  {
+    "query": "sustainable fashion brands",
+    "mode": "baseline",
+    "elapsed_ms": 14.283041993621737
+  },
+  {
+    "query": "sustainable fashion brands",
+    "mode": "ltr",
+    "elapsed_ms": 18.820166995283216
+  },
+  {
+    "query": "sustainable fashion brands",
+    "mode": "adaptive",
+    "elapsed_ms": 15.637332980986685
+  },
+  {
+    "query": "sustainable fashion brands",
+    "mode": "hybrid",
+    "elapsed_ms": 89.7879580152221
+  },
+  {
+    "query": "sustainable fashion brands",
+    "mode": "cross_encoder",
+    "elapsed_ms": 216.05558303417638
+  },
+  {
+    "query": "data privacy protection",
+    "mode": "baseline",
+    "elapsed_ms": 19.46649997262284
+  },
+  {
+    "query": "data privacy protection",
+    "mode": "ltr",
+    "elapsed_ms": 23.490124964155257
+  },
+  {
+    "query": "data privacy protection",
+    "mode": "adaptive",
+    "elapsed_ms": 23.030417039990425
+  },
+  {
+    "query": "data privacy protection",
+    "mode": "hybrid",
+    "elapsed_ms": 95.91550001641735
+  },
+  {
+    "query": "data privacy protection",
+    "mode": "cross_encoder",
+    "elapsed_ms": 457.88245904259384
+  },
+  {
+    "query": "mental health therapy",
+    "mode": "baseline",
+    "elapsed_ms": 21.007750008720905
+  },
+  {
+    "query": "mental health therapy",
+    "mode": "ltr",
+    "elapsed_ms": 24.217500002123415
+  },
+  {
+    "query": "mental health therapy",
+    "mode": "adaptive",
+    "elapsed_ms": 22.655167034827173
+  },
+  {
+    "query": "mental health therapy",
+    "mode": "hybrid",
+    "elapsed_ms": 91.74070798326284
+  },
+  {
+    "query": "mental health therapy",
+    "mode": "cross_encoder",
+    "elapsed_ms": 381.96908397367224
+  },
+  {
+    "query": "space exploration missions",
+    "mode": "baseline",
+    "elapsed_ms": 19.866582995746285
+  },
+  {
+    "query": "space exploration missions",
+    "mode": "ltr",
+    "elapsed_ms": 31.89899999415502
+  },
+  {
+    "query": "space exploration missions",
+    "mode": "adaptive",
+    "elapsed_ms": 22.536917007528245
+  },
+  {
+    "query": "space exploration missions",
+    "mode": "hybrid",
+    "elapsed_ms": 107.64325101627037
+  },
+  {
+    "query": "space exploration missions",
+    "mode": "cross_encoder",
+    "elapsed_ms": 426.31516698747873
+  },
+  {
+    "query": "social media marketing",
+    "mode": "baseline",
+    "elapsed_ms": 20.4536669771187
+  },
+  {
+    "query": "social media marketing",
+    "mode": "ltr",
+    "elapsed_ms": 24.711999983992428
+  },
+  {
+    "query": "social media marketing",
+    "mode": "adaptive",
+    "elapsed_ms": 23.890750017017126
+  },
+  {
+    "query": "social media marketing",
+    "mode": "hybrid",
+    "elapsed_ms": 104.89654197590426
+  },
+  {
+    "query": "social media marketing",
+    "mode": "cross_encoder",
+    "elapsed_ms": 402.4603750440292
+  },
+  {
+    "query": "protein rich foods",
+    "mode": "baseline",
+    "elapsed_ms": 20.641958981286734
+  },
+  {
+    "query": "protein rich foods",
+    "mode": "ltr",
+    "elapsed_ms": 23.87970802374184
+  },
+  {
+    "query": "protein rich foods",
+    "mode": "adaptive",
+    "elapsed_ms": 23.6909999512136
+  },
+  {
+    "query": "protein rich foods",
+    "mode": "hybrid",
+    "elapsed_ms": 104.88087497651577
+  },
+  {
+    "query": "protein rich foods",
+    "mode": "cross_encoder",
+    "elapsed_ms": 445.965624996461
+  },
+  {
+    "query": "who coined the",
+    "mode": "baseline",
+    "elapsed_ms": 20.915542030707
+  },
+  {
+    "query": "who coined the",
+    "mode": "ltr",
+    "elapsed_ms": 24.2268749861978
+  },
+  {
+    "query": "who coined the",
+    "mode": "adaptive",
+    "elapsed_ms": 23.115791962482035
+  },
+  {
+    "query": "who coined the",
+    "mode": "hybrid",
+    "elapsed_ms": 120.8160410169512
+  },
+  {
+    "query": "who coined the",
+    "mode": "cross_encoder",
+    "elapsed_ms": 486.6057080216706
+  },
+  {
+    "query": "cooked least",
+    "mode": "baseline",
+    "elapsed_ms": 21.318125014659017
+  },
+  {
+    "query": "cooked least",
+    "mode": "ltr",
+    "elapsed_ms": 24.64812499238178
+  },
+  {
+    "query": "cooked least",
+    "mode": "adaptive",
+    "elapsed_ms": 20.466874993871897
+  },
+  {
+    "query": "cooked least",
+    "mode": "hybrid",
+    "elapsed_ms": 102.25362499477342
+  },
+  {
+    "query": "cooked least",
+    "mode": "cross_encoder",
+    "elapsed_ms": 447.6972509874031
+  },
+  {
+    "query": "traits that are derived from a common ancestor are said to be",
+    "mode": "baseline",
+    "elapsed_ms": 41.81695799343288
+  },
+  {
+    "query": "traits that are derived from a common ancestor are said to be",
+    "mode": "ltr",
+    "elapsed_ms": 35.82445898791775
+  },
+  {
+    "query": "traits that are derived from a common ancestor are said to be",
+    "mode": "adaptive",
+    "elapsed_ms": 95.08379100589082
+  },
+  {
+    "query": "traits that are derived from a common ancestor are said to be",
+    "mode": "hybrid",
+    "elapsed_ms": 139.98645800165832
+  },
+  {
+    "query": "traits that are derived from a common ancestor are said to be",
+    "mode": "cross_encoder",
+    "elapsed_ms": 629.5817919890396
+  },
+  {
+    "query": "greek tragedy",
+    "mode": "baseline",
+    "elapsed_ms": 24.060208001174033
+  },
+  {
+    "query": "greek tragedy",
+    "mode": "ltr",
+    "elapsed_ms": 24.850124958902597
+  },
+  {
+    "query": "greek tragedy",
+    "mode": "adaptive",
+    "elapsed_ms": 93.46225002082065
+  },
+  {
+    "query": "greek tragedy",
+    "mode": "hybrid",
+    "elapsed_ms": 146.48666698485613
+  },
+  {
+    "query": "greek tragedy",
+    "mode": "cross_encoder",
+    "elapsed_ms": 564.9195000296459
+  },
+  {
+    "query": "james madison",
+    "mode": "baseline",
+    "elapsed_ms": 20.30625002225861
+  },
+  {
+    "query": "james madison",
+    "mode": "ltr",
+    "elapsed_ms": 25.51962499273941
+  },
+  {
+    "query": "james madison",
+    "mode": "adaptive",
+    "elapsed_ms": 93.46804197411984
+  },
+  {
+    "query": "james madison",
+    "mode": "hybrid",
+    "elapsed_ms": 117.66925000119954
+  },
+  {
+    "query": "james madison",
+    "mode": "cross_encoder",
+    "elapsed_ms": 467.7673749974929
+  },
+  {
+    "query": "what temp does",
+    "mode": "baseline",
+    "elapsed_ms": 21.76945796236396
+  },
+  {
+    "query": "what temp does",
+    "mode": "ltr",
+    "elapsed_ms": 27.327749994583428
+  },
+  {
+    "query": "what temp does",
+    "mode": "adaptive",
+    "elapsed_ms": 21.472332999110222
+  },
+  {
+    "query": "what temp does",
+    "mode": "hybrid",
+    "elapsed_ms": 151.45216695964336
+  },
+  {
+    "query": "what temp does",
+    "mode": "cross_encoder",
+    "elapsed_ms": 499.32333297329023
+  },
+  {
+    "query": "what kind of",
+    "mode": "baseline",
+    "elapsed_ms": 27.039791049901396
+  },
+  {
+    "query": "what kind of",
+    "mode": "ltr",
+    "elapsed_ms": 30.60479200212285
+  },
+  {
+    "query": "what kind of",
+    "mode": "adaptive",
+    "elapsed_ms": 23.19133299170062
+  },
+  {
+    "query": "what kind of",
+    "mode": "hybrid",
+    "elapsed_ms": 149.85683397389948
+  },
+  {
+    "query": "what kind of",
+    "mode": "cross_encoder",
+    "elapsed_ms": 588.5901660076343
+  },
+  {
+    "query": "how long is german measles contagious",
+    "mode": "baseline",
+    "elapsed_ms": 29.28733400767669
+  },
+  {
+    "query": "how long is german measles contagious",
+    "mode": "ltr",
+    "elapsed_ms": 33.5669579799287
+  },
+  {
+    "query": "how long is german measles contagious",
+    "mode": "adaptive",
+    "elapsed_ms": 96.80095902876928
+  },
+  {
+    "query": "how long is german measles contagious",
+    "mode": "hybrid",
+    "elapsed_ms": 145.96816699486226
+  },
+  {
+    "query": "how long is german measles contagious",
+    "mode": "cross_encoder",
+    "elapsed_ms": 502.0744170178659
+  },
+  {
+    "query": "Adoption fees for",
+    "mode": "baseline",
+    "elapsed_ms": 25.021957990247756
+  },
+  {
+    "query": "Adoption fees for",
+    "mode": "ltr",
+    "elapsed_ms": 24.95058299973607
+  },
+  {
+    "query": "Adoption fees for",
+    "mode": "adaptive",
+    "elapsed_ms": 68.21212498471141
+  },
+  {
+    "query": "Adoption fees for",
+    "mode": "hybrid",
+    "elapsed_ms": 98.9065000321716
+  },
+  {
+    "query": "Adoption fees for",
+    "mode": "cross_encoder",
+    "elapsed_ms": 464.42712598945946
+  },
+  {
+    "query": "your pan",
+    "mode": "baseline",
+    "elapsed_ms": 22.458791034296155
+  },
+  {
+    "query": "your pan",
+    "mode": "ltr",
+    "elapsed_ms": 24.789958028122783
+  },
+  {
+    "query": "your pan",
+    "mode": "adaptive",
+    "elapsed_ms": 72.12324999272823
+  },
+  {
+    "query": "your pan",
+    "mode": "hybrid",
+    "elapsed_ms": 112.26429196540266
+  },
+  {
+    "query": "your pan",
+    "mode": "cross_encoder",
+    "elapsed_ms": 480.44737498275936
+  },
+  {
+    "query": "price to install tile in shower",
+    "mode": "baseline",
+    "elapsed_ms": 27.015791973099113
+  },
+  {
+    "query": "price to install tile in shower",
+    "mode": "ltr",
+    "elapsed_ms": 34.30804202798754
+  },
+  {
+    "query": "price to install tile in shower",
+    "mode": "adaptive",
+    "elapsed_ms": 85.48358298139647
+  },
+  {
+    "query": "price to install tile in shower",
+    "mode": "hybrid",
+    "elapsed_ms": 118.18004096858203
+  },
+  {
+    "query": "price to install tile in shower",
+    "mode": "cross_encoder",
+    "elapsed_ms": 451.2499169795774
+  },
+  {
+    "query": "rabbit fee",
+    "mode": "baseline",
+    "elapsed_ms": 20.045500015839934
+  },
+  {
+    "query": "rabbit fee",
+    "mode": "ltr",
+    "elapsed_ms": 24.34970799367875
+  },
+  {
+    "query": "rabbit fee",
+    "mode": "adaptive",
+    "elapsed_ms": 19.14354198379442
+  },
+  {
+    "query": "rabbit fee",
+    "mode": "hybrid",
+    "elapsed_ms": 95.9472079994157
+  },
+  {
+    "query": "rabbit fee",
+    "mode": "cross_encoder",
+    "elapsed_ms": 459.95741698425263
+  },
+  {
+    "query": "day subutex",
+    "mode": "baseline",
+    "elapsed_ms": 20.07537498138845
+  },
+  {
+    "query": "day subutex",
+    "mode": "ltr",
+    "elapsed_ms": 24.30762496078387
+  },
+  {
+    "query": "day subutex",
+    "mode": "adaptive",
+    "elapsed_ms": 18.441124993842095
+  },
+  {
+    "query": "day subutex",
+    "mode": "hybrid",
+    "elapsed_ms": 109.72262499853969
+  },
+  {
+    "query": "day subutex",
+    "mode": "cross_encoder",
+    "elapsed_ms": 452.32720795320347
+  },
+  {
+    "query": "who coined the phrase it is what it is",
+    "mode": "baseline",
+    "elapsed_ms": 28.050958004314452
+  },
+  {
+    "query": "who coined the phrase it is what it is",
+    "mode": "ltr",
+    "elapsed_ms": 33.66391599411145
+  },
+  {
+    "query": "who coined the phrase it is what it is",
+    "mode": "adaptive",
+    "elapsed_ms": 26.703875046223402
+  },
+  {
+    "query": "who coined the phrase it is what it is",
+    "mode": "hybrid",
+    "elapsed_ms": 145.87404200574383
+  },
+  {
+    "query": "who coined the phrase it is what it is",
+    "mode": "cross_encoder",
+    "elapsed_ms": 558.9078339980915
+  },
+  {
+    "query": "how long do",
+    "mode": "baseline",
+    "elapsed_ms": 23.518582980614156
+  },
+  {
+    "query": "how long do",
+    "mode": "ltr",
+    "elapsed_ms": 27.639000036288053
+  },
+  {
+    "query": "how long do",
+    "mode": "adaptive",
+    "elapsed_ms": 21.64212497882545
+  },
+  {
+    "query": "how long do",
+    "mode": "hybrid",
+    "elapsed_ms": 120.11062499368563
+  },
+  {
+    "query": "how long do",
+    "mode": "cross_encoder",
+    "elapsed_ms": 449.2161250091158
+  },
+  {
+    "query": "years nurses",
+    "mode": "baseline",
+    "elapsed_ms": 21.620916959363967
+  },
+  {
+    "query": "years nurses",
+    "mode": "ltr",
+    "elapsed_ms": 26.30804100772366
+  },
+  {
+    "query": "years nurses",
+    "mode": "adaptive",
+    "elapsed_ms": 19.383582985028625
+  },
+  {
+    "query": "years nurses",
+    "mode": "hybrid",
+    "elapsed_ms": 144.17387504363433
+  },
+  {
+    "query": "years nurses",
+    "mode": "cross_encoder",
+    "elapsed_ms": 615.9804170019925
+  },
+  {
+    "query": "community rba",
+    "mode": "baseline",
+    "elapsed_ms": 14.309707970824093
+  },
+  {
+    "query": "community rba",
+    "mode": "ltr",
+    "elapsed_ms": 16.919917019549757
+  },
+  {
+    "query": "community rba",
+    "mode": "adaptive",
+    "elapsed_ms": 87.52733300207183
+  },
+  {
+    "query": "community rba",
+    "mode": "hybrid",
+    "elapsed_ms": 117.0452919905074
+  },
+  {
+    "query": "community rba",
+    "mode": "cross_encoder",
+    "elapsed_ms": 270.0535000185482
+  },
+  {
+    "query": "how long cooking chicken legs in the big easy",
+    "mode": "baseline",
+    "elapsed_ms": 40.04391701892018
+  },
+  {
+    "query": "how long cooking chicken legs in the big easy",
+    "mode": "ltr",
+    "elapsed_ms": 46.82899999897927
+  },
+  {
+    "query": "how long cooking chicken legs in the big easy",
+    "mode": "adaptive",
+    "elapsed_ms": 36.27979202428833
+  },
+  {
+    "query": "how long cooking chicken legs in the big easy",
+    "mode": "hybrid",
+    "elapsed_ms": 143.09729100205004
+  },
+  {
+    "query": "how long cooking chicken legs in the big easy",
+    "mode": "cross_encoder",
+    "elapsed_ms": 606.7808329826221
+  },
+  {
+    "query": "diabetic type",
+    "mode": "baseline",
+    "elapsed_ms": 31.600625021383166
+  },
+  {
+    "query": "diabetic type",
+    "mode": "ltr",
+    "elapsed_ms": 26.84866701019928
+  },
+  {
+    "query": "diabetic type",
+    "mode": "adaptive",
+    "elapsed_ms": 98.9794580382295
+  },
+  {
+    "query": "diabetic type",
+    "mode": "hybrid",
+    "elapsed_ms": 152.68295898567885
+  },
+  {
+    "query": "diabetic type",
+    "mode": "cross_encoder",
+    "elapsed_ms": 606.830041971989
+  }
+]

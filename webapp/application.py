@@ -35,6 +35,8 @@ def build_app_state(runtime=None):
         cross_encoder_model=runtime.cross_encoder_model,
         query_router=runtime.query_router,
         adaptive_hard_top_k_cap=runtime_config.adaptive_hard_top_k_cap,
+        adaptive_guardrails=runtime_config.adaptive_guardrails,
+        adaptive_baseline_min_top_score=runtime_config.adaptive_baseline_min_top_score,
     )
     search_service = SearchService(
         es=runtime.es,
@@ -149,6 +151,8 @@ def register_routes(app, state):
             router_model_path=state.runtime_config.query_router_model_path,
             hard_threshold_override=state.runtime_config.adaptive_hard_threshold,
             hard_top_k_cap=state.runtime_config.adaptive_hard_top_k_cap,
+            adaptive_guardrails=state.runtime_config.adaptive_guardrails,
+            adaptive_baseline_min_top_score=state.runtime_config.adaptive_baseline_min_top_score,
         ))
 
     @app.route("/track_click", methods=["POST"])

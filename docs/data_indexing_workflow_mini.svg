@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="220" viewBox="0 0 1000 220">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#334155"/>
+    </marker>
+    <style>
+      text {
+        font-family: Arial, Helvetica, sans-serif;
+        fill: #1f2937;
+      }
+      .box-title {
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .line {
+        fill: none;
+        stroke: #334155;
+        stroke-width: 1.6;
+        marker-end: url(#arrow);
+      }
+      .source { fill: #f3e8ff; stroke: #7c3aed; stroke-width: 1.3; }
+      .process { fill: #e6f5ef; stroke: #0b6e4f; stroke-width: 1.3; }
+      .field { fill: #fff7ed; stroke: #d97706; stroke-width: 1.3; }
+      .index { fill: #dbeafe; stroke: #2563eb; stroke-width: 1.3; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="220" fill="none"/>
+
+  <rect x="40" y="80" width="150" height="58" rx="12" class="source"/>
+  <text x="115" y="114" text-anchor="middle" class="box-title">MS MARCO</text>
+
+  <rect x="240" y="80" width="150" height="58" rx="12" class="process"/>
+  <text x="315" y="114" text-anchor="middle" class="box-title">Text Cleaning</text>
+
+  <rect x="440" y="80" width="150" height="58" rx="12" class="process"/>
+  <text x="515" y="106" text-anchor="middle" class="box-title">Feature</text>
+  <text x="515" y="126" text-anchor="middle" class="box-title">Extraction</text>
+
+  <rect x="640" y="80" width="150" height="58" rx="12" class="field"/>
+  <text x="715" y="106" text-anchor="middle" class="box-title">Combined</text>
+  <text x="715" y="126" text-anchor="middle" class="box-title">Text</text>
+
+  <rect x="840" y="80" width="150" height="58" rx="12" class="index"/>
+  <text x="915" y="106" text-anchor="middle" class="box-title">Elasticsearch</text>
+  <text x="915" y="126" text-anchor="middle" class="box-title">Index</text>
+
+  <line x1="190" y1="109" x2="240" y2="109" class="line"/>
+  <line x1="390" y1="109" x2="440" y2="109" class="line"/>
+  <line x1="590" y1="109" x2="640" y2="109" class="line"/>
+  <line x1="790" y1="109" x2="840" y2="109" class="line"/>
+</svg>

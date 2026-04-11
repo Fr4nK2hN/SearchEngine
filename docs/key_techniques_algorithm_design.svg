@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#334155"/>
+    </marker>
+    <style>
+      text {
+        font-family: Arial, Helvetica, sans-serif;
+        fill: #1f2937;
+      }
+      .box-title {
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .box-sub {
+        font-size: 13px;
+        fill: #475569;
+      }
+      .tag {
+        font-size: 12px;
+        font-weight: 700;
+        fill: #475569;
+      }
+      .line {
+        fill: none;
+        stroke: #334155;
+        stroke-width: 1.6;
+        stroke-linejoin: miter;
+        stroke-linecap: square;
+        marker-end: url(#arrow);
+      }
+      .thin {
+        fill: none;
+        stroke: #64748b;
+        stroke-width: 1.3;
+        stroke-linejoin: miter;
+        stroke-linecap: square;
+        marker-end: url(#arrow);
+      }
+      .input { fill: #e6f5ef; stroke: #0b6e4f; stroke-width: 1.3; }
+      .feature { fill: #f3e8ff; stroke: #7c3aed; stroke-width: 1.3; }
+      .model { fill: #fef3c7; stroke: #d97706; stroke-width: 1.3; }
+      .semantic { fill: #ffe4e6; stroke: #e11d48; stroke-width: 1.3; }
+      .router { fill: #dbeafe; stroke: #2563eb; stroke-width: 1.3; }
+      .output { fill: #ecfdf5; stroke: #059669; stroke-width: 1.3; }
+      .group {
+        fill: #f8fafc;
+        stroke: #cbd5e1;
+        stroke-width: 1.1;
+      }
+      .group-title {
+        font-size: 14px;
+        font-weight: 700;
+        fill: #475569;
+      }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="560" fill="none"/>
+
+  <!-- Inputs -->
+  <rect x="55" y="210" width="180" height="70" rx="12" class="input"/>
+  <text x="145" y="238" text-anchor="middle" class="box-title">Candidate Results</text>
+  <text x="145" y="258" text-anchor="middle" class="box-sub">from Elasticsearch</text>
+
+  <rect x="55" y="330" width="180" height="70" rx="12" class="input"/>
+  <text x="145" y="358" text-anchor="middle" class="box-title">User Query</text>
+  <text x="145" y="378" text-anchor="middle" class="box-sub">terms &amp; intent signal</text>
+
+  <!-- Feature engineering -->
+  <rect x="290" y="80" width="250" height="110" rx="16" class="feature"/>
+  <text x="415" y="115" text-anchor="middle" class="box-title">Feature Engineering</text>
+  <text x="415" y="140" text-anchor="middle" class="box-sub">exact match / position</text>
+  <text x="415" y="160" text-anchor="middle" class="box-sub">TF-IDF / BM25 / ES score</text>
+
+  <rect x="290" y="245" width="250" height="95" rx="16" class="feature"/>
+  <text x="415" y="278" text-anchor="middle" class="box-title">Semantic Features</text>
+  <text x="415" y="303" text-anchor="middle" class="box-sub">Sentence embedding similarity</text>
+  <text x="415" y="323" text-anchor="middle" class="box-sub">title / content consistency</text>
+
+  <rect x="290" y="390" width="250" height="90" rx="16" class="router"/>
+  <text x="415" y="424" text-anchor="middle" class="box-title">Query Router Features</text>
+  <text x="415" y="449" text-anchor="middle" class="box-sub">length / terms / stopwords</text>
+
+  <!-- Ranking models group -->
+  <rect x="610" y="70" width="520" height="325" rx="18" class="group"/>
+  <text x="630" y="100" class="group-title">Ranking Strategy Pool</text>
+
+  <rect x="650" y="135" width="190" height="70" rx="12" class="model"/>
+  <text x="745" y="163" text-anchor="middle" class="box-title">LTR Ranking</text>
+  <text x="745" y="184" text-anchor="middle" class="box-sub">LightGBM LambdaMART</text>
+
+  <rect x="900" y="135" width="190" height="70" rx="12" class="semantic"/>
+  <text x="995" y="163" text-anchor="middle" class="box-title">Semantic Ranking</text>
+  <text x="995" y="184" text-anchor="middle" class="box-sub">Cross-Encoder rerank</text>
+
+  <rect x="650" y="270" width="190" height="70" rx="12" class="model"/>
+  <text x="745" y="298" text-anchor="middle" class="box-title">Baseline Ranking</text>
+  <text x="745" y="319" text-anchor="middle" class="box-sub">Elasticsearch score</text>
+
+  <rect x="900" y="270" width="190" height="70" rx="12" class="semantic"/>
+  <text x="995" y="298" text-anchor="middle" class="box-title">Hybrid Ranking</text>
+  <text x="995" y="319" text-anchor="middle" class="box-sub">LTR + Cross-Encoder</text>
+
+  <!-- Router and output -->
+  <rect x="650" y="430" width="260" height="80" rx="14" class="router"/>
+  <text x="780" y="460" text-anchor="middle" class="box-title">Adaptive Router</text>
+  <text x="780" y="482" text-anchor="middle" class="box-sub">selects efficient ranking path</text>
+
+  <rect x="965" y="430" width="170" height="80" rx="14" class="output"/>
+  <text x="1050" y="460" text-anchor="middle" class="box-title">Final Ranking</text>
+  <text x="1050" y="482" text-anchor="middle" class="box-sub">Top-K results</text>
+
+  <!-- Input to features -->
+  <path d="M235 245 L260 245 L260 135 L290 135" class="thin"/>
+  <path d="M235 245 L260 245 L260 292 L290 292" class="thin"/>
+  <path d="M235 365 L260 365 L260 435 L290 435" class="thin"/>
+
+  <!-- Features to strategy pool -->
+  <path d="M540 135 L650 135 L650 170" class="line"/>
+  <path d="M540 292 L610 292 L610 170 L900 170" class="line"/>
+  <path d="M540 435 L650 435 L650 470" class="line"/>
+
+  <!-- Router selects strategies -->
+  <path d="M780 430 L780 370 L745 370 L745 340" class="thin"/>
+  <path d="M780 430 L780 370 L995 370 L995 340" class="thin"/>
+  <path d="M780 430 L780 120 L745 120 L745 135" class="thin"/>
+  <path d="M780 120 L995 120 L995 135" class="thin"/>
+
+  <!-- Ranking output -->
+  <path d="M840 170 L870 170 L870 405 L1050 405 L1050 430" class="line"/>
+  <path d="M1090 170 L1120 170 L1120 405 L1050 405" class="thin"/>
+  <path d="M840 305 L870 305" class="thin"/>
+  <path d="M1090 305 L1120 305" class="thin"/>
+  <line x1="910" y1="470" x2="965" y2="470" class="line"/>
+
+  <!-- Tags -->
+  <text x="560" y="124" class="tag">30-dim feature vector</text>
+  <text x="548" y="282" class="tag">semantic signal</text>
+  <text x="548" y="425" class="tag">query complexity</text>
+</svg>

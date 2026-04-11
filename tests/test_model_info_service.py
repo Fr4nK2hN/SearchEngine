@@ -22,6 +22,8 @@ class ModelInfoServiceTests(unittest.TestCase):
             router_model_path="models/query_router.pkl",
             hard_threshold_override=0.6062,
             hard_top_k_cap=5,
+            adaptive_guardrails=frozenset({"hard_question_prefix_baseline"}),
+            adaptive_baseline_min_top_score=40.0,
         )
 
         self.assertEqual(payload["status"], "not_trained")
@@ -55,6 +57,8 @@ class ModelInfoServiceTests(unittest.TestCase):
             router_model_path="models/query_router.pkl",
             hard_threshold_override=0.6062,
             hard_top_k_cap=5,
+            adaptive_guardrails=frozenset({"hard_question_prefix_baseline"}),
+            adaptive_baseline_min_top_score=40.0,
         )
 
         self.assertEqual(payload["status"], "trained")

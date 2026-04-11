@@ -31,11 +31,15 @@ class SearchPipeline:
         cross_encoder_model,
         query_router,
         adaptive_hard_top_k_cap,
+        adaptive_guardrails=None,
+        adaptive_baseline_min_top_score=0.0,
     ):
         self.ltr_ranker = ltr_ranker
         self.cross_encoder_model = cross_encoder_model
         self.query_router = query_router
         self.adaptive_hard_top_k_cap = adaptive_hard_top_k_cap
+        self.adaptive_guardrails = adaptive_guardrails
+        self.adaptive_baseline_min_top_score = adaptive_baseline_min_top_score
 
     def is_ltr_available(self):
         return bool(self.ltr_ranker and self.ltr_ranker.is_trained)
@@ -51,6 +55,7 @@ class SearchPipeline:
             route_label=route.get("route_label"),
             selected_mode=selected_mode,
             ltr_available=self.is_ltr_available(),
+            enabled_guardrails=self.adaptive_guardrails,
         )
         if not override:
             return route
@@ -165,12 +170,34 @@ class SearchPipeline:
         t1 = time.perf_counter()
         return (results, "Cross-Encoder", 0.0, (t1 - t0) * 1000.0)
 
-    def resolve_adaptive_route(self, query):
+    def apply_retrieval_confidence_guardrail(self, route, results):
+        """Keep high-confidence lexical results on the fast baseline path."""
+        if not isinstance(route, dict) or not results:
+            return route
+        threshold = self.adaptive_baseline_min_top_score
+        if threshold is None or float(threshold) <= 0:
+            return route
+        selected_mode = route.get("selected_mode")
+        if selected_mode not in {"cross_encoder", "hybrid"}:
+            return route
+        top_score = float(results[0].get("_score", 0.0) or 0.0)
+        if top_score < float(threshold):
+            return route
+
+        guarded = dict(route)
+        guarded["selected_mode"] = "baseline"
+        guarded["route_guardrail"] = "baseline_top_score_confidence"
+        guarded["baseline_top_score"] = top_score
+        guarded["baseline_min_top_score"] = float(threshold)
+        return guarded
+
+    def resolve_adaptive_route(self, query, results=None):
         """根据 router 判定 easy/hard，并映射为最终可执行模式。"""
         route = self.apply_adaptive_guardrails(
             query,
             self.query_router.route(query),
         )
+        route = self.apply_retrieval_confidence_guardrail(route, results)
         selected_mode = route.get("selected_mode") or "baseline"
         route_label = route.get("route_label", "easy")
         hard_top_k = to_positive_int(route.get("hard_top_k")) or 30

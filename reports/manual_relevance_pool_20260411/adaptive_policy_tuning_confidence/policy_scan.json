@@ -1,0 +1,1981 @@
+{
+  "generated_at": "2026-04-11T16:42:03.235047+00:00",
+  "rows": [
+    {
+      "policy": "baseline_or_ce_t0.3_k10_baseScore40",
+      "threshold": 0.3,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 40.0,
+      "query_count": 42,
+      "ndcg@10": 0.8866485206582801,
+      "mrr@10": 0.9785714285714286,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 37.67377863931913,
+      "latency_p50_ms": 16.137145488755777,
+      "latency_p95_ms": 106.95807676529509,
+      "selected_counts": {
+        "baseline": 31,
+        "cross_encoder": 11
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k10_baseScore160",
+      "threshold": 0.3,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 160.0,
+      "query_count": 42,
+      "ndcg@10": 0.8863588866943539,
+      "mrr@10": 0.9785714285714286,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 50.43566654508357,
+      "latency_p50_ms": 18.979874526849017,
+      "latency_p95_ms": 113.36185866966844,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k10_baseScore180",
+      "threshold": 0.3,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 180.0,
+      "query_count": 42,
+      "ndcg@10": 0.8863588866943539,
+      "mrr@10": 0.9785714285714286,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 56.732967163303066,
+      "latency_p50_ms": 24.1867289878428,
+      "latency_p95_ms": 115.17567613045684,
+      "selected_counts": {
+        "cross_encoder": 20,
+        "baseline": 22
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k10_baseScore200",
+      "threshold": 0.3,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 200.0,
+      "query_count": 42,
+      "ndcg@10": 0.8863588866943539,
+      "mrr@10": 0.9785714285714286,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 61.049090164791174,
+      "latency_p50_ms": 85.91320848790929,
+      "latency_p95_ms": 115.17567613045684,
+      "selected_counts": {
+        "cross_encoder": 22,
+        "baseline": 20
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k10",
+      "threshold": 0.3,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": null,
+      "query_count": 42,
+      "ndcg@10": 0.8856708515835541,
+      "mrr@10": 0.9785714285714286,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 98.5632668570837,
+      "latency_p50_ms": 97.4070624797605,
+      "latency_p95_ms": 118.64140564866828,
+      "selected_counts": {
+        "cross_encoder": 41,
+        "baseline": 1
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k10_baseScore140",
+      "threshold": 0.3,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 140.0,
+      "query_count": 42,
+      "ndcg@10": 0.8849558038569963,
+      "mrr@10": 0.9785714285714286,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 42.022056425810746,
+      "latency_p50_ms": 16.983916488243267,
+      "latency_p95_ms": 113.10895032074765,
+      "selected_counts": {
+        "baseline": 29,
+        "cross_encoder": 13
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k10_baseScore60",
+      "threshold": 0.3,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 60.0,
+      "query_count": 42,
+      "ndcg@10": 0.8844024733381802,
+      "mrr@10": 0.9785714285714286,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 40.11295423454916,
+      "latency_p50_ms": 16.16820797789842,
+      "latency_p95_ms": 113.10895032074765,
+      "selected_counts": {
+        "baseline": 30,
+        "cross_encoder": 12
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k10_baseScore80",
+      "threshold": 0.3,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 80.0,
+      "query_count": 42,
+      "ndcg@10": 0.8844024733381802,
+      "mrr@10": 0.9785714285714286,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 40.11295423454916,
+      "latency_p50_ms": 16.16820797789842,
+      "latency_p95_ms": 113.10895032074765,
+      "selected_counts": {
+        "baseline": 30,
+        "cross_encoder": 12
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k10_baseScore100",
+      "threshold": 0.3,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 100.0,
+      "query_count": 42,
+      "ndcg@10": 0.8844024733381802,
+      "mrr@10": 0.9785714285714286,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 40.11295423454916,
+      "latency_p50_ms": 16.16820797789842,
+      "latency_p95_ms": 113.10895032074765,
+      "selected_counts": {
+        "baseline": 30,
+        "cross_encoder": 12
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k10_baseScore120",
+      "threshold": 0.3,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 120.0,
+      "query_count": 42,
+      "ndcg@10": 0.8844024733381802,
+      "mrr@10": 0.9785714285714286,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 40.11295423454916,
+      "latency_p50_ms": 16.16820797789842,
+      "latency_p95_ms": 113.10895032074765,
+      "selected_counts": {
+        "baseline": 30,
+        "cross_encoder": 12
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k5_baseScore160",
+      "threshold": 0.3,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 160.0,
+      "query_count": 42,
+      "ndcg@10": 0.8713843393361953,
+      "mrr@10": 0.9587301587301587,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 36.1851904045103,
+      "latency_p50_ms": 18.979874526849017,
+      "latency_p95_ms": 69.47590147610752,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k5_baseScore180",
+      "threshold": 0.3,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 180.0,
+      "query_count": 42,
+      "ndcg@10": 0.8713843393361953,
+      "mrr@10": 0.9587301587301587,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 40.70421916549094,
+      "latency_p50_ms": 24.1867289878428,
+      "latency_p95_ms": 76.47999818145763,
+      "selected_counts": {
+        "cross_encoder": 20,
+        "baseline": 22
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k5_baseScore200",
+      "threshold": 0.3,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 200.0,
+      "query_count": 42,
+      "ndcg@10": 0.8713843393361953,
+      "mrr@10": 0.9587301587301587,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 43.2767003076151,
+      "latency_p50_ms": 56.82352103758603,
+      "latency_p95_ms": 76.47999818145763,
+      "selected_counts": {
+        "cross_encoder": 22,
+        "baseline": 20
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k5_baseScore140",
+      "threshold": 0.3,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 140.0,
+      "query_count": 42,
+      "ndcg@10": 0.870337727911138,
+      "mrr@10": 0.9587301587301587,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 31.55663285482054,
+      "latency_p50_ms": 16.983916488243267,
+      "latency_p95_ms": 69.29012857144696,
+      "selected_counts": {
+        "baseline": 29,
+        "cross_encoder": 13
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k5_baseScore40",
+      "threshold": 0.3,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 40.0,
+      "query_count": 42,
+      "ndcg@10": 0.870094286043073,
+      "mrr@10": 0.9587301587301587,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 28.515074306467017,
+      "latency_p50_ms": 16.137145488755777,
+      "latency_p95_ms": 64.43541899789123,
+      "selected_counts": {
+        "baseline": 31,
+        "cross_encoder": 11
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k5_baseScore60",
+      "threshold": 0.3,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 60.0,
+      "query_count": 42,
+      "ndcg@10": 0.870094286043073,
+      "mrr@10": 0.9587301587301587,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 30.47387292497747,
+      "latency_p50_ms": 16.16820797789842,
+      "latency_p95_ms": 69.29012857144696,
+      "selected_counts": {
+        "baseline": 30,
+        "cross_encoder": 12
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k5_baseScore80",
+      "threshold": 0.3,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 80.0,
+      "query_count": 42,
+      "ndcg@10": 0.870094286043073,
+      "mrr@10": 0.9587301587301587,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 30.47387292497747,
+      "latency_p50_ms": 16.16820797789842,
+      "latency_p95_ms": 69.29012857144696,
+      "selected_counts": {
+        "baseline": 30,
+        "cross_encoder": 12
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k5_baseScore100",
+      "threshold": 0.3,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 100.0,
+      "query_count": 42,
+      "ndcg@10": 0.870094286043073,
+      "mrr@10": 0.9587301587301587,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 30.47387292497747,
+      "latency_p50_ms": 16.16820797789842,
+      "latency_p95_ms": 69.29012857144696,
+      "selected_counts": {
+        "baseline": 30,
+        "cross_encoder": 12
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k5_baseScore120",
+      "threshold": 0.3,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 120.0,
+      "query_count": 42,
+      "ndcg@10": 0.870094286043073,
+      "mrr@10": 0.9587301587301587,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 30.47387292497747,
+      "latency_p50_ms": 16.16820797789842,
+      "latency_p95_ms": 69.29012857144696,
+      "selected_counts": {
+        "baseline": 30,
+        "cross_encoder": 12
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k5",
+      "threshold": 0.3,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": null,
+      "query_count": 42,
+      "ndcg@10": 0.8675245651514238,
+      "mrr@10": 0.9587301587301587,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 65.12312392615492,
+      "latency_p50_ms": 63.10004147235304,
+      "latency_p95_ms": 76.48506278346758,
+      "selected_counts": {
+        "cross_encoder": 41,
+        "baseline": 1
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k10",
+      "threshold": 0.8,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": null,
+      "query_count": 42,
+      "ndcg@10": 0.8593972489642554,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 21.809317353126104,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 93.29987950040938,
+      "selected_counts": {
+        "baseline": 39,
+        "cross_encoder": 3
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k10",
+      "threshold": 0.7,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": null,
+      "query_count": 42,
+      "ndcg@10": 0.8593972489642554,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 27.813058424120147,
+      "latency_p50_ms": 14.489270484773442,
+      "latency_p95_ms": 106.90723269362931,
+      "selected_counts": {
+        "baseline": 36,
+        "cross_encoder": 6
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k10",
+      "threshold": 0.6062,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": null,
+      "query_count": 42,
+      "ndcg@10": 0.8593972489642554,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 42.2179979255556,
+      "latency_p50_ms": 15.085583494510502,
+      "latency_p95_ms": 111.95152525615411,
+      "selected_counts": {
+        "baseline": 29,
+        "cross_encoder": 13
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k10",
+      "threshold": 0.4,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": null,
+      "query_count": 42,
+      "ndcg@10": 0.8593972489642554,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 50.74214575801133,
+      "latency_p50_ms": 17.976874514715746,
+      "latency_p95_ms": 112.35000834276434,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k10",
+      "threshold": 0.5,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": null,
+      "query_count": 42,
+      "ndcg@10": 0.8593972489642554,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 50.74214575801133,
+      "latency_p50_ms": 17.976874514715746,
+      "latency_p95_ms": 112.35000834276434,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k5_baseScore40",
+      "threshold": 0.4,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 40.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k5_baseScore60",
+      "threshold": 0.4,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 60.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k5_baseScore80",
+      "threshold": 0.4,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 80.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k5_baseScore100",
+      "threshold": 0.4,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 100.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k5_baseScore120",
+      "threshold": 0.4,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 120.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k5_baseScore140",
+      "threshold": 0.4,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 140.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k5_baseScore40",
+      "threshold": 0.5,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 40.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k5_baseScore60",
+      "threshold": 0.5,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 60.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k5_baseScore80",
+      "threshold": 0.5,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 80.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k5_baseScore100",
+      "threshold": 0.5,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 100.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k5_baseScore120",
+      "threshold": 0.5,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 120.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k5_baseScore140",
+      "threshold": 0.5,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 140.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k5_baseScore40",
+      "threshold": 0.6062,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 40.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k5_baseScore60",
+      "threshold": 0.6062,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 60.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k5_baseScore80",
+      "threshold": 0.6062,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 80.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k5_baseScore100",
+      "threshold": 0.6062,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 100.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k5_baseScore120",
+      "threshold": 0.6062,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 120.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k5_baseScore140",
+      "threshold": 0.6062,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 140.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k5_baseScore40",
+      "threshold": 0.7,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 40.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k5_baseScore60",
+      "threshold": 0.7,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 60.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k5_baseScore80",
+      "threshold": 0.7,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 80.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k5_baseScore100",
+      "threshold": 0.7,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 100.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k5_baseScore120",
+      "threshold": 0.7,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 120.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k5_baseScore140",
+      "threshold": 0.7,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 140.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k5_baseScore40",
+      "threshold": 0.8,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 40.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k5_baseScore60",
+      "threshold": 0.8,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 60.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k5_baseScore80",
+      "threshold": 0.8,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 80.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k5_baseScore100",
+      "threshold": 0.8,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 100.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k5_baseScore120",
+      "threshold": 0.8,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 120.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k5_baseScore140",
+      "threshold": 0.8,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 140.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k5_baseScore160",
+      "threshold": 0.8,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 160.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k5_baseScore180",
+      "threshold": 0.8,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 180.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k10_baseScore40",
+      "threshold": 0.4,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 40.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k10_baseScore60",
+      "threshold": 0.4,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 60.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k10_baseScore80",
+      "threshold": 0.4,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 80.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k10_baseScore100",
+      "threshold": 0.4,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 100.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k10_baseScore120",
+      "threshold": 0.4,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 120.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k10_baseScore140",
+      "threshold": 0.4,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 140.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k10_baseScore40",
+      "threshold": 0.5,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 40.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k10_baseScore60",
+      "threshold": 0.5,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 60.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k10_baseScore80",
+      "threshold": 0.5,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 80.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k10_baseScore100",
+      "threshold": 0.5,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 100.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k10_baseScore120",
+      "threshold": 0.5,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 120.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k10_baseScore140",
+      "threshold": 0.5,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 140.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k10_baseScore40",
+      "threshold": 0.6062,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 40.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k10_baseScore60",
+      "threshold": 0.6062,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 60.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k10_baseScore80",
+      "threshold": 0.6062,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 80.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k10_baseScore100",
+      "threshold": 0.6062,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 100.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k10_baseScore120",
+      "threshold": 0.6062,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 120.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k10_baseScore140",
+      "threshold": 0.6062,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 140.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k10_baseScore40",
+      "threshold": 0.7,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 40.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k10_baseScore60",
+      "threshold": 0.7,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 60.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k10_baseScore80",
+      "threshold": 0.7,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 80.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k10_baseScore100",
+      "threshold": 0.7,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 100.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k10_baseScore120",
+      "threshold": 0.7,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 120.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k10_baseScore140",
+      "threshold": 0.7,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 140.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k10_baseScore40",
+      "threshold": 0.8,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 40.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k10_baseScore60",
+      "threshold": 0.8,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 60.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k10_baseScore80",
+      "threshold": 0.8,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 80.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k10_baseScore100",
+      "threshold": 0.8,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 100.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k10_baseScore120",
+      "threshold": 0.8,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 120.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k10_baseScore140",
+      "threshold": 0.8,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 140.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k10_baseScore160",
+      "threshold": 0.8,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 160.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k10_baseScore180",
+      "threshold": 0.8,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 180.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 15.466770733751002,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 21.199379148310975,
+      "selected_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k5_baseScore160",
+      "threshold": 0.6062,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 160.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 16.737729067071562,
+      "latency_p50_ms": 14.387853967491537,
+      "latency_p95_ms": 26.804922579321985,
+      "selected_counts": {
+        "baseline": 41,
+        "cross_encoder": 1
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k5_baseScore160",
+      "threshold": 0.7,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 160.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 16.737729067071562,
+      "latency_p50_ms": 14.387853967491537,
+      "latency_p95_ms": 26.804922579321985,
+      "selected_counts": {
+        "baseline": 41,
+        "cross_encoder": 1
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k5_baseScore180",
+      "threshold": 0.7,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 180.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 16.737729067071562,
+      "latency_p50_ms": 14.387853967491537,
+      "latency_p95_ms": 26.804922579321985,
+      "selected_counts": {
+        "baseline": 41,
+        "cross_encoder": 1
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k5_baseScore200",
+      "threshold": 0.8,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 200.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 16.766201280656137,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 26.804922579321985,
+      "selected_counts": {
+        "baseline": 41,
+        "cross_encoder": 1
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k10_baseScore160",
+      "threshold": 0.6062,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 160.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 17.48130744783252,
+      "latency_p50_ms": 14.387853967491537,
+      "latency_p95_ms": 26.804922579321985,
+      "selected_counts": {
+        "baseline": 41,
+        "cross_encoder": 1
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k10_baseScore160",
+      "threshold": 0.7,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 160.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 17.48130744783252,
+      "latency_p50_ms": 14.387853967491537,
+      "latency_p95_ms": 26.804922579321985,
+      "selected_counts": {
+        "baseline": 41,
+        "cross_encoder": 1
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k10_baseScore180",
+      "threshold": 0.7,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 180.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 17.48130744783252,
+      "latency_p50_ms": 14.387853967491537,
+      "latency_p95_ms": 26.804922579321985,
+      "selected_counts": {
+        "baseline": 41,
+        "cross_encoder": 1
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k10_baseScore200",
+      "threshold": 0.8,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 200.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 17.643971115051368,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 26.804922579321985,
+      "selected_counts": {
+        "baseline": 41,
+        "cross_encoder": 1
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k5_baseScore200",
+      "threshold": 0.7,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 200.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 18.037159613976698,
+      "latency_p50_ms": 14.387853967491537,
+      "latency_p95_ms": 46.053044073050756,
+      "selected_counts": {
+        "baseline": 40,
+        "cross_encoder": 2
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k5_baseScore180",
+      "threshold": 0.6062,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 180.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 18.19055347143495,
+      "latency_p50_ms": 14.489270484773442,
+      "latency_p95_ms": 46.053044073050756,
+      "selected_counts": {
+        "baseline": 40,
+        "cross_encoder": 2
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k5",
+      "threshold": 0.8,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": null,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 18.96872211364098,
+      "latency_p50_ms": 14.264416473452002,
+      "latency_p95_ms": 60.712108388543065,
+      "selected_counts": {
+        "baseline": 39,
+        "cross_encoder": 3
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k5_baseScore160",
+      "threshold": 0.4,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 160.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 19.046387807022604,
+      "latency_p50_ms": 14.60149948252365,
+      "latency_p95_ms": 55.025210807798395,
+      "selected_counts": {
+        "baseline": 39,
+        "cross_encoder": 3
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k5_baseScore160",
+      "threshold": 0.5,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 160.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 19.046387807022604,
+      "latency_p50_ms": 14.60149948252365,
+      "latency_p95_ms": 55.025210807798395,
+      "selected_counts": {
+        "baseline": 39,
+        "cross_encoder": 3
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k10_baseScore180",
+      "threshold": 0.6062,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 180.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 19.26994832908912,
+      "latency_p50_ms": 14.489270484773442,
+      "latency_p95_ms": 46.053044073050756,
+      "selected_counts": {
+        "baseline": 40,
+        "cross_encoder": 2
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k5_baseScore200",
+      "threshold": 0.6062,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 200.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 19.489984018340085,
+      "latency_p50_ms": 14.489270484773442,
+      "latency_p95_ms": 66.23038095713119,
+      "selected_counts": {
+        "baseline": 39,
+        "cross_encoder": 3
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k10_baseScore200",
+      "threshold": 0.7,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 200.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 19.65850782913289,
+      "latency_p50_ms": 14.387853967491537,
+      "latency_p95_ms": 46.053044073050756,
+      "selected_counts": {
+        "baseline": 40,
+        "cross_encoder": 2
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k10_baseScore200",
+      "threshold": 0.6062,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 200.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 21.447148710389488,
+      "latency_p50_ms": 14.489270484773442,
+      "latency_p95_ms": 87.0372809644321,
+      "selected_counts": {
+        "baseline": 39,
+        "cross_encoder": 3
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k5_baseScore180",
+      "threshold": 0.4,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 180.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 21.697841186930116,
+      "latency_p50_ms": 14.818646013736725,
+      "latency_p95_ms": 67.0597101037856,
+      "selected_counts": {
+        "baseline": 37,
+        "cross_encoder": 5
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k5_baseScore180",
+      "threshold": 0.5,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 180.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 21.697841186930116,
+      "latency_p50_ms": 14.818646013736725,
+      "latency_p95_ms": 67.0597101037856,
+      "selected_counts": {
+        "baseline": 37,
+        "cross_encoder": 5
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k10_baseScore160",
+      "threshold": 0.4,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 160.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 21.888152686490987,
+      "latency_p50_ms": 14.60149948252365,
+      "latency_p95_ms": 95.89915834949329,
+      "selected_counts": {
+        "baseline": 39,
+        "cross_encoder": 3
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k10_baseScore160",
+      "threshold": 0.5,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 160.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 21.888152686490987,
+      "latency_p50_ms": 14.60149948252365,
+      "latency_p95_ms": 95.89915834949329,
+      "selected_counts": {
+        "baseline": 39,
+        "cross_encoder": 3
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k5_baseScore200",
+      "threshold": 0.4,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 200.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 22.99727173383525,
+      "latency_p50_ms": 14.818646013736725,
+      "latency_p95_ms": 68.22442918492015,
+      "selected_counts": {
+        "baseline": 36,
+        "cross_encoder": 6
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k5_baseScore200",
+      "threshold": 0.5,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": 200.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 22.99727173383525,
+      "latency_p50_ms": 14.818646013736725,
+      "latency_p95_ms": 68.22442918492015,
+      "selected_counts": {
+        "baseline": 36,
+        "cross_encoder": 6
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k10_baseScore180",
+      "threshold": 0.4,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 180.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 25.79503068617279,
+      "latency_p50_ms": 14.818646013736725,
+      "latency_p95_ms": 99.43116879439913,
+      "selected_counts": {
+        "baseline": 37,
+        "cross_encoder": 5
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k10_baseScore180",
+      "threshold": 0.5,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 180.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 25.79503068617279,
+      "latency_p50_ms": 14.818646013736725,
+      "latency_p95_ms": 99.43116879439913,
+      "selected_counts": {
+        "baseline": 37,
+        "cross_encoder": 5
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k10_baseScore200",
+      "threshold": 0.4,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 200.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 27.972231067473157,
+      "latency_p50_ms": 14.818646013736725,
+      "latency_p95_ms": 102.12195861386134,
+      "selected_counts": {
+        "baseline": 36,
+        "cross_encoder": 6
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k10_baseScore200",
+      "threshold": 0.5,
+      "ce_top_n": 10,
+      "min_top_score_for_baseline": 200.0,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 27.972231067473157,
+      "latency_p50_ms": 14.818646013736725,
+      "latency_p95_ms": 102.12195861386134,
+      "selected_counts": {
+        "baseline": 36,
+        "cross_encoder": 6
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k5",
+      "threshold": 0.7,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": null,
+      "query_count": 42,
+      "ndcg@10": 0.855541083612314,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 22.48123104107522,
+      "latency_p50_ms": 14.489270484773442,
+      "latency_p95_ms": 67.21758510393556,
+      "selected_counts": {
+        "baseline": 36,
+        "cross_encoder": 6
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k5",
+      "threshold": 0.6062,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": null,
+      "query_count": 42,
+      "ndcg@10": 0.855541083612314,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 30.538104065705003,
+      "latency_p50_ms": 15.085583494510502,
+      "latency_p95_ms": 70.32270170166156,
+      "selected_counts": {
+        "baseline": 29,
+        "cross_encoder": 13
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k5",
+      "threshold": 0.4,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": null,
+      "query_count": 42,
+      "ndcg@10": 0.855541083612314,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 35.31327868612217,
+      "latency_p50_ms": 17.976874514715746,
+      "latency_p95_ms": 70.37452255317474,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k5",
+      "threshold": 0.5,
+      "ce_top_n": 5,
+      "min_top_score_for_baseline": null,
+      "query_count": 42,
+      "ndcg@10": 0.855541083612314,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 35.31327868612217,
+      "latency_p50_ms": 17.976874514715746,
+      "latency_p95_ms": 70.37452255317474,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    }
+  ]
+}

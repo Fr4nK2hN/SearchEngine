@@ -4,6 +4,8 @@ def build_router_info(
     model_path,
     hard_threshold_override,
     hard_top_k_cap,
+    adaptive_guardrails,
+    adaptive_baseline_min_top_score,
 ):
     return {
         "status": "loaded" if query_router.loaded else "heuristic_fallback",
@@ -15,6 +17,8 @@ def build_router_info(
         "hard_top_k": query_router.hard_top_k,
         "hard_top_k_cap": hard_top_k_cap,
         "hard_topk_policy": query_router.hard_topk_policy,
+        "adaptive_guardrails": "all" if adaptive_guardrails is None else sorted(adaptive_guardrails),
+        "adaptive_baseline_min_top_score": adaptive_baseline_min_top_score,
         "load_error": query_router.load_error,
     }
 
@@ -26,12 +30,16 @@ def build_model_info_payload(
     router_model_path,
     hard_threshold_override,
     hard_top_k_cap,
+    adaptive_guardrails,
+    adaptive_baseline_min_top_score,
 ):
     router_info = build_router_info(
         query_router,
         model_path=router_model_path,
         hard_threshold_override=hard_threshold_override,
         hard_top_k_cap=hard_top_k_cap,
+        adaptive_guardrails=adaptive_guardrails,
+        adaptive_baseline_min_top_score=adaptive_baseline_min_top_score,
     )
 
     if not ltr_ranker or not ltr_ranker.is_trained:

@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#334155"/>
+    </marker>
+    <style>
+      text {
+        font-family: Arial, Helvetica, sans-serif;
+        fill: #1f2937;
+      }
+      .layer {
+        font-size: 16px;
+        font-weight: 700;
+        fill: #475569;
+      }
+      .box-title {
+        font-size: 15px;
+        font-weight: 700;
+      }
+      .box-sub {
+        font-size: 13px;
+        fill: #475569;
+      }
+      .field {
+        font-size: 14px;
+        font-weight: 700;
+        fill: #1f2937;
+      }
+      .desc {
+        font-size: 13px;
+        fill: #475569;
+      }
+      .label {
+        font-size: 12px;
+        fill: #475569;
+      }
+      .line {
+        fill: none;
+        stroke: #334155;
+        stroke-width: 1.5;
+        marker-end: url(#arrow);
+      }
+      .group {
+        fill: #f8fafc;
+        stroke: #cbd5e1;
+        stroke-width: 1.2;
+      }
+      .source { fill: #f3e8ff; stroke: #7c3aed; }
+      .process { fill: #e6f5ef; stroke: #0b6e4f; }
+      .fieldbox { fill: #fff7ed; stroke: #d97706; }
+      .index { fill: #dbeafe; stroke: #2563eb; }
+      .runtime { fill: #ecfdf5; stroke: #059669; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="680" fill="none"/>
+
+  <!-- Source Layer -->
+  <rect x="55" y="40" width="1090" height="92" rx="16" class="group"/>
+  <text x="75" y="68" class="layer">Data Source</text>
+  <rect x="465" y="58" width="270" height="58" rx="10" class="source"/>
+  <text x="600" y="83" text-anchor="middle" class="box-title">MS MARCO Dataset</text>
+  <text x="600" y="103" text-anchor="middle" class="box-sub">Raw QA-style document records</text>
+
+  <!-- Preprocessing Layer -->
+  <rect x="55" y="165" width="1090" height="150" rx="16" class="group"/>
+  <text x="75" y="194" class="layer">Offline Preprocessing</text>
+
+  <rect x="105" y="225" width="200" height="58" rx="10" class="process"/>
+  <text x="205" y="249" text-anchor="middle" class="box-title">Text Cleaning</text>
+  <text x="205" y="269" text-anchor="middle" class="box-sub">HTML / spaces / symbols</text>
+
+  <rect x="370" y="225" width="200" height="58" rx="10" class="process"/>
+  <text x="470" y="249" text-anchor="middle" class="box-title">Content Summary</text>
+  <text x="470" y="269" text-anchor="middle" class="box-sub">Title &amp; snippet normalization</text>
+
+  <rect x="635" y="225" width="200" height="58" rx="10" class="process"/>
+  <text x="735" y="249" text-anchor="middle" class="box-title">Keyword Extraction</text>
+  <text x="735" y="269" text-anchor="middle" class="box-sub">Top terms from content</text>
+
+  <rect x="900" y="225" width="200" height="58" rx="10" class="process"/>
+  <text x="1000" y="249" text-anchor="middle" class="box-title">Combined Field</text>
+  <text x="1000" y="269" text-anchor="middle" class="box-sub">title + content + keywords</text>
+
+  <!-- Field Layer -->
+  <rect x="55" y="350" width="1090" height="150" rx="16" class="group"/>
+  <text x="75" y="379" class="layer">Processed Document Fields</text>
+
+  <rect x="165" y="400" width="870" height="72" rx="10" class="fieldbox"/>
+  <text x="205" y="426" class="field">title</text>
+  <text x="405" y="426" class="desc">Normalized document title</text>
+  <text x="205" y="454" class="field">content</text>
+  <text x="405" y="454" class="desc">Short content snippet for display and ranking</text>
+
+  <line x1="590" y1="409" x2="590" y2="462" stroke="#fed7aa" stroke-width="1"/>
+
+  <text x="640" y="426" class="field">related_queries</text>
+  <text x="835" y="426" class="desc">Auxiliary query phrases</text>
+  <text x="640" y="454" class="field">combined_text</text>
+  <text x="835" y="454" class="desc">Aggregated field for retrieval</text>
+
+  <!-- Index Layer -->
+  <rect x="55" y="535" width="1090" height="105" rx="16" class="group"/>
+  <text x="75" y="565" class="layer">Index &amp; Retrieval</text>
+
+  <rect x="240" y="570" width="270" height="58" rx="10" class="index"/>
+  <text x="375" y="594" text-anchor="middle" class="box-title">Elasticsearch Mapping</text>
+  <text x="375" y="614" text-anchor="middle" class="box-sub">text fields + keyword fields</text>
+
+  <rect x="690" y="570" width="270" height="58" rx="10" class="runtime"/>
+  <text x="825" y="594" text-anchor="middle" class="box-title">Online Retrieval</text>
+  <text x="825" y="614" text-anchor="middle" class="box-sub">multi_match + phrase recall</text>
+
+  <!-- Main vertical / horizontal flow -->
+  <line x1="600" y1="116" x2="600" y2="165" class="line"/>
+  <line x1="305" y1="254" x2="370" y2="254" class="line"/>
+  <line x1="570" y1="254" x2="635" y2="254" class="line"/>
+  <line x1="835" y1="254" x2="900" y2="254" class="line"/>
+  <polyline points="1000,283 1000,330 600,330 600,400" class="line"/>
+  <polyline points="600,472 600,520 375,520 375,570" class="line"/>
+  <line x1="510" y1="599" x2="690" y2="599" class="line"/>
+
+  <text x="615" y="151" class="label">download &amp; load</text>
+  <text x="610" y="342" class="label">structured fields</text>
+  <text x="612" y="531" class="label">bulk indexing</text>
+  <text x="560" y="587" class="label">documents index</text>
+</svg>

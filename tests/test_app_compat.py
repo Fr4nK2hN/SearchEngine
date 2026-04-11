@@ -58,8 +58,10 @@ def load_app_module():
             ltr_model_path="models/ltr_model.pkl",
             query_router_model_path="models/query_router.pkl",
             recall_relax_threshold=5,
-            adaptive_hard_top_k_cap=5,
-            adaptive_hard_threshold=0.6062,
+            adaptive_hard_top_k_cap=10,
+            adaptive_hard_threshold=0.30,
+            adaptive_guardrails=frozenset({"hard_question_prefix_baseline"}),
+            adaptive_baseline_min_top_score=40.0,
             log_file=handle.name,
             index_name="documents",
         ),
@@ -83,7 +85,7 @@ class AppCompatibilityTests(unittest.TestCase):
         app_module, log_path = load_app_module()
         self.addCleanup(lambda: os.path.exists(log_path) and os.unlink(log_path))
 
-        self.assertEqual(app_module.ADAPTIVE_HARD_TOP_K_CAP, 5)
+        self.assertEqual(app_module.ADAPTIVE_HARD_TOP_K_CAP, 10)
         self.assertEqual(app_module.RECALL_RELAX_THRESHOLD, 5)
         self.assertTrue(app_module._is_ltr_available())
 

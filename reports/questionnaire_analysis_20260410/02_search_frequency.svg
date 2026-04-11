@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<style>
+text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; fill:#1f2a37; }
+.small { font-size:14px; fill:#5f6a75; }
+.label { font-size:16px; }
+.title { font-size:28px; font-weight:700; }
+.subtitle { font-size:15px; fill:#5f6a75; }
+.axis { stroke:#cbd5e1; stroke-width:1; }
+.grid { stroke:#e5e7eb; stroke-width:1; }
+</style>
+<rect x="0" y="0" width="1200" height="720" fill="#fffdfa"/><text x="60" y="60" class="title">搜索引擎使用频率</text><text x="60" y="92" class="subtitle">受访者大多数属于高频搜索用户</text><line x1="150" y1="180" x2="150" y2="600" class="grid"/><rect x="100" y="505.0" width="100" height="95.0" rx="12" fill="#d97706"/><text x="150" y="493.0" text-anchor="middle" class="label">5</text><text x="150" y="635" text-anchor="middle" class="small">很少</text><line x1="340" y1="180" x2="340" y2="600" class="grid"/><rect x="290" y="410.0" width="100" height="190.0" rx="12" fill="#ca8a04"/><text x="340" y="398.0" text-anchor="middle" class="label">10</text><text x="340" y="635" text-anchor="middle" class="small">偶尔</text><line x1="530" y1="180" x2="530" y2="600" class="grid"/><rect x="480" y="391.0" width="100" height="209.0" rx="12" fill="#65a30d"/><text x="530" y="379.0" text-anchor="middle" class="label">11</text><text x="530" y="635" text-anchor="middle" class="small">一般</text><line x1="720" y1="180" x2="720" y2="600" class="grid"/><rect x="670" y="220.0" width="100" height="380.0" rx="12" fill="#0f766e"/><text x="720" y="208.0" text-anchor="middle" class="label">20</text><text x="720" y="635" text-anchor="middle" class="small">经常</text><line x1="910" y1="180" x2="910" y2="600" class="grid"/><rect x="860" y="239.0" width="100" height="361.0" rx="12" fill="#0b6e4f"/><text x="910" y="227.0" text-anchor="middle" class="label">19</text><text x="910" y="635" text-anchor="middle" class="small">非常频繁</text><line x1="70" y1="600" x2="1110" y2="600" class="axis"/>
+</svg>

@@ -1,0 +1,130 @@
+@startuml
+title 搜索引擎系统整体架构图
+
+skinparam backgroundColor #FFFDFA
+skinparam shadowing false
+skinparam roundcorner 16
+skinparam componentStyle rectangle
+skinparam defaultFontName "Microsoft YaHei"
+skinparam defaultTextAlignment center
+skinparam ArrowColor #334155
+skinparam ArrowThickness 1.2
+
+skinparam rectangle {
+  BorderColor #334155
+  FontColor #1F2937
+}
+
+skinparam package {
+  BorderColor #94A3B8
+  FontColor #1F2937
+  BackgroundColor #F8FAFC
+}
+
+actor "用户" as User
+
+package "前端展示层\n(templates/index.html + static/script.js)" as Frontend {
+  rectangle "搜索输入\n模式切换\n结果展示\n高亮显示" as UI #E6F5EF
+  rectangle "交互事件采集\n查询 / 点击 / 浏览行为" as ClientLog #E6F5EF
+}
+
+package "Flask Web 应用层\n(app.py / webapp/application.py)" as FlaskApp {
+  rectangle "/search\n搜索接口" as SearchAPI #DBEAFE
+  rectangle "/log / track_click\n日志接口" as LogAPI #DBEAFE
+  rectangle "/model_info\n模型信息接口" as ModelInfoAPI #DBEAFE
+  rectangle "/export_data\n/research_dashboard\n实验分析接口" as DashboardAPI #DBEAFE
+}
+
+package "搜索服务层\n(webapp/services/search.py)" as ServiceLayer {
+  rectangle "SearchService\n查询参数处理\n异常处理\n结构化日志" as SearchService #F0FDF4
+  rectangle "SearchPipeline\n排序模式调度\n分数融合\nTop-K 截断" as SearchPipeline #F0FDF4
+}
+
+package "检索与索引层\n(engine/)" as RetrievalLayer {
+  rectangle "Elasticsearch 查询构造\nmulti_match / phrase\nstrict + relaxed fallback" as Retrieval #FEF3C7
+  database "Elasticsearch\n documents 索引\n倒排索引 + 文档字段" as ES #FEF3C7
+  rectangle "索引初始化\n映射定义\n批量导入\n指纹校验" as Indexing #FEF3C7
+}
+
+package "排序与算法层\n(ranking/)" as RankingLayer {
+  rectangle "Baseline Ranking\nES _score" as Baseline #FFE4E6
+  rectangle "LTR Ranking\nLightGBM LambdaMART\n30维排序特征" as LTR #FFE4E6
+  rectangle "Semantic Ranking\nCross-Encoder 语义重排" as CrossEncoder #FFE4E6
+  rectangle "Hybrid Ranking\nLTR + Cross-Encoder 融合" as Hybrid #FFE4E6
+  rectangle "Adaptive Router\n查询复杂度判断\n动态选择排序路径" as Router #FFE4E6
+  rectangle "FeatureExtractor\nBM25 / TF-IDF\n语义相似度 / ES分数" as FeatureExtractor #FFE4E6
+}
+
+package "离线数据与训练层\n(pipelines/ + tools/)" as OfflineLayer {
+  rectangle "MS MARCO 数据下载\npipelines/data/download_msmarco.py" as Download #F3E8FF
+  rectangle "数据预处理\n文本清洗 / 摘要 / 关键词\ncombined_text 构建" as Preprocess #F3E8FF
+  rectangle "IDF 构建\nEmbedding 预计算" as Precompute #F3E8FF
+  rectangle "LTR 训练\n反馈数据构建\n离线评测 / 消融实验" as Training #F3E8FF
+}
+
+package "日志与评估层\n(logs/ + webapp/analytics.py + reports/)" as AnalysisLayer {
+  rectangle "结构化事件日志\nlogs/events.log" as EventLog #ECFDF5
+  rectangle "用户行为统计\nCTR / 点击位置\n会话导出" as Analytics #ECFDF5
+  rectangle "性能与检索效果报告\n时延 / nDCG / MRR / Recall" as Reports #ECFDF5
+  rectangle "用户问卷分析\n可用性 / 满意度\n动态排序认可度" as Questionnaire #ECFDF5
+}
+
+User --> UI : 输入查询\n选择排序模式
+UI --> SearchAPI : GET /search?q=...\nmode=adaptive等
+ClientLog --> LogAPI : POST /log\nPOST /track_click
+
+SearchAPI --> SearchService
+SearchService --> Retrieval : 构造并执行检索请求
+Retrieval --> ES : strict 检索\n必要时 relaxed fallback
+ES --> Retrieval : 候选文档 Top-N
+Retrieval --> SearchService : hits + 检索策略
+SearchService --> SearchPipeline : 候选结果 + mode
+
+SearchPipeline --> Router : adaptive 模式\n查询路由
+Router --> Baseline : easy路径可选
+Router --> LTR : topical easy / hard路径可选
+Router --> CrossEncoder : hard路径可选
+SearchPipeline --> Baseline
+SearchPipeline --> LTR
+SearchPipeline --> CrossEncoder
+SearchPipeline --> Hybrid
+LTR --> FeatureExtractor
+Hybrid --> LTR
+Hybrid --> CrossEncoder
+FeatureExtractor --> ES : 读取文档字段\ncontent_emb / title_emb
+
+SearchPipeline --> SearchService : 重排序结果
+SearchService --> EventLog : 记录查询、耗时、路由和结果
+SearchService --> SearchAPI : JSON结果
+SearchAPI --> UI : Top-10 搜索结果\nrouting 信息
+
+ModelInfoAPI --> LTR : 模型状态\n特征重要性
+ModelInfoAPI --> Router : 路由器状态
+DashboardAPI --> Analytics
+LogAPI --> EventLog
+EventLog --> Analytics
+Analytics --> Reports
+Questionnaire --> Reports
+
+Download --> Preprocess
+Preprocess --> Indexing
+Indexing --> ES
+Preprocess --> Precompute
+Precompute --> ES : 写入 content_emb\ntitle_emb
+EventLog --> Training : 点击反馈构建训练数据
+Training --> LTR : 训练/更新模型
+Training --> Router : 路由器训练/评估
+Training --> Reports : 离线评测结果
+
+note right of CrossEncoder
+前端显示为 Semantic Ranking；
+实际含义是 Cross-Encoder
+语义重排序，不是向量召回。
+end note
+
+note bottom of ES
+核心数据层为 Elasticsearch documents 索引；
+项目未使用 MySQL 等关系型数据库。
+end note
+
+@enduml

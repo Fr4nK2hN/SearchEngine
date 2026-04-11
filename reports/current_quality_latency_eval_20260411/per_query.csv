@@ -1,0 +1,211 @@
+mode,query,ndcg@10,latency_ms,result_count,route
+baseline,vitamins health benefits,0.0,45.01912504201755,10,baseline
+baseline,tesla battery technology,0.0,70.24358300259337,10,baseline
+baseline,climate change effects,0.0,74.83574998332188,10,baseline
+baseline,machine learning algorithms,0.0,68.79166699945927,10,baseline
+baseline,cooking pasta recipes,0.0,88.97591597633436,10,baseline
+baseline,investment strategies,0.0,57.0736660156399,10,baseline
+baseline,quantum computing principles,0.0,41.11308301798999,10,baseline
+baseline,exercise weight loss,0.0,91.22429200215265,10,baseline
+baseline,renewable energy sources,0.0,162.7980830380693,10,baseline
+baseline,smartphone photography tips,0.0,37.28458296973258,10,baseline
+baseline,meditation stress relief,0.0,121.85195804340765,10,baseline
+baseline,artificial intelligence ethics,0.0,82.70220801932737,10,baseline
+baseline,travel budget planning,0.0,84.81416600989178,10,baseline
+baseline,home gardening vegetables,0.0,126.81979197077453,10,baseline
+baseline,sleep quality improvement,0.0,100.05279199685901,10,baseline
+baseline,electric vehicle charging,0.0,89.24979198491201,10,baseline
+baseline,online learning platforms,0.0,62.736666994169354,10,baseline
+baseline,sustainable fashion brands,0.0,87.09608297795057,10,baseline
+baseline,data privacy protection,0.0,90.92012501787394,10,baseline
+baseline,mental health therapy,0.0,92.88954100338742,10,baseline
+baseline,space exploration missions,0.0,117.04208300216123,10,baseline
+baseline,social media marketing,0.0,75.71058295434341,10,baseline
+baseline,protein rich foods,0.2988586838751811,98.78166700946167,10,baseline
+baseline,who coined the,0.6676765008394243,74.8117080074735,10,baseline
+baseline,cooked least,0.0,103.55187504319474,10,baseline
+baseline,traits that are derived from a common ancestor are said to be,0.0,101.46595898550004,10,baseline
+baseline,greek tragedy,0.5602358590704188,82.72054197732359,10,baseline
+baseline,james madison,0.3862692454161108,58.55887499637902,10,baseline
+baseline,what temp does,0.6131471927654584,76.19345799321309,10,baseline
+baseline,what kind of,0.0,194.865916040726,10,baseline
+baseline,how long is german measles contagious,1.0,269.9013330275193,10,baseline
+baseline,Adoption fees for,0.7725384908322216,153.09045900357887,10,baseline
+baseline,your pan,0.0,184.62545896181837,10,baseline
+baseline,price to install tile in shower,1.0,75.45645796926692,10,baseline
+baseline,rabbit fee,0.3605179623883701,120.73791603324935,10,baseline
+baseline,day subutex,0.0,44.02958299033344,10,baseline
+baseline,who coined the phrase it is what it is,0.2890648263178878,85.8695839997381,10,baseline
+baseline,how long do,0.0,62.120791990309954,10,baseline
+baseline,years nurses,0.7725384908322216,49.7955420287326,10,baseline
+baseline,community rba,0.0,28.36320799542591,10,baseline
+baseline,how long cooking chicken legs in the big easy,0.0,104.88591704051942,10,baseline
+baseline,diabetic type,0.5,74.42008296493441,10,baseline
+ltr,vitamins health benefits,0.0,42.566874995827675,10,ltr
+ltr,tesla battery technology,0.0,107.8997909789905,10,ltr
+ltr,climate change effects,0.0,66.02641596691683,10,ltr
+ltr,machine learning algorithms,0.2959842760619721,74.50891699409112,10,ltr
+ltr,cooking pasta recipes,0.0,53.37724997662008,10,ltr
+ltr,investment strategies,0.0,67.47970799915493,10,ltr
+ltr,quantum computing principles,0.0,34.071666945237666,10,ltr
+ltr,exercise weight loss,0.0,57.12374998256564,10,ltr
+ltr,renewable energy sources,0.0,43.16366702551022,10,ltr
+ltr,smartphone photography tips,0.0,29.98645801562816,10,ltr
+ltr,meditation stress relief,0.0,36.43337497487664,10,ltr
+ltr,artificial intelligence ethics,0.0,30.859625025186688,10,ltr
+ltr,travel budget planning,0.0,57.39116697805002,10,ltr
+ltr,home gardening vegetables,0.0,52.971791999880224,10,ltr
+ltr,sleep quality improvement,0.0,56.49774998892099,10,ltr
+ltr,electric vehicle charging,0.0,89.9157919920981,10,ltr
+ltr,online learning platforms,0.0,43.18829101976007,10,ltr
+ltr,sustainable fashion brands,0.0,48.22208301629871,10,ltr
+ltr,data privacy protection,0.0,60.452833015006036,10,ltr
+ltr,mental health therapy,0.0,46.80650000227615,10,ltr
+ltr,space exploration missions,0.0,71.18554197950289,10,ltr
+ltr,social media marketing,0.0,47.1403329866007,10,ltr
+ltr,protein rich foods,0.2751837627520222,51.74620897741988,10,ltr
+ltr,who coined the,0.22331370467629932,59.22900000587106,10,ltr
+ltr,cooked least,0.0,41.33762500714511,10,ltr
+ltr,traits that are derived from a common ancestor are said to be,0.0,76.1221669963561,10,ltr
+ltr,greek tragedy,0.5602358590704188,64.7412920370698,10,ltr
+ltr,james madison,0.7725384908322216,44.995709031354636,10,ltr
+ltr,what temp does,0.20438239758848614,52.01799998758361,10,ltr
+ltr,what kind of,0.0,35.40858399355784,10,ltr
+ltr,how long is german measles contagious,0.6309297535714575,50.1938330125995,10,ltr
+ltr,Adoption fees for,0.3862692454161108,41.78362502716482,10,ltr
+ltr,your pan,0.0,45.294166018720716,10,ltr
+ltr,price to install tile in shower,0.0,60.91775099048391,10,ltr
+ltr,rabbit fee,0.3605179623883701,41.54324997216463,10,ltr
+ltr,day subutex,0.18457569677956817,41.45554202841595,10,ltr
+ltr,who coined the phrase it is what it is,0.0,67.87266599712893,10,ltr
+ltr,how long do,0.0,50.87575002107769,10,ltr
+ltr,years nurses,0.2988586838751811,53.110042004846036,10,ltr
+ltr,community rba,0.0,35.883957985788584,10,ltr
+ltr,how long cooking chicken legs in the big easy,0.0,69.55937499878928,10,ltr
+ltr,diabetic type,1.0,48.33741701440886,10,ltr
+adaptive,vitamins health benefits,0.0,42.04729199409485,10,ltr
+adaptive,tesla battery technology,0.0,50.09420798160136,10,ltr
+adaptive,climate change effects,0.0,38.109707995317876,10,ltr
+adaptive,machine learning algorithms,0.2959842760619721,33.62645901506767,10,ltr
+adaptive,cooking pasta recipes,0.0,35.14649998396635,10,ltr
+adaptive,investment strategies,0.0,94.82633299194276,10,cross_encoder
+adaptive,quantum computing principles,0.0,24.119957990478724,10,ltr
+adaptive,exercise weight loss,0.0,34.235832979902625,10,ltr
+adaptive,renewable energy sources,0.0,37.302957964129746,10,ltr
+adaptive,smartphone photography tips,0.0,24.246125016361475,10,ltr
+adaptive,meditation stress relief,0.0,29.02970800641924,10,ltr
+adaptive,artificial intelligence ethics,0.0,35.774625022895634,10,ltr
+adaptive,travel budget planning,0.0,49.607458990067244,10,ltr
+adaptive,home gardening vegetables,0.0,36.570833006408066,10,ltr
+adaptive,sleep quality improvement,0.0,33.40254200156778,10,ltr
+adaptive,electric vehicle charging,0.0,44.93691702373326,10,ltr
+adaptive,online learning platforms,0.0,38.424584025051445,10,ltr
+adaptive,sustainable fashion brands,0.0,22.14416698552668,10,ltr
+adaptive,data privacy protection,0.0,29.23104102956131,10,ltr
+adaptive,mental health therapy,0.0,30.849000031594187,10,ltr
+adaptive,space exploration missions,0.0,31.215582974255085,10,ltr
+adaptive,social media marketing,0.0,34.749166981782764,10,ltr
+adaptive,protein rich foods,0.2751837627520222,29.595375002827495,10,ltr
+adaptive,who coined the,0.6676765008394243,27.16020797379315,10,baseline
+adaptive,cooked least,0.0,33.02274999441579,10,baseline
+adaptive,traits that are derived from a common ancestor are said to be,0.0,231.53608397115022,10,cross_encoder
+adaptive,greek tragedy,0.5602358590704188,124.68474998604506,10,cross_encoder
+adaptive,james madison,0.3862692454161108,71.24074996681884,10,cross_encoder
+adaptive,what temp does,0.6131471927654584,40.02545797266066,10,baseline
+adaptive,what kind of,0.0,33.35949999745935,10,baseline
+adaptive,how long is german measles contagious,1.0,109.1020000167191,10,cross_encoder
+adaptive,Adoption fees for,0.7725384908322216,87.57312496891245,10,cross_encoder
+adaptive,your pan,0.0,105.78016698127612,10,cross_encoder
+adaptive,price to install tile in shower,1.0,105.14933295780793,10,cross_encoder
+adaptive,rabbit fee,0.3605179623883701,27.992833987809718,10,baseline
+adaptive,day subutex,0.0,33.73841696884483,10,baseline
+adaptive,who coined the phrase it is what it is,0.2890648263178878,59.884624963160604,10,baseline
+adaptive,how long do,0.0,31.223999976646155,10,baseline
+adaptive,years nurses,0.7725384908322216,39.14112504571676,10,baseline
+adaptive,community rba,0.0,62.32645903946832,10,cross_encoder
+adaptive,how long cooking chicken legs in the big easy,0.0,63.61399998422712,10,ltr
+adaptive,diabetic type,1.0,91.28329099621624,10,cross_encoder
+hybrid,vitamins health benefits,0.0,147.75416697375476,10,hybrid
+hybrid,tesla battery technology,0.0,112.06070799380541,10,hybrid
+hybrid,climate change effects,0.0,110.7879169867374,10,hybrid
+hybrid,machine learning algorithms,0.2801179295352094,120.1394580421038,10,hybrid
+hybrid,cooking pasta recipes,0.0,120.70716702146456,10,hybrid
+hybrid,investment strategies,0.0,96.80200001457706,10,hybrid
+hybrid,quantum computing principles,0.0,101.1560830520466,10,hybrid
+hybrid,exercise weight loss,0.0,110.54725002031773,10,hybrid
+hybrid,renewable energy sources,0.0,110.6574580189772,10,hybrid
+hybrid,smartphone photography tips,0.0,121.50708300760016,10,hybrid
+hybrid,meditation stress relief,0.0,110.91666604625061,10,hybrid
+hybrid,artificial intelligence ethics,0.0,116.30470800446346,10,hybrid
+hybrid,travel budget planning,0.0,115.72987504769117,10,hybrid
+hybrid,home gardening vegetables,0.0,119.66341699007899,10,hybrid
+hybrid,sleep quality improvement,0.0,130.2634589956142,10,hybrid
+hybrid,electric vehicle charging,0.0,102.25704201729968,10,hybrid
+hybrid,online learning platforms,0.0,110.59941694838926,10,hybrid
+hybrid,sustainable fashion brands,0.0,113.10425004921854,10,hybrid
+hybrid,data privacy protection,0.0,113.77366603119299,10,hybrid
+hybrid,mental health therapy,0.0,108.3274589618668,10,hybrid
+hybrid,space exploration missions,0.0,130.81633299589157,10,hybrid
+hybrid,social media marketing,0.0,103.16404100740328,10,hybrid
+hybrid,protein rich foods,0.2575128302774072,141.1190410144627,10,hybrid
+hybrid,who coined the,0.22331370467629932,127.90591601515189,10,hybrid
+hybrid,cooked least,0.0,140.35674999468029,10,hybrid
+hybrid,traits that are derived from a common ancestor are said to be,0.0,182.58795799920335,10,hybrid
+hybrid,greek tragedy,0.5602358590704188,124.85212500905618,10,hybrid
+hybrid,james madison,0.7725384908322216,105.49958300543949,10,hybrid
+hybrid,what temp does,0.21840743681816416,123.91708302311599,10,hybrid
+hybrid,what kind of,0.0,133.58308403985575,10,hybrid
+hybrid,how long is german measles contagious,1.0,129.9725840217434,10,hybrid
+hybrid,Adoption fees for,0.3862692454161108,109.7173749585636,10,hybrid
+hybrid,your pan,0.0,133.52999999187887,10,hybrid
+hybrid,price to install tile in shower,0.0,135.99854201311246,10,hybrid
+hybrid,rabbit fee,0.3605179623883701,107.25425003329292,10,hybrid
+hybrid,day subutex,0.19342640361727081,117.68570798449218,10,hybrid
+hybrid,who coined the phrase it is what it is,0.0,149.12691595964134,10,hybrid
+hybrid,how long do,0.0,112.27195797255263,10,hybrid
+hybrid,years nurses,0.3862692454161108,123.83212498389184,10,hybrid
+hybrid,community rba,0.0,93.45516696339473,10,hybrid
+hybrid,how long cooking chicken legs in the big easy,0.0,153.00433296943083,10,hybrid
+hybrid,diabetic type,1.0,134.92704200325534,10,hybrid
+cross_encoder,vitamins health benefits,0.0,428.07449999963865,10,cross_encoder
+cross_encoder,tesla battery technology,0.0,498.2283749850467,10,cross_encoder
+cross_encoder,climate change effects,0.0,418.1418750085868,10,cross_encoder
+cross_encoder,machine learning algorithms,0.0,407.17041603056714,10,cross_encoder
+cross_encoder,cooking pasta recipes,0.0,1052.3298340267502,10,cross_encoder
+cross_encoder,investment strategies,0.2640681225725909,343.46254100091755,10,cross_encoder
+cross_encoder,quantum computing principles,0.0,169.91779196541756,10,cross_encoder
+cross_encoder,exercise weight loss,0.0,539.1359170316719,10,cross_encoder
+cross_encoder,renewable energy sources,0.0,397.2037499770522,10,cross_encoder
+cross_encoder,smartphone photography tips,0.0,210.94050002284348,10,cross_encoder
+cross_encoder,meditation stress relief,0.0,341.02716704364866,10,cross_encoder
+cross_encoder,artificial intelligence ethics,0.0,378.55387496529147,10,cross_encoder
+cross_encoder,travel budget planning,0.0,469.36745900893584,10,cross_encoder
+cross_encoder,home gardening vegetables,0.0,475.90962500544265,10,cross_encoder
+cross_encoder,sleep quality improvement,0.0,450.84466697881,10,cross_encoder
+cross_encoder,electric vehicle charging,0.0,443.9271669834852,10,cross_encoder
+cross_encoder,online learning platforms,0.0,432.9482080065645,10,cross_encoder
+cross_encoder,sustainable fashion brands,0.0,203.32000002963468,10,cross_encoder
+cross_encoder,data privacy protection,0.0,492.3382090055384,10,cross_encoder
+cross_encoder,mental health therapy,0.0,390.33720904262736,10,cross_encoder
+cross_encoder,space exploration missions,0.0,474.88312498899177,10,cross_encoder
+cross_encoder,social media marketing,0.0,422.7628330118023,10,cross_encoder
+cross_encoder,protein rich foods,0.33271421821083474,428.2620419980958,10,cross_encoder
+cross_encoder,who coined the,0.2575128302774072,508.76883399905637,10,cross_encoder
+cross_encoder,cooked least,0.0,433.1391250016168,10,cross_encoder
+cross_encoder,traits that are derived from a common ancestor are said to be,0.0,664.1971669741906,10,cross_encoder
+cross_encoder,greek tragedy,0.5602358590704188,506.1759169911966,10,cross_encoder
+cross_encoder,james madison,0.3862692454161108,399.7312500141561,10,cross_encoder
+cross_encoder,what temp does,0.38685280723454163,419.0942089771852,10,cross_encoder
+cross_encoder,what kind of,0.0,519.3164169904776,10,cross_encoder
+cross_encoder,how long is german measles contagious,1.0,496.20474997209385,10,cross_encoder
+cross_encoder,Adoption fees for,0.7725384908322216,463.29150098608807,10,cross_encoder
+cross_encoder,your pan,0.0,458.5029169684276,10,cross_encoder
+cross_encoder,price to install tile in shower,1.0,465.604999975767,10,cross_encoder
+cross_encoder,rabbit fee,0.3605179623883701,837.3357920208946,10,cross_encoder
+cross_encoder,day subutex,0.0,452.468833012972,10,cross_encoder
+cross_encoder,who coined the phrase it is what it is,0.0,532.5265830033459,10,cross_encoder
+cross_encoder,how long do,0.0,511.34625100530684,10,cross_encoder
+cross_encoder,years nurses,0.7725384908322216,484.91366603411734,10,cross_encoder
+cross_encoder,community rba,0.0,182.91758303530514,10,cross_encoder
+cross_encoder,how long cooking chicken legs in the big easy,0.31546487678572877,513.9265420148149,10,cross_encoder
+cross_encoder,diabetic type,1.0,487.0958340470679,10,cross_encoder

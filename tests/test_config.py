@@ -15,8 +15,10 @@ class ConfigTests(unittest.TestCase):
         self.assertEqual(config.es_scheme, "http")
         self.assertEqual(config.adaptive_easy_mode, "baseline")
         self.assertEqual(config.adaptive_hard_mode, "cross_encoder")
-        self.assertEqual(config.adaptive_hard_threshold, 0.6062)
-        self.assertEqual(config.adaptive_hard_top_k_cap, 5)
+        self.assertEqual(config.adaptive_hard_threshold, 0.30)
+        self.assertEqual(config.adaptive_hard_top_k_cap, 10)
+        self.assertEqual(config.adaptive_guardrails, frozenset({"hard_question_prefix_baseline"}))
+        self.assertEqual(config.adaptive_baseline_min_top_score, 40.0)
         self.assertEqual(config.recall_relax_threshold, 5)
         self.assertEqual(config.log_file, os.path.join("logs", "events.log"))
 
@@ -29,6 +31,8 @@ class ConfigTests(unittest.TestCase):
             "ADAPTIVE_HARD_MODE": "hybrid",
             "ADAPTIVE_HARD_THRESHOLD": "0.45",
             "ADAPTIVE_HARD_TOP_K_CAP": "30",
+            "ADAPTIVE_GUARDRAILS": "hard_question_prefix_baseline,hard_long_mix_ltr",
+            "ADAPTIVE_BASELINE_MIN_TOP_SCORE": "55.5",
             "RECALL_RELAX_THRESHOLD": "7",
             "SEARCHENGINE_LOG_DIR": "tmp_logs",
             "SEARCHENGINE_LOG_FILENAME": "runtime.log",
@@ -43,6 +47,11 @@ class ConfigTests(unittest.TestCase):
         self.assertEqual(config.adaptive_hard_mode, "hybrid")
         self.assertEqual(config.adaptive_hard_threshold, 0.45)
         self.assertEqual(config.adaptive_hard_top_k_cap, 30)
+        self.assertEqual(
+            config.adaptive_guardrails,
+            frozenset({"hard_question_prefix_baseline", "hard_long_mix_ltr"}),
+        )
+        self.assertEqual(config.adaptive_baseline_min_top_score, 55.5)
         self.assertEqual(config.recall_relax_threshold, 7)
         self.assertEqual(config.log_file, os.path.join("tmp_logs", "runtime.log"))
 

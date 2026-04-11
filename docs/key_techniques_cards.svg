@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360">
+  <defs>
+    <style>
+      text {
+        font-family: Arial, Helvetica, sans-serif;
+        fill: #1f2937;
+      }
+      .card {
+        stroke-width: 1.4;
+      }
+      .title {
+        font-size: 22px;
+        font-weight: 700;
+      }
+      .bullet {
+        font-size: 16px;
+        fill: #334155;
+      }
+      .dot {
+        font-size: 22px;
+        font-weight: 700;
+      }
+      .small-label {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.4px;
+        fill: #64748b;
+      }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="360" fill="none"/>
+
+  <!-- Card 1 -->
+  <rect x="55" y="42" width="330" height="270" rx="18" fill="#e6f5ef" stroke="#0b6e4f" class="card"/>
+  <text x="92" y="82" class="small-label">TECHNIQUE 01</text>
+  <text x="92" y="126" class="title">Query Processing</text>
+
+  <text x="92" y="181" class="dot" fill="#0b6e4f">•</text>
+  <text x="124" y="181" class="bullet">Query normalization</text>
+  <text x="92" y="225" class="dot" fill="#0b6e4f">•</text>
+  <text x="124" y="225" class="bullet">Ranking mode selection</text>
+  <text x="92" y="269" class="dot" fill="#0b6e4f">•</text>
+  <text x="124" y="269" class="bullet">Parameter parsing</text>
+
+  <!-- Card 2 -->
+  <rect x="435" y="42" width="330" height="270" rx="18" fill="#fef3c7" stroke="#d97706" class="card"/>
+  <text x="472" y="82" class="small-label">TECHNIQUE 02</text>
+  <text x="472" y="126" class="title">Adaptive Retrieval</text>
+
+  <text x="472" y="181" class="dot" fill="#d97706">•</text>
+  <text x="504" y="181" class="bullet">Strict recall first</text>
+  <text x="472" y="225" class="dot" fill="#d97706">•</text>
+  <text x="504" y="225" class="bullet">Relaxed fallback strategy</text>
+  <text x="472" y="269" class="dot" fill="#d97706">•</text>
+  <text x="504" y="261" class="bullet">Candidate generation</text>
+  <text x="504" y="284" class="bullet">in Elasticsearch</text>
+
+  <!-- Card 3 -->
+  <rect x="815" y="42" width="330" height="270" rx="18" fill="#dbeafe" stroke="#2563eb" class="card"/>
+  <text x="852" y="82" class="small-label">TECHNIQUE 03</text>
+  <text x="852" y="126" class="title">Ranking Strategy</text>
+
+  <text x="852" y="181" class="dot" fill="#2563eb">•</text>
+  <text x="884" y="181" class="bullet">Baseline lexical scoring</text>
+  <text x="852" y="225" class="dot" fill="#2563eb">•</text>
+  <text x="884" y="225" class="bullet">LTR / LambdaMART</text>
+  <text x="852" y="269" class="dot" fill="#2563eb">•</text>
+  <text x="884" y="269" class="bullet">Semantic / Hybrid reranking</text>
+</svg>

@@ -1,0 +1,645 @@
+{
+  "generated_at": "2026-04-11T16:36:08.602206+00:00",
+  "rows": [
+    {
+      "policy": "baseline_or_ce_t0.3_k50",
+      "threshold": 0.3,
+      "ce_top_n": 50,
+      "query_count": 42,
+      "ndcg@10": 0.9146176909617115,
+      "mrr@10": 0.9791666666666666,
+      "recall@10": 0.605024848090152,
+      "latency_avg_ms": 411.42771345663016,
+      "latency_p50_ms": 435.6277295446489,
+      "latency_p95_ms": 542.2038325283211,
+      "selected_counts": {
+        "cross_encoder": 41,
+        "baseline": 1
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k10",
+      "threshold": 0.3,
+      "ce_top_n": 10,
+      "query_count": 42,
+      "ndcg@10": 0.8856708515835541,
+      "mrr@10": 0.9785714285714286,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 104.52473016145329,
+      "latency_p50_ms": 102.35777101479471,
+      "latency_p95_ms": 129.58545593428425,
+      "selected_counts": {
+        "cross_encoder": 41,
+        "baseline": 1
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k5",
+      "threshold": 0.3,
+      "ce_top_n": 5,
+      "query_count": 42,
+      "ndcg@10": 0.8675245651514238,
+      "mrr@10": 0.9587301587301587,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 71.26729764526577,
+      "latency_p50_ms": 68.50660449708812,
+      "latency_p95_ms": 84.5931066229241,
+      "selected_counts": {
+        "cross_encoder": 41,
+        "baseline": 1
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k50",
+      "threshold": 0.6062,
+      "ce_top_n": 50,
+      "query_count": 42,
+      "ndcg@10": 0.8618870321711644,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 154.14624709713584,
+      "latency_p50_ms": 18.09056251659058,
+      "latency_p95_ms": 514.8952902207384,
+      "selected_counts": {
+        "baseline": 29,
+        "cross_encoder": 13
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6_k50",
+      "threshold": 0.6,
+      "ce_top_n": 50,
+      "query_count": 42,
+      "ndcg@10": 0.8618870321711644,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 185.47565286003407,
+      "latency_p50_ms": 20.857499999692664,
+      "latency_p95_ms": 514.8952902207384,
+      "selected_counts": {
+        "baseline": 26,
+        "cross_encoder": 16
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k50",
+      "threshold": 0.4,
+      "ce_top_n": 50,
+      "query_count": 42,
+      "ndcg@10": 0.8618870321711644,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 196.37578281219163,
+      "latency_p50_ms": 21.90985399647616,
+      "latency_p95_ms": 514.8952902207384,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k50",
+      "threshold": 0.5,
+      "ce_top_n": 50,
+      "query_count": 42,
+      "ndcg@10": 0.8618870321711644,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 196.37578281219163,
+      "latency_p50_ms": 21.90985399647616,
+      "latency_p95_ms": 514.8952902207384,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.55_k50",
+      "threshold": 0.55,
+      "ce_top_n": 50,
+      "query_count": 42,
+      "ndcg@10": 0.8618870321711644,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 196.37578281219163,
+      "latency_p50_ms": 21.90985399647616,
+      "latency_p95_ms": 514.8952902207384,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k10",
+      "threshold": 0.8,
+      "ce_top_n": 10,
+      "query_count": 42,
+      "ndcg@10": 0.8593972489642554,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 25.711530761327595,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 100.89194374158961,
+      "selected_counts": {
+        "baseline": 39,
+        "cross_encoder": 3
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.75_k10",
+      "threshold": 0.75,
+      "ce_top_n": 10,
+      "query_count": 42,
+      "ndcg@10": 0.8593972489642554,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 30.24387797562494,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 120.73581902950535,
+      "selected_counts": {
+        "baseline": 37,
+        "cross_encoder": 5
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.65_k10",
+      "threshold": 0.65,
+      "ce_top_n": 10,
+      "query_count": 42,
+      "ndcg@10": 0.8593972489642554,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 33.11218352228891,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 123.9640631363727,
+      "selected_counts": {
+        "baseline": 36,
+        "cross_encoder": 6
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k10",
+      "threshold": 0.7,
+      "ce_top_n": 10,
+      "query_count": 42,
+      "ndcg@10": 0.8593972489642554,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 33.11218352228891,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 123.9640631363727,
+      "selected_counts": {
+        "baseline": 36,
+        "cross_encoder": 6
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k10",
+      "threshold": 0.6062,
+      "ce_top_n": 10,
+      "query_count": 42,
+      "ndcg@10": 0.8593972489642554,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 47.46410811674737,
+      "latency_p50_ms": 18.09056251659058,
+      "latency_p95_ms": 123.9640631363727,
+      "selected_counts": {
+        "baseline": 29,
+        "cross_encoder": 13
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6_k10",
+      "threshold": 0.6,
+      "ce_top_n": 10,
+      "query_count": 42,
+      "ndcg@10": 0.8593972489642554,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 53.94077578343318,
+      "latency_p50_ms": 20.857499999692664,
+      "latency_p95_ms": 123.9640631363727,
+      "selected_counts": {
+        "baseline": 26,
+        "cross_encoder": 16
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k10",
+      "threshold": 0.4,
+      "ce_top_n": 10,
+      "query_count": 42,
+      "ndcg@10": 0.8593972489642554,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 56.08482637797438,
+      "latency_p50_ms": 21.90985399647616,
+      "latency_p95_ms": 123.9640631363727,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k10",
+      "threshold": 0.5,
+      "ce_top_n": 10,
+      "query_count": 42,
+      "ndcg@10": 0.8593972489642554,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 56.08482637797438,
+      "latency_p50_ms": 21.90985399647616,
+      "latency_p95_ms": 123.9640631363727,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.55_k10",
+      "threshold": 0.55,
+      "ce_top_n": 10,
+      "query_count": 42,
+      "ndcg@10": 0.8593972489642554,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 56.08482637797438,
+      "latency_p50_ms": 21.90985399647616,
+      "latency_p95_ms": 123.9640631363727,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k50",
+      "threshold": 0.8,
+      "ce_top_n": 50,
+      "query_count": 42,
+      "ndcg@10": 0.8593239420648457,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 52.486013905200664,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 451.8943812639901,
+      "selected_counts": {
+        "baseline": 39,
+        "cross_encoder": 3
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k5",
+      "threshold": 0.8,
+      "ce_top_n": 5,
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 22.49642657226927,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 67.41604139097034,
+      "selected_counts": {
+        "baseline": 39,
+        "cross_encoder": 3
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.75_k50",
+      "threshold": 0.75,
+      "ce_top_n": 50,
+      "query_count": 42,
+      "ndcg@10": 0.8584718967278688,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 78.3486260250876,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 512.2166773915524,
+      "selected_counts": {
+        "baseline": 37,
+        "cross_encoder": 5
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.65_k50",
+      "threshold": 0.65,
+      "ce_top_n": 50,
+      "query_count": 42,
+      "ndcg@10": 0.8584718967278688,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 88.92648911985036,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 512.2166773915524,
+      "selected_counts": {
+        "baseline": 36,
+        "cross_encoder": 6
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k50",
+      "threshold": 0.7,
+      "ce_top_n": 50,
+      "query_count": 42,
+      "ndcg@10": 0.8584718967278688,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 88.92648911985036,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 512.2166773915524,
+      "selected_counts": {
+        "baseline": 36,
+        "cross_encoder": 6
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.8_k20",
+      "threshold": 0.8,
+      "ce_top_n": 20,
+      "query_count": 42,
+      "ndcg@10": 0.8584665496081995,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5962766518419558,
+      "latency_avg_ms": 32.2492132891923,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 183.0821827636095,
+      "selected_counts": {
+        "baseline": 39,
+        "cross_encoder": 3
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.75_k20",
+      "threshold": 0.75,
+      "ce_top_n": 20,
+      "query_count": 42,
+      "ndcg@10": 0.8568134252763715,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5949539005192045,
+      "latency_avg_ms": 41.28987995430916,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 196.307800640352,
+      "selected_counts": {
+        "baseline": 37,
+        "cross_encoder": 5
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.75_k5",
+      "threshold": 0.75,
+      "ce_top_n": 5,
+      "query_count": 42,
+      "ndcg@10": 0.855541083612314,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 24.85602776176252,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 74.32642735366242,
+      "selected_counts": {
+        "baseline": 37,
+        "cross_encoder": 5
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.65_k5",
+      "threshold": 0.65,
+      "ce_top_n": 5,
+      "query_count": 42,
+      "ndcg@10": 0.855541083612314,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 26.91427678551658,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 75.93411695270332,
+      "selected_counts": {
+        "baseline": 36,
+        "cross_encoder": 6
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k5",
+      "threshold": 0.7,
+      "ce_top_n": 5,
+      "query_count": 42,
+      "ndcg@10": 0.855541083612314,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 26.91427678551658,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 75.93411695270332,
+      "selected_counts": {
+        "baseline": 36,
+        "cross_encoder": 6
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k5",
+      "threshold": 0.6062,
+      "ce_top_n": 5,
+      "query_count": 42,
+      "ndcg@10": 0.855541083612314,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 35.22593352439193,
+      "latency_p50_ms": 18.09056251659058,
+      "latency_p95_ms": 75.93411695270332,
+      "selected_counts": {
+        "baseline": 29,
+        "cross_encoder": 13
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6_k5",
+      "threshold": 0.6,
+      "ce_top_n": 5,
+      "query_count": 42,
+      "ndcg@10": 0.855541083612314,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 39.06429959516529,
+      "latency_p50_ms": 20.857499999692664,
+      "latency_p95_ms": 75.99147110595368,
+      "selected_counts": {
+        "baseline": 26,
+        "cross_encoder": 16
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k5",
+      "threshold": 0.4,
+      "ce_top_n": 5,
+      "query_count": 42,
+      "ndcg@10": 0.855541083612314,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 40.18015673777665,
+      "latency_p50_ms": 21.90985399647616,
+      "latency_p95_ms": 75.99147110595368,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k5",
+      "threshold": 0.5,
+      "ce_top_n": 5,
+      "query_count": 42,
+      "ndcg@10": 0.855541083612314,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 40.18015673777665,
+      "latency_p50_ms": 21.90985399647616,
+      "latency_p95_ms": 75.99147110595368,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.55_k5",
+      "threshold": 0.55,
+      "ce_top_n": 5,
+      "query_count": 42,
+      "ndcg@10": 0.855541083612314,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 40.18015673777665,
+      "latency_p50_ms": 21.90985399647616,
+      "latency_p95_ms": 75.99147110595368,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.65_k20",
+      "threshold": 0.65,
+      "ce_top_n": 20,
+      "query_count": 42,
+      "ndcg@10": 0.8552986446049677,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5934658052811093,
+      "latency_avg_ms": 45.93899304884309,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 221.05214550101653,
+      "selected_counts": {
+        "baseline": 36,
+        "cross_encoder": 6
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.7_k20",
+      "threshold": 0.7,
+      "ce_top_n": 20,
+      "query_count": 42,
+      "ndcg@10": 0.8552986446049677,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5934658052811093,
+      "latency_avg_ms": 45.93899304884309,
+      "latency_p50_ms": 16.835249989526346,
+      "latency_p95_ms": 221.05214550101653,
+      "selected_counts": {
+        "baseline": 36,
+        "cross_encoder": 6
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.3_k20",
+      "threshold": 0.3,
+      "ce_top_n": 20,
+      "query_count": 42,
+      "ndcg@10": 0.8529225772694935,
+      "mrr@10": 0.9821428571428571,
+      "recall@10": 0.5463441515845945,
+      "latency_avg_ms": 182.57311914099515,
+      "latency_p50_ms": 178.30077151302248,
+      "latency_p95_ms": 239.7959437628742,
+      "selected_counts": {
+        "cross_encoder": 41,
+        "baseline": 1
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6062_k20",
+      "threshold": 0.6062,
+      "ce_top_n": 20,
+      "query_count": 42,
+      "ndcg@10": 0.8396812642025169,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5810886155583818,
+      "latency_avg_ms": 73.78495435668377,
+      "latency_p50_ms": 18.09056251659058,
+      "latency_p95_ms": 221.36910999834063,
+      "selected_counts": {
+        "baseline": 29,
+        "cross_encoder": 13
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.6_k20",
+      "threshold": 0.6,
+      "ce_top_n": 20,
+      "query_count": 42,
+      "ndcg@10": 0.83645065835987,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5781124250821913,
+      "latency_avg_ms": 86.39151987985575,
+      "latency_p50_ms": 20.857499999692664,
+      "latency_p95_ms": 221.75904964969956,
+      "selected_counts": {
+        "baseline": 26,
+        "cross_encoder": 16
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.4_k20",
+      "threshold": 0.4,
+      "ce_top_n": 20,
+      "query_count": 42,
+      "ndcg@10": 0.83645065835987,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5781124250821913,
+      "latency_avg_ms": 90.73934628395364,
+      "latency_p50_ms": 21.90985399647616,
+      "latency_p95_ms": 221.75904964969956,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.5_k20",
+      "threshold": 0.5,
+      "ce_top_n": 20,
+      "query_count": 42,
+      "ndcg@10": 0.83645065835987,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5781124250821913,
+      "latency_avg_ms": 90.73934628395364,
+      "latency_p50_ms": 21.90985399647616,
+      "latency_p95_ms": 221.75904964969956,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    },
+    {
+      "policy": "baseline_or_ce_t0.55_k20",
+      "threshold": 0.55,
+      "ce_top_n": 20,
+      "query_count": 42,
+      "ndcg@10": 0.83645065835987,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5781124250821913,
+      "latency_avg_ms": 90.73934628395364,
+      "latency_p50_ms": 21.90985399647616,
+      "latency_p95_ms": 221.75904964969956,
+      "selected_counts": {
+        "baseline": 25,
+        "cross_encoder": 17
+      }
+    }
+  ]
+}

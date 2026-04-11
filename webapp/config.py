@@ -4,8 +4,10 @@ from dataclasses import dataclass
 
 ALLOWED_ROUTER_MODES = frozenset({"baseline", "ltr", "cross_encoder", "hybrid"})
 DEFAULT_RECALL_RELAX_THRESHOLD = 5
-DEFAULT_ADAPTIVE_HARD_THRESHOLD = 0.6062
-DEFAULT_ADAPTIVE_HARD_TOP_K_CAP = 5
+DEFAULT_ADAPTIVE_HARD_THRESHOLD = 0.30
+DEFAULT_ADAPTIVE_HARD_TOP_K_CAP = 10
+DEFAULT_ADAPTIVE_GUARDRAILS = "hard_question_prefix_baseline"
+DEFAULT_ADAPTIVE_BASELINE_MIN_TOP_SCORE = 40.0
 
 
 def _parse_int(value, default, minimum=None):
@@ -37,6 +39,20 @@ def _normalize_router_mode(value, default):
     return normalized
 
 
+def _parse_guardrails(value, default):
+    raw = default if value is None else value
+    normalized = str(raw).strip().lower()
+    if normalized in {"all", "*"}:
+        return None
+    if normalized in {"", "none", "off", "disabled"}:
+        return frozenset()
+    return frozenset(
+        item.strip()
+        for item in str(raw).split(",")
+        if item.strip()
+    )
+
+
 @dataclass(frozen=True)
 class SearchEngineConfig:
     es_host: str
@@ -53,6 +69,8 @@ class SearchEngineConfig:
     adaptive_hard_mode: str
     adaptive_hard_threshold: float
     adaptive_hard_top_k_cap: int
+    adaptive_guardrails: frozenset | None
+    adaptive_baseline_min_top_score: float
     recall_relax_threshold: int
 
     @property
@@ -123,6 +141,15 @@ def load_config(
             os.getenv("ADAPTIVE_HARD_TOP_K_CAP"),
             DEFAULT_ADAPTIVE_HARD_TOP_K_CAP,
             minimum=1,
+        ),
+        adaptive_guardrails=_parse_guardrails(
+            os.getenv("ADAPTIVE_GUARDRAILS"),
+            DEFAULT_ADAPTIVE_GUARDRAILS,
+        ),
+        adaptive_baseline_min_top_score=_parse_float(
+            os.getenv("ADAPTIVE_BASELINE_MIN_TOP_SCORE"),
+            DEFAULT_ADAPTIVE_BASELINE_MIN_TOP_SCORE,
+            minimum=0.0,
         ),
         recall_relax_threshold=_parse_int(
             os.getenv("RECALL_RELAX_THRESHOLD"),

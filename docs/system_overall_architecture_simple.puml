@@ -1,0 +1,60 @@
+@startuml
+!pragma layout smetana
+title 搜索引擎系统整体架构（演示版）
+
+skinparam backgroundColor #FFFDFA
+skinparam shadowing false
+skinparam roundcorner 18
+skinparam defaultFontName "Microsoft YaHei"
+skinparam defaultTextAlignment center
+skinparam ArrowColor #334155
+skinparam ArrowThickness 1.3
+skinparam linetype ortho
+skinparam rectangle {
+  BorderColor #334155
+  FontColor #1F2937
+}
+skinparam package {
+  BorderColor transparent
+  FontColor #1F2937
+  BackgroundColor transparent
+}
+
+actor "用户" as User
+
+rectangle "前端界面\n搜索输入 / 结果展示\n排序模式切换" as Frontend #E6F5EF
+
+rectangle "Flask 后端\n搜索接口 / 日志接口\n流程调度" as Backend #DBEAFE
+
+rectangle "Elasticsearch\n文档索引\n关键词召回" as ES #FEF3C7
+
+rectangle "排序优化模块" as Ranking #FFE4E6 {
+  rectangle "Baseline\nES 原始分" as Baseline #FFFFFF
+  rectangle "LTR\nLambdaMART" as LTR #FFFFFF
+  rectangle "Semantic Ranking\nCross-Encoder" as CE #FFFFFF
+  rectangle "Adaptive Router\n动态选择排序策略" as Router #FFFFFF
+}
+
+rectangle "日志与评测\n查询日志 / 点击反馈\n性能与问卷分析" as Analysis #ECFDF5
+
+rectangle "离线数据处理\nMS MARCO\n清洗 / 建索引 / 训练" as Offline #F3E8FF
+
+User -right-> Frontend : 输入查询
+Frontend -right-> Backend : /search 请求
+Backend -right-> ES : 候选召回
+ES -left-> Backend : Top-N 候选
+Backend -down-> Ranking : 重排序
+Ranking -up-> Backend : Top-K 结果
+Backend -left-> Frontend : 返回结果
+Frontend -down-> Analysis : 用户行为日志
+Backend -down-> Analysis : 时延 / 路由日志
+Offline -up-> ES : 批量导入文档
+Offline -up-> Ranking : 训练 LTR / Router
+Analysis -left-> Offline : 反馈数据构建
+
+note bottom of Ranking
+核心主线：先召回，再重排；
+Adaptive 根据查询选择合适排序路径。
+end note
+
+@enduml

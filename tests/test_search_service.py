@@ -18,7 +18,7 @@ class DummySearchPipeline:
             }
         )
 
-    def resolve_adaptive_route(self, query):
+    def resolve_adaptive_route(self, query, results=None):
         self.resolved_queries.append(query)
         return {
             "route_label": "easy",

@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#334155"/>
+    </marker>
+    <style>
+      text {
+        font-family: Arial, Helvetica, sans-serif;
+        fill: #1f2937;
+      }
+      .box-title {
+        font-size: 15px;
+        font-weight: 700;
+      }
+      .box-sub {
+        font-size: 13px;
+        fill: #475569;
+      }
+      .label {
+        font-size: 12px;
+        fill: #475569;
+      }
+      .line {
+        fill: none;
+        stroke: #334155;
+        stroke-width: 1.6;
+        stroke-linejoin: miter;
+        stroke-linecap: square;
+        marker-end: url(#arrow);
+      }
+      .thin {
+        fill: none;
+        stroke: #64748b;
+        stroke-width: 1.2;
+        stroke-linejoin: miter;
+        stroke-linecap: square;
+        marker-end: url(#arrow);
+      }
+      .dash {
+        fill: none;
+        stroke: #64748b;
+        stroke-width: 1.3;
+        stroke-dasharray: 6 5;
+        stroke-linejoin: miter;
+        stroke-linecap: square;
+        marker-end: url(#arrow);
+      }
+      .query { fill: #e6f5ef; stroke: #0b6e4f; stroke-width: 1.3; }
+      .retrieval { fill: #fef3c7; stroke: #d97706; stroke-width: 1.3; }
+      .router { fill: #fff7ed; stroke: #ea580c; stroke-width: 1.3; }
+      .rank { fill: #ffe4e6; stroke: #e11d48; stroke-width: 1.3; }
+      .result { fill: #dbeafe; stroke: #2563eb; stroke-width: 1.3; }
+      .log { fill: #f3e8ff; stroke: #7c3aed; stroke-width: 1.3; }
+      .group {
+        fill: #f8fafc;
+        stroke: #cbd5e1;
+        stroke-width: 1.1;
+      }
+      .group-title {
+        font-size: 14px;
+        font-weight: 700;
+        fill: #475569;
+      }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="520" fill="none"/>
+
+  <!-- Main pipeline -->
+  <rect x="45" y="80" width="170" height="62" rx="12" class="query"/>
+  <text x="130" y="105" text-anchor="middle" class="box-title">User Query</text>
+  <text x="130" y="125" text-anchor="middle" class="box-sub">q + ranking mode</text>
+
+  <rect x="265" y="80" width="170" height="62" rx="12" class="query"/>
+  <text x="350" y="105" text-anchor="middle" class="box-title">Query Processing</text>
+  <text x="350" y="125" text-anchor="middle" class="box-sub">mode / params</text>
+
+  <rect x="485" y="80" width="190" height="62" rx="12" class="retrieval"/>
+  <text x="580" y="105" text-anchor="middle" class="box-title">ES Candidate Recall</text>
+  <text x="580" y="125" text-anchor="middle" class="box-sub">strict + relaxed fallback</text>
+
+  <rect x="725" y="80" width="180" height="62" rx="12" class="router"/>
+  <text x="815" y="105" text-anchor="middle" class="box-title">Adaptive Router</text>
+  <text x="815" y="125" text-anchor="middle" class="box-sub">easy / hard decision</text>
+
+  <rect x="955" y="80" width="190" height="62" rx="12" class="result"/>
+  <text x="1050" y="105" text-anchor="middle" class="box-title">Top-K Results</text>
+  <text x="1050" y="125" text-anchor="middle" class="box-sub">ranked search response</text>
+
+  <line x1="215" y1="111" x2="265" y2="111" class="line"/>
+  <line x1="435" y1="111" x2="485" y2="111" class="line"/>
+  <line x1="675" y1="111" x2="725" y2="111" class="line"/>
+
+  <!-- Ranking strategy group -->
+  <rect x="265" y="220" width="640" height="170" rx="16" class="group"/>
+  <text x="285" y="250" class="group-title">Ranking Strategy Layer</text>
+
+  <rect x="305" y="285" width="130" height="56" rx="10" class="rank"/>
+  <text x="370" y="308" text-anchor="middle" class="box-title">Baseline</text>
+  <text x="370" y="327" text-anchor="middle" class="box-sub">ES score</text>
+
+  <rect x="470" y="285" width="130" height="56" rx="10" class="rank"/>
+  <text x="535" y="308" text-anchor="middle" class="box-title">LTR</text>
+  <text x="535" y="327" text-anchor="middle" class="box-sub">LambdaMART</text>
+
+  <rect x="635" y="285" width="130" height="56" rx="10" class="rank"/>
+  <text x="700" y="308" text-anchor="middle" class="box-title">Semantic</text>
+  <text x="700" y="327" text-anchor="middle" class="box-sub">Cross-Encoder</text>
+
+  <rect x="800" y="285" width="80" height="56" rx="10" class="rank"/>
+  <text x="840" y="308" text-anchor="middle" class="box-title">Hybrid</text>
+  <text x="840" y="327" text-anchor="middle" class="box-sub">fusion</text>
+
+  <!-- Router to strategies -->
+  <path d="M815 142 L815 190 L370 190 L370 285" class="thin"/>
+  <path d="M815 190 L535 190 L535 285" class="thin"/>
+  <path d="M815 190 L700 190 L700 285" class="thin"/>
+  <path d="M815 190 L840 190 L840 285" class="thin"/>
+
+  <!-- Strategies to result -->
+  <path d="M370 341 L370 430 L1050 430 L1050 142" class="line"/>
+  <path d="M535 341 L535 430" class="thin"/>
+  <path d="M700 341 L700 430" class="thin"/>
+  <path d="M840 341 L840 430" class="thin"/>
+
+  <!-- Logging / evaluation -->
+  <rect x="45" y="410" width="210" height="62" rx="12" class="log"/>
+  <text x="150" y="435" text-anchor="middle" class="box-title">Logs &amp; Evaluation</text>
+  <text x="150" y="455" text-anchor="middle" class="box-sub">latency / route / click</text>
+
+  <path d="M350 142 L350 180 L150 180 L150 410" class="dash"/>
+  <path d="M1050 142 L1050 180 L150 180" class="dash"/>
+
+  <!-- Labels -->
+  <text x="228" y="101" class="label">submit</text>
+  <text x="448" y="101" class="label">build query</text>
+  <text x="687" y="101" class="label">candidates</text>
+  <text x="826" y="182" class="label">select mode</text>
+  <text x="952" y="421" class="label">ranked output</text>
+</svg>
