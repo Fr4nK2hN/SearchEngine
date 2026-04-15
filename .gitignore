@@ -56,6 +56,10 @@ docker-compose.override.yml
 
 # Project-specific large artifacts
 models/
+!models/
+models/*
+!models/ltr_model_manual.pkl
+!models/query_router_retrieval.pkl
 data/msmarco_*.json
 data/*processed.json
 data/ltr_training_data.json

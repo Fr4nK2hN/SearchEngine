@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-04-11T19:38:08.595979+00:00",
+  "judgments": "reports/manual_relevance_pool_20260411/judgment_pool.csv",
+  "model_output": "models/ltr_model_manual.pkl",
+  "training_data": "reports/manual_relevance_pool_20260411/manual_ltr_training/manual_ltr_training_data.json",
+  "query_count": 42,
+  "document_count": 741,
+  "label_distribution": {
+    "0": 116,
+    "1": 255,
+    "2": 293,
+    "3": 77
+  },
+  "diagnostics": {
+    "missing_positive_labels": 0
+  },
+  "split": {
+    "seed": 42,
+    "train_indices": [
+      9,
+      3,
+      10,
+      26,
+      37,
+      18,
+      39,
+      25,
+      4,
+      33,
+      22,
+      11,
+      29,
+      21,
+      12,
+      24,
+      35,
+      36,
+      32,
+      13,
+      23,
+      20,
+      28,
+      38,
+      30,
+      19,
+      16,
+      41,
+      34,
+      31,
+      0,
+      2,
+      27
+    ],
+    "val_indices": [
+      5,
+      6,
+      8,
+      14
+    ],
+    "test_indices": [
+      15,
+      17,
+      1,
+      7,
+      40
+    ]
+  },
+  "params": {
+    "candidate_size": 50,
+    "n_estimators": 80,
+    "learning_rate": 0.05,
+    "max_depth": 4,
+    "seed": 42
+  }
+}

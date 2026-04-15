@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+<defs>
+<filter id="shadow" x="-15%" y="-15%" width="130%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#243047" flood-opacity="0.10"/></filter>
+</defs>
+<text x="70" y="72" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#2F3A98">Algorithm Design and Complexity Analysis</text>
+<rect x="70" y="96" width="1140" height="7" rx="3.5" fill="#D9E8F6"/>
+<rect x="70" y="140" width="690" height="470" rx="24" fill="#F8FBFF" stroke="#D5DFEC" stroke-width="2" filter="url(#shadow)"/>
+<text x="104" y="190" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="28" font-weight="700" fill="#243047">Ranking Cost Comparison</text>
+<rect x="104" y="225" width="610" height="44" rx="10" fill="#EAF1F8"/>
+<text x="122" y="254" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#243047">Method</text>
+<text x="332" y="254" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#243047">Additional Ranking Cost</text>
+<text x="662" y="254" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#243047">Use Case</text>
+<rect x="104" y="287" width="610" height="58" rx="16" fill="#EEF5FF" stroke="#D5DFEC" stroke-width="1"/>
+<rect x="118" y="300" width="8" height="32" rx="4" fill="#7EA6D8"/>
+<text x="138" y="323" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#243047">Baseline</text>
+<text x="332" y="323" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#243047">O(1) after ES retrieval</text>
+<text x="662" y="323" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#667085">fast path</text>
+<rect x="104" y="363" width="610" height="58" rx="16" fill="#FFF6DC" stroke="#D5DFEC" stroke-width="1"/>
+<rect x="118" y="376" width="8" height="32" rx="4" fill="#F2B84B"/>
+<text x="138" y="399" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#243047">LTR</text>
+<text x="332" y="399" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#243047">O(kF + k log k)</text>
+<text x="662" y="399" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#667085">feature rerank</text>
+<rect x="104" y="439" width="610" height="58" rx="16" fill="#FDEDEA" stroke="#D5DFEC" stroke-width="1"/>
+<rect x="118" y="452" width="8" height="32" rx="4" fill="#E86E5A"/>
+<text x="138" y="475" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#243047">Cross-Encoder</text>
+<text x="332" y="475" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#243047">O(k · L² · H)</text>
+<text x="662" y="475" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#667085">semantic rerank</text>
+<rect x="104" y="515" width="610" height="58" rx="16" fill="#EAF7F0" stroke="#D5DFEC" stroke-width="1"/>
+<rect x="118" y="528" width="8" height="32" rx="4" fill="#2F9E62"/>
+<text x="138" y="551" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#243047">Adaptive</text>
+<text x="332" y="551" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#243047">O(router) + p · O(kF + k log k)</text>
+<text x="662" y="551" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#667085">selected path</text>
+<text x="104" y="584" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="16" fill="#667085">k: reranked candidates   F: ranking features   L: sequence length   H: Transformer hidden computation</text>
+<rect x="800" y="140" width="410" height="470" rx="24" fill="#F8FBFF" stroke="#D5DFEC" stroke-width="2" filter="url(#shadow)"/>
+<text x="834" y="190" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="28" font-weight="700" fill="#243047">Adaptive Routing</text>
+<rect x="834" y="222" width="342" height="118" rx="18" fill="#EAF7F0" stroke="#A8DDBF" stroke-width="2"/>
+<text x="858" y="266" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#2F9E62">I_hard(q) = 1</text>
+<text x="858" y="302" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#243047">if P_hard(q) ≥ 0.60</text>
+<text x="858" y="326" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="18" fill="#667085">otherwise route to Baseline</text>
+<rect x="834" y="370" width="342" height="122" rx="18" fill="#FFFFFF" stroke="#D5DFEC" stroke-width="1.5"/>
+<text x="858" y="414" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#243047">T_adaptive(q)</text>
+<text x="858" y="452" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#243047">= T_ES(q) + T_router(q)</text>
+<text x="858" y="482" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#243047">+ I_hard(q) · O(kF + k log k)</text>
+<rect x="834" y="522" width="342" height="54" rx="16" fill="#F7FAFC" stroke="#D5DFEC" stroke-width="1"/>
+<text x="858" y="556" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#243047">Evaluation route split:</text>
+<text x="1055" y="556" text-anchor="middle" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#2F9E62">16 LTR / 42 queries</text>
+<rect x="70" y="635" width="1140" height="52" rx="18" fill="#F3F7FB" stroke="#D5DFEC" stroke-width="1"/>
+<text x="100" y="668" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#243047">Key idea:</text>
+<text x="205" y="668" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="21" fill="#243047">Apply LTR only to hard queries, preserving ranking quality while avoiding unnecessary reranking cost.</text>
+</svg>

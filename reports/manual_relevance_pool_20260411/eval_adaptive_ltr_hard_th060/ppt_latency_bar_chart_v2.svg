@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+<text x="120" y="58" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="34" font-weight="700" fill="#243047">Average Query Latency</text>
+<line x1="120" y1="602.00" x2="1200" y2="602.00" stroke="#DCE4EF" stroke-width="1"/>
+<text x="102" y="608.00" text-anchor="end" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="16" fill="#667085">0.00</text>
+<line x1="120" y1="517.00" x2="1200" y2="517.00" stroke="#DCE4EF" stroke-width="1"/>
+<text x="102" y="523.00" text-anchor="end" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="16" fill="#667085">15.00</text>
+<line x1="120" y1="432.00" x2="1200" y2="432.00" stroke="#DCE4EF" stroke-width="1"/>
+<text x="102" y="438.00" text-anchor="end" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="16" fill="#667085">30.00</text>
+<line x1="120" y1="347.00" x2="1200" y2="347.00" stroke="#DCE4EF" stroke-width="1"/>
+<text x="102" y="353.00" text-anchor="end" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="16" fill="#667085">45.00</text>
+<line x1="120" y1="262.00" x2="1200" y2="262.00" stroke="#DCE4EF" stroke-width="1"/>
+<text x="102" y="268.00" text-anchor="end" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="16" fill="#667085">60.00</text>
+<line x1="120" y1="177.00" x2="1200" y2="177.00" stroke="#DCE4EF" stroke-width="1"/>
+<text x="102" y="183.00" text-anchor="end" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="16" fill="#667085">75.00</text>
+<line x1="120" y1="92.00" x2="1200" y2="92.00" stroke="#DCE4EF" stroke-width="1"/>
+<text x="102" y="98.00" text-anchor="end" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="16" fill="#667085">90.00</text>
+<line x1="120" y1="92" x2="120" y2="602" stroke="#9AA8BA" stroke-width="1.4"/>
+<line x1="120" y1="602" x2="1200" y2="602" stroke="#9AA8BA" stroke-width="1.4"/>
+<text x="42" y="347.0" text-anchor="middle" transform="rotate(-90 42 347.0)" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#667085">Average Response Time (ms)</text>
+<rect x="192.00" y="519.61" width="126" height="82.39" rx="8" ry="8" fill="#7EA6D8" opacity="0.88" stroke="#7EA6D8" stroke-width="0"/>
+<text x="255.00" y="503.61" text-anchor="middle" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#243047">14.54 ms</text>
+<text x="255.00" y="644" text-anchor="middle" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#243047">Baseline</text>
+<rect x="462.00" y="478.50" width="126" height="123.50" rx="8" ry="8" fill="#F2B84B" opacity="0.88" stroke="#F2B84B" stroke-width="0"/>
+<text x="525.00" y="462.50" text-anchor="middle" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#243047">21.79 ms</text>
+<text x="525.00" y="644" text-anchor="middle" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#243047">LTR</text>
+<rect x="732.00" y="518.64" width="126" height="83.36" rx="8" ry="8" fill="#3BAA6F" opacity="1" stroke="#1E7F54" stroke-width="3"/>
+<text x="795.00" y="502.64" text-anchor="middle" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#243047">14.71 ms</text>
+<text x="795.00" y="644" text-anchor="middle" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#243047">Adaptive</text>
+<rect x="731.00" y="660" width="128" height="28" rx="14" fill="#E9F7EF" stroke="#A7DEC0" stroke-width="1"/>
+<text x="795.00" y="680" text-anchor="middle" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#1E7F54">Selected</text>
+<rect x="1002.00" y="118.30" width="126" height="483.70" rx="8" ry="8" fill="#E86E5A" opacity="0.88" stroke="#E86E5A" stroke-width="0"/>
+<text x="1065.00" y="118.00" text-anchor="middle" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#243047">85.36 ms</text>
+<text x="1065.00" y="644" text-anchor="middle" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#243047">Cross-Encoder</text>
+<text x="1274" y="716" text-anchor="end" font-family="Aptos, Calibri, Helvetica, Arial, sans-serif" font-size="12" fill="#B8C0CC">42 queries, 741 judgments</text>
+</svg>

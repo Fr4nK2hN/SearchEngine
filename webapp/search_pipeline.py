@@ -125,10 +125,10 @@ class SearchPipeline:
     def apply_ranking_mode(self, query, results, mode, rerank_top_n=None):
         """统一执行排序模式。"""
         if mode == "ltr" and self.is_ltr_available():
-            results = self.ltr_ranker.rerank(query, results)
+            results = self.ltr_ranker.rerank(query, results, top_n=rerank_top_n)
             return (
                 results,
-                "LTR",
+                f"LTR (top-{int(rerank_top_n)})" if rerank_top_n is not None else "LTR",
                 float(self.ltr_ranker.last_timing.get("feature_ms", 0.0)),
                 float(self.ltr_ranker.last_timing.get("inference_ms", 0.0)),
             )
@@ -193,9 +193,14 @@ class SearchPipeline:
 
     def resolve_adaptive_route(self, query, results=None):
         """根据 router 判定 easy/hard，并映射为最终可执行模式。"""
+        try:
+            raw_route = self.query_router.route(query, results=results)
+        except TypeError:
+            raw_route = self.query_router.route(query)
+
         route = self.apply_adaptive_guardrails(
             query,
-            self.query_router.route(query),
+            raw_route,
         )
         route = self.apply_retrieval_confidence_guardrail(route, results)
         selected_mode = route.get("selected_mode") or "baseline"
@@ -211,7 +216,7 @@ class SearchPipeline:
         route["hard_top_k"] = hard_top_k
         route["rerank_top_n"] = (
             hard_top_k
-            if route_label == "hard" and selected_mode in ("cross_encoder", "hybrid")
+            if route_label == "hard" and selected_mode in ("cross_encoder", "hybrid", "ltr")
             else None
         )
         return route

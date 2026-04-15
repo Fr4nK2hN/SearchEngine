@@ -8,7 +8,7 @@ class DummyLTRRanker:
         self.is_trained = is_trained
         self.last_timing = {"feature_ms": 11.0, "inference_ms": 7.0}
 
-    def rerank(self, query, results):
+    def rerank(self, query, results, top_n=None):
         for item in results:
             item["_ltr_score"] = item.get("_score", 0.0)
         return results
@@ -54,6 +54,28 @@ class SearchPipelineTests(unittest.TestCase):
         self.assertEqual(route["selected_mode"], "cross_encoder")
         self.assertEqual(route["hard_top_k"], 20)
         self.assertEqual(route["rerank_top_n"], 20)
+
+    def test_resolve_adaptive_route_caps_hard_ltr_rerank(self):
+        pipeline = SearchPipeline(
+            ltr_ranker=DummyLTRRanker(is_trained=True),
+            cross_encoder_model=DummyCrossEncoder(),
+            query_router=DummyRouter(
+                {
+                    "route_label": "hard",
+                    "route_confidence": 0.9,
+                    "route_source": "model",
+                    "selected_mode": "ltr",
+                    "hard_top_k": 50,
+                }
+            ),
+            adaptive_hard_top_k_cap=10,
+        )
+
+        route = pipeline.resolve_adaptive_route("alpha beta gamma")
+
+        self.assertEqual(route["selected_mode"], "ltr")
+        self.assertEqual(route["hard_top_k"], 10)
+        self.assertEqual(route["rerank_top_n"], 10)
 
     def test_apply_ranking_mode_baseline_is_passthrough(self):
         results = [{"_id": "doc-1", "_score": 1.0, "_source": {"content": "alpha"}}]

@@ -12,7 +12,7 @@ STOPWORDS = {
 }
 QUESTION_WORDS = {"what", "when", "where", "which", "who", "why", "how"}
 
-FEATURE_NAMES = [
+QUERY_FEATURE_NAMES = [
     "query_len_chars",
     "query_terms",
     "unique_terms",
@@ -20,6 +20,17 @@ FEATURE_NAMES = [
     "prefix_like",
     "unique_ratio",
 ]
+RETRIEVAL_FEATURE_NAMES = [
+    "base_top_score",
+    "base_second_score",
+    "base_score_gap",
+    "base_score_ratio",
+    "base_top10_mean",
+    "base_top10_std",
+    "result_count",
+]
+FEATURE_NAMES = QUERY_FEATURE_NAMES
+EXTENDED_FEATURE_NAMES = QUERY_FEATURE_NAMES + RETRIEVAL_FEATURE_NAMES
 
 EXPERT_TO_MODE = {
     "Baseline": "baseline",
@@ -60,6 +71,45 @@ def query_feature_vector(query):
         1.0 if is_prefix_like_query(tokens) else 0.0,
         float((len(uniq) / len(tokens)) if tokens else 0.0),
     ]
+
+
+def retrieval_feature_vector(results):
+    if not results:
+        return [0.0 for _ in RETRIEVAL_FEATURE_NAMES]
+
+    scores = []
+    for hit in results[:10]:
+        try:
+            scores.append(float(hit.get("_score", 0.0) or 0.0))
+        except (AttributeError, TypeError, ValueError):
+            scores.append(0.0)
+
+    if not scores:
+        return [0.0 for _ in RETRIEVAL_FEATURE_NAMES]
+
+    top_score = scores[0]
+    second_score = scores[1] if len(scores) > 1 else 0.0
+    score_gap = top_score - second_score
+    score_ratio = (second_score / top_score) if top_score > 0 else 0.0
+    score_mean = sum(scores) / len(scores)
+    score_var = sum((score - score_mean) ** 2 for score in scores) / len(scores)
+    return [
+        float(top_score),
+        float(second_score),
+        float(score_gap),
+        float(score_ratio),
+        float(score_mean),
+        float(score_var ** 0.5),
+        float(len(results)),
+    ]
+
+
+def router_feature_vector(query, results=None, feature_names=None):
+    feature_names = list(feature_names or FEATURE_NAMES)
+    feature_map = {}
+    feature_map.update(zip(QUERY_FEATURE_NAMES, query_feature_vector(query)))
+    feature_map.update(zip(RETRIEVAL_FEATURE_NAMES, retrieval_feature_vector(results)))
+    return [float(feature_map.get(name, 0.0)) for name in feature_names]
 
 
 def adaptive_guardrail(query, route_label, selected_mode, ltr_available, enabled_guardrails=None):
@@ -205,6 +255,7 @@ class QueryRouter:
         self.loaded = False
         self.load_error = None
         self.model_meta = {}
+        self.feature_names = FEATURE_NAMES
         self._try_load_model()
 
     def _try_load_model(self):
@@ -222,6 +273,7 @@ class QueryRouter:
             self.easy_mode = payload.get("easy_mode", self.default_easy_mode)
             self.hard_mode = payload.get("hard_mode", self.default_hard_mode)
             self.model_meta = payload.get("meta", {})
+            self.feature_names = payload.get("feature_names") or FEATURE_NAMES
             self.loaded = self.model is not None and self.scaler is not None
         except Exception as e:
             self.loaded = False
@@ -266,12 +318,12 @@ class QueryRouter:
             "hard_top_k": self.hard_top_k,
         }
 
-    def route(self, query):
+    def route(self, query, results=None):
         if not self.loaded:
             return self._heuristic_route(query)
 
         try:
-            feats = [query_feature_vector(query)]
+            feats = [router_feature_vector(query, results=results, feature_names=self.feature_names)]
             feats_scaled = self.scaler.transform(feats)
             prob = self.model.predict_proba(feats_scaled)[0]
             hard_prob = float(prob[1]) if len(prob) > 1 else float(prob[0])

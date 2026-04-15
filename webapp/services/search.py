@@ -116,7 +116,7 @@ class SearchService:
                 route_info = self.search_pipeline.resolve_adaptive_route(query, results=results)
                 exec_mode = route_info.get("selected_mode", "baseline")
                 rerank_limit = route_info.get("rerank_top_n")
-            elif mode in {"cross_encoder", "hybrid"}:
+            elif mode in {"cross_encoder", "hybrid", "ltr"}:
                 rerank_limit = requested_rerank_top_n
 
             results, ranking_method, feature_ms, inference_ms = self.search_pipeline.apply_ranking_mode(

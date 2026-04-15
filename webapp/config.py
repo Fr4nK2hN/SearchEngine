@@ -4,10 +4,12 @@ from dataclasses import dataclass
 
 ALLOWED_ROUTER_MODES = frozenset({"baseline", "ltr", "cross_encoder", "hybrid"})
 DEFAULT_RECALL_RELAX_THRESHOLD = 5
-DEFAULT_ADAPTIVE_HARD_THRESHOLD = 0.30
+DEFAULT_ADAPTIVE_HARD_THRESHOLD = 0.60
 DEFAULT_ADAPTIVE_HARD_TOP_K_CAP = 10
 DEFAULT_ADAPTIVE_GUARDRAILS = "hard_question_prefix_baseline"
 DEFAULT_ADAPTIVE_BASELINE_MIN_TOP_SCORE = 40.0
+DEFAULT_QUERY_ROUTER_MODEL_PATH = "models/query_router_retrieval.pkl"
+DEFAULT_LTR_MODEL_PATH = "models/ltr_model_manual.pkl"
 
 
 def _parse_int(value, default, minimum=None):
@@ -106,7 +108,7 @@ def load_config(
     )
     adaptive_hard_mode = _normalize_router_mode(
         os.getenv("ADAPTIVE_HARD_MODE"),
-        "cross_encoder",
+        "ltr",
     )
 
     return SearchEngineConfig(
@@ -124,10 +126,10 @@ def load_config(
             "SEARCHENGINE_BI_ENCODER_MODEL",
             "all-MiniLM-L6-v2",
         ),
-        ltr_model_path=os.getenv("SEARCHENGINE_LTR_MODEL_PATH", "models/ltr_model.pkl"),
+        ltr_model_path=os.getenv("SEARCHENGINE_LTR_MODEL_PATH", DEFAULT_LTR_MODEL_PATH),
         query_router_model_path=os.getenv(
             "SEARCHENGINE_QUERY_ROUTER_MODEL_PATH",
-            "models/query_router.pkl",
+            DEFAULT_QUERY_ROUTER_MODEL_PATH,
         ),
         adaptive_easy_mode=adaptive_easy_mode,
         adaptive_hard_mode=adaptive_hard_mode,

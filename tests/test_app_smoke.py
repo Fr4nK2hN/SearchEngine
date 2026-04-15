@@ -25,7 +25,7 @@ class FakeLTRRanker:
         )
         self.last_timing = {"feature_ms": 0.0, "inference_ms": 0.0}
 
-    def rerank(self, query, results):
+    def rerank(self, query, results, top_n=None):
         return results
 
     def train(self, *args, **kwargs):
@@ -39,7 +39,7 @@ class FakeQueryRouter:
     def __init__(self):
         self.loaded = True
         self.easy_mode = "baseline"
-        self.hard_mode = "cross_encoder"
+        self.hard_mode = "ltr"
         self.hard_threshold = 0.6062
         self.hard_top_k = 5
         self.hard_topk_policy = []
@@ -58,11 +58,11 @@ class FakeQueryRouter:
 def load_app_module(log_path):
     runtime = SimpleNamespace(
         config=SimpleNamespace(
-            ltr_model_path="models/ltr_model.pkl",
-            query_router_model_path="models/query_router.pkl",
+            ltr_model_path="models/ltr_model_manual.pkl",
+            query_router_model_path="models/query_router_retrieval.pkl",
             recall_relax_threshold=5,
             adaptive_hard_top_k_cap=10,
-            adaptive_hard_threshold=0.30,
+            adaptive_hard_threshold=0.60,
             adaptive_guardrails=frozenset({"hard_question_prefix_baseline"}),
             adaptive_baseline_min_top_score=40.0,
             log_file=log_path,

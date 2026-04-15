@@ -1,0 +1,83 @@
+{
+  "generated_at": "2026-04-11T20:02:05.033540+00:00",
+  "label_stats": {
+    "labeled_rows": 741,
+    "unlabeled_rows": 0,
+    "query_count": 42,
+    "skipped_query_count": 0,
+    "skipped_queries": {}
+  },
+  "rows": [
+    {
+      "mode": "baseline",
+      "query_count": 42,
+      "ndcg@10": 0.8588532064184998,
+      "mrr@10": 0.9238095238095237,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 17.23200902121053,
+      "latency_p50_ms": 16.315250482875854,
+      "latency_p95_ms": 22.0399104146054,
+      "unjudged_returned_avg": 0.0,
+      "route_counts": {
+        "baseline": 42
+      }
+    },
+    {
+      "mode": "ltr",
+      "query_count": 42,
+      "ndcg@10": 0.8993986345276502,
+      "mrr@10": 1.0,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 26.217984190831583,
+      "latency_p50_ms": 22.108103992650285,
+      "latency_p95_ms": 48.68761458492372,
+      "unjudged_returned_avg": 0.0,
+      "route_counts": {
+        "ltr": 42
+      }
+    },
+    {
+      "mode": "adaptive",
+      "query_count": 42,
+      "ndcg@10": 0.899317389457513,
+      "mrr@10": 1.0,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 17.27726487886338,
+      "latency_p50_ms": 16.25345801585354,
+      "latency_p95_ms": 24.253628563019443,
+      "unjudged_returned_avg": 0.0,
+      "route_counts": {
+        "baseline": 25,
+        "ltr": 17
+      }
+    },
+    {
+      "mode": "hybrid",
+      "query_count": 42,
+      "ndcg@10": 0.7308228984208541,
+      "mrr@10": 0.9293650793650793,
+      "recall@10": 0.43462744217844884,
+      "latency_avg_ms": 96.76917173783295,
+      "latency_p50_ms": 95.95616700244136,
+      "latency_p95_ms": 111.31560836220159,
+      "unjudged_returned_avg": 4.214285714285714,
+      "route_counts": {
+        "hybrid": 42
+      }
+    },
+    {
+      "mode": "cross_encoder",
+      "query_count": 42,
+      "ndcg@10": 0.8856708515835541,
+      "mrr@10": 0.9785714285714286,
+      "recall@10": 0.5944342482138378,
+      "latency_avg_ms": 87.16785914813434,
+      "latency_p50_ms": 86.56997946673073,
+      "latency_p95_ms": 100.65479340264574,
+      "unjudged_returned_avg": 0.0,
+      "route_counts": {
+        "cross_encoder": 42
+      }
+    }
+  ]
+}

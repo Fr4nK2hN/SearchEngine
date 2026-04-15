@@ -23,12 +23,35 @@ def render_research_dashboard_html(
 ):
     latency_stats = summary.get("latency_stats", {})
     adaptive_stats = summary.get("adaptive_stats", {})
+    by_ranking_method = latency_stats.get("by_ranking_method", {})
+
+    def average_latency_for(*prefixes):
+        total_ms = 0.0
+        total_count = 0
+        normalized_prefixes = tuple(prefix.lower() for prefix in prefixes)
+        for method, stats in by_ranking_method.items():
+            normalized_method = str(method or "").strip().lower().replace("_", "-")
+            if not normalized_method.startswith(normalized_prefixes):
+                continue
+            count = int(stats.get("count", 0) or 0)
+            if count <= 0:
+                continue
+            total_ms += float(stats.get("avg_total_ms", 0.0) or 0.0) * count
+            total_count += count
+        if total_count <= 0:
+            return "N/A"
+        return f"{total_ms / total_count:.1f}"
+
+    baseline_latency = average_latency_for("baseline")
+    ltr_latency = average_latency_for("ltr")
+    adaptive_latency = average_latency_for("adaptive")
+    cross_encoder_latency = average_latency_for("cross-encoder")
 
     dashboard_html = f"""
         <!DOCTYPE html>
         <html>
         <head>
-            <title>Research Dashboard - LTR Enhanced</title>
+            <title>Search Engine Research Dashboard</title>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
             <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet" />
@@ -243,78 +266,57 @@ def render_research_dashboard_html(
         <body>
             <div class="container">
                 <div class="header">
-                    <p class="eyebrow">Adaptive Retrieval Lab</p>
-                    <h1>Search Research Dashboard</h1>
-                    <p class="header-sub">Real-time monitoring of routing, ranking quality proxies, and latency behavior.</p>
-                    <span class="ltr-badge">LTR Enabled</span>
+                    <h1>Search Engine Research Dashboard</h1>
                 </div>
                 
                 <div class="summary">
                     <div class="summary-head">
                         <div>
                             <h2>System Statistics</h2>
-                            <p class="summary-sub">Toggle cards by metric family to focus on quality, latency, routing, or model status.</p>
-                        </div>
-                        <div class="filter-tabs" id="stat-filters">
-                            <button class="filter-tab active" type="button" data-filter="all">All</button>
-                            <button class="filter-tab" type="button" data-filter="quality">Quality</button>
-                            <button class="filter-tab" type="button" data-filter="latency">Latency</button>
-                            <button class="filter-tab" type="button" data-filter="routing">Routing</button>
-                            <button class="filter-tab" type="button" data-filter="model">Model</button>
                         </div>
                     </div>
                     <div class="stats-grid">
-                        <div class="stat-card" data-group="overview">
-                            <div class="stat-value">{len(sessions)}</div>
-                            <div class="stat-label">Total Sessions</div>
-                        </div>
-                        <div class="stat-card" data-group="overview">
-                            <div class="stat-value">{summary['total_events']}</div>
-                            <div class="stat-label">Total Events</div>
-                        </div>
                         <div class="stat-card" data-group="overview quality">
                             <div class="stat-value">{summary['query_stats']['total_queries']}</div>
                             <div class="stat-label">Total Queries</div>
                         </div>
-                        <div class="stat-card" data-group="quality">
-                            <div class="stat-value">{summary['interaction_stats']['total_clicks']}</div>
-                            <div class="stat-label">Result Clicks</div>
-                        </div>
-                        <div class="stat-card" data-group="quality">
-                            <div class="stat-value">{summary['feedback_stats']['ctr_at_3'] * 100:.1f}%</div>
-                            <div class="stat-label">CTR@3</div>
-                        </div>
-                        <div class="stat-card" data-group="quality">
-                            <div class="stat-value">{summary['feedback_stats']['avg_click_rank']:.2f}</div>
-                            <div class="stat-label">Avg Click Rank</div>
-                        </div>
-                        <div class="stat-card" data-group="quality">
-                            <div class="stat-value">{summary['feedback_stats']['abandonment_rate'] * 100:.1f}%</div>
-                            <div class="stat-label">Abandonment Rate</div>
-                        </div>
                         <div class="stat-card" data-group="latency">
                             <div class="stat-value">{latency_stats.get('avg_total_ms', 0.0):.1f}</div>
-                            <div class="stat-label">Avg Latency (ms)</div>
-                        </div>
-                        <div class="stat-card" data-group="latency">
-                            <div class="stat-value">{latency_stats.get('p95_total_ms', 0.0):.1f}</div>
-                            <div class="stat-label">P95 Latency (ms)</div>
+                            <div class="stat-label">Overall Avg Latency (ms)</div>
                         </div>
                         <div class="stat-card" data-group="routing">
                             <div class="stat-value">{adaptive_stats.get('hard_rate', 0.0) * 100:.1f}%</div>
                             <div class="stat-label">Adaptive Hard Rate</div>
                         </div>
                         <div class="stat-card" data-group="model">
-                            <div class="stat-value">{'✓' if ltr_available else '✗'}</div>
-                            <div class="stat-label">LTR Model Status</div>
+                            <div class="stat-value">{'Ready' if ltr_available and router_loaded else 'Partial'}</div>
+                            <div class="stat-label">LTR / Router Status</div>
                         </div>
-                        <div class="stat-card" data-group="routing model">
-                            <div class="stat-value">{'✓' if router_loaded else 'Heuristic'}</div>
-                            <div class="stat-label">Router Status</div>
+                    </div>
+                </div>
+
+                <div class="summary">
+                    <div class="summary-head">
+                        <div>
+                            <h2>Latency by Ranking Mode</h2>
                         </div>
-                        <div class="stat-card" data-group="model">
-                            <div class="stat-value">{feature_count}</div>
-                            <div class="stat-label">Feature Dimensions</div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card" data-group="latency">
+                            <div class="stat-value">{baseline_latency}</div>
+                            <div class="stat-label">Baseline Latency (ms)</div>
+                        </div>
+                        <div class="stat-card" data-group="latency">
+                            <div class="stat-value">{ltr_latency}</div>
+                            <div class="stat-label">LTR Latency (ms)</div>
+                        </div>
+                        <div class="stat-card" data-group="latency">
+                            <div class="stat-value">{adaptive_latency}</div>
+                            <div class="stat-label">Adaptive Latency (ms)</div>
+                        </div>
+                        <div class="stat-card" data-group="latency">
+                            <div class="stat-value">{cross_encoder_latency}</div>
+                            <div class="stat-label">Cross-Encoder Latency (ms)</div>
                         </div>
                     </div>
                 </div>
@@ -352,28 +354,6 @@ def render_research_dashboard_html(
     dashboard_html += """
                 </div>
             </div>
-            <script>
-                (() => {
-                    const buttons = document.querySelectorAll('.filter-tab');
-                    const cards = document.querySelectorAll('.stat-card');
-                    if (!buttons.length || !cards.length) return;
-
-                    const applyFilter = (selected) => {
-                        cards.forEach((card) => {
-                            const groups = (card.dataset.group || '').split(/\\s+/).filter(Boolean);
-                            const visible = selected === 'all' || groups.includes(selected);
-                            card.classList.toggle('is-hidden', !visible);
-                        });
-                        buttons.forEach((btn) => {
-                            btn.classList.toggle('active', btn.dataset.filter === selected);
-                        });
-                    };
-
-                    buttons.forEach((btn) => {
-                        btn.addEventListener('click', () => applyFilter(btn.dataset.filter || 'all'));
-                    });
-                })();
-            </script>
         </body>
         </html>
     """

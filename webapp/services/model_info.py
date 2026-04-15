@@ -19,6 +19,7 @@ def build_router_info(
         "hard_topk_policy": query_router.hard_topk_policy,
         "adaptive_guardrails": "all" if adaptive_guardrails is None else sorted(adaptive_guardrails),
         "adaptive_baseline_min_top_score": adaptive_baseline_min_top_score,
+        "feature_names": getattr(query_router, "feature_names", []),
         "load_error": query_router.load_error,
     }
 

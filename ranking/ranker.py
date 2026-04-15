@@ -1,5 +1,6 @@
 import numpy as np
 import pickle
+import pandas as pd
 from lightgbm import LGBMRanker
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
@@ -47,7 +48,10 @@ class LTRRanker:
         print(f"Label distribution: {np.bincount(y_train.astype(int))}")
         
         # 特征标准化
-        X_train_scaled = self.scaler.fit_transform(X_train)
+        X_train_scaled = pd.DataFrame(
+            self.scaler.fit_transform(X_train),
+            columns=self.feature_names,
+        )
         
         # 初始化模型
         self.model = LGBMRanker(
@@ -71,7 +75,10 @@ class LTRRanker:
         eval_group = None
         if validation_data:
             X_val, y_val, groups_val = self._prepare_data(validation_data)
-            X_val_scaled = self.scaler.transform(X_val)
+            X_val_scaled = pd.DataFrame(
+                self.scaler.transform(X_val),
+                columns=self.feature_names,
+            )
             eval_set = [(X_val_scaled, y_val)]
             eval_group = [groups_val]
         
@@ -162,7 +169,11 @@ class LTRRanker:
             X.append(feature_vector)
         t1 = time.perf_counter()
         X = np.array(X)
-        X_scaled = self.scaler.transform(X)
+        model_feature_names = getattr(self.model, 'feature_name_', None) or self.feature_names
+        X_scaled = pd.DataFrame(
+            self.scaler.transform(X),
+            columns=model_feature_names,
+        )
         scores = self.model.predict(X_scaled)
         t2 = time.perf_counter()
         self.last_timing = {
@@ -172,7 +183,7 @@ class LTRRanker:
         }
         return scores
     
-    def rerank(self, query, search_results):
+    def rerank(self, query, search_results, top_n=None):
         """
         对搜索结果进行重排序
         
@@ -185,9 +196,14 @@ class LTRRanker:
         """
         if not search_results:
             return []
+
+        if top_n is None:
+            top_n = len(search_results)
+        top_n = max(1, min(int(top_n), len(search_results)))
+        head = search_results[:top_n]
         
         documents = []
-        for hit in search_results:
+        for hit in head:
             source = dict(hit.get('_source') or {})
             # 线上推理阶段补齐 ES 原始分，避免训练/推理特征分布不一致。
             source['es_score'] = float(hit.get('_score', source.get('es_score', 0.0)) or 0.0)
@@ -197,12 +213,13 @@ class LTRRanker:
         scores = self.predict(query, documents)
         
         # 添加预测分数到结果中
-        for i, (hit, score) in enumerate(zip(search_results, scores)):
+        for i, (hit, score) in enumerate(zip(head, scores)):
             hit['_ltr_score'] = float(score)
             hit['_original_rank'] = i + 1
         
         # 按 LTR 分数排序
-        search_results.sort(key=lambda x: x['_ltr_score'], reverse=True)
+        head.sort(key=lambda x: x['_ltr_score'], reverse=True)
+        search_results[:top_n] = head
         
         return search_results
     

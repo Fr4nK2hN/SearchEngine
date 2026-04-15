@@ -103,8 +103,10 @@ def percentile(values, p):
     return arr[lo] * (hi - pos) + arr[hi] * (pos - lo)
 
 
-def fetch_search(base_url, query, mode, timeout, client=None):
+def fetch_search(base_url, query, mode, timeout, client=None, rerank_top_n=None):
     params = {"q": query, "mode": mode, "session_id": f"manual-eval-{int(time.time() * 1000)}"}
+    if rerank_top_n is not None:
+        params["rerank_top_n"] = str(rerank_top_n)
     t0 = time.perf_counter()
     if client is not None:
         response = client.get("/search", query_string=params)
@@ -119,7 +121,7 @@ def fetch_search(base_url, query, mode, timeout, client=None):
     return payload, elapsed_ms
 
 
-def evaluate(judgments, base_url, modes, top_k, timeout, client=None):
+def evaluate(judgments, base_url, modes, top_k, timeout, client=None, rerank_top_n=None):
     rows = []
     per_query = []
     queries = sorted(judgments.keys())
@@ -134,7 +136,14 @@ def evaluate(judgments, base_url, modes, top_k, timeout, client=None):
 
         for query in queries:
             label_map = judgments[query]
-            payload, elapsed_ms = fetch_search(base_url, query, mode, timeout, client=client)
+            payload, elapsed_ms = fetch_search(
+                base_url,
+                query,
+                mode,
+                timeout,
+                client=client,
+                rerank_top_n=rerank_top_n,
+            )
             hits = payload.get("results", [])[:top_k]
             returned_ids = [str(hit.get("_id")) for hit in hits if hit.get("_id") is not None]
             returned_set = set(returned_ids)
@@ -302,6 +311,7 @@ def main():
     parser.add_argument("--top-k", type=int, default=10)
     parser.add_argument("--min-labels-per-query", type=int, default=10)
     parser.add_argument("--timeout", type=float, default=60.0)
+    parser.add_argument("--rerank-top-n", type=int, default=0)
     parser.add_argument("--use-flask-test-client", action="store_true")
     parser.add_argument("--out-dir", default="reports/manual_relevance_pool_20260411/eval_after_labeling")
     args = parser.parse_args()
@@ -325,7 +335,15 @@ def main():
 
         client = flask_app.test_client()
 
-    rows, per_query = evaluate(judgments, args.base_url, modes, args.top_k, args.timeout, client=client)
+    rows, per_query = evaluate(
+        judgments,
+        args.base_url,
+        modes,
+        args.top_k,
+        args.timeout,
+        client=client,
+        rerank_top_n=args.rerank_top_n if args.rerank_top_n > 0 else None,
+    )
     label_stats = {
         "labeled_rows": sum(1 for row in judgment_rows if row["parsed_label"] is not None),
         "unlabeled_rows": sum(1 for row in judgment_rows if row["parsed_label"] is None),

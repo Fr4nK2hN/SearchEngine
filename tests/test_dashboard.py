@@ -27,7 +27,19 @@ class DashboardTests(unittest.TestCase):
                 "avg_click_rank": 1.0,
                 "abandonment_rate": 0.25,
             },
-            "latency_stats": {"avg_total_ms": 120.0, "p95_total_ms": 200.0},
+            "latency_stats": {
+                "avg_total_ms": 120.0,
+                "p95_total_ms": 200.0,
+                "by_ranking_method": {
+                    "Baseline (ES only)": {"count": 1, "avg_total_ms": 25.0},
+                    "LTR": {"count": 1, "avg_total_ms": 40.0},
+                    "Adaptive (hard -> ltr) | LTR (top-10)": {
+                        "count": 2,
+                        "avg_total_ms": 35.0,
+                    },
+                    "Cross-Encoder": {"count": 1, "avg_total_ms": 90.0},
+                },
+            },
             "adaptive_stats": {"hard_rate": 0.4},
         }
         sessions = {
@@ -49,13 +61,26 @@ class DashboardTests(unittest.TestCase):
             feature_count=12,
         )
 
-        self.assertIn("Search Research Dashboard", html)
-        self.assertIn("Total Sessions", html)
+        self.assertIn("Search Engine Research Dashboard", html)
+        self.assertIn("Total Queries", html)
+        self.assertIn("Overall Avg Latency (ms)", html)
+        self.assertIn("Adaptive Hard Rate", html)
+        self.assertIn("LTR / Router Status", html)
+        self.assertIn("Latency by Ranking Mode", html)
+        self.assertIn("Baseline Latency (ms)", html)
+        self.assertIn("LTR Latency (ms)", html)
+        self.assertIn("Adaptive Latency (ms)", html)
+        self.assertIn("Cross-Encoder Latency (ms)", html)
         self.assertIn(">1</div>", html)
+        self.assertIn(">120.0</div>", html)
+        self.assertIn(">40.0%</div>", html)
+        self.assertIn("Partial", html)
+        self.assertIn(">25.0</div>", html)
+        self.assertIn(">40.0</div>", html)
+        self.assertIn(">35.0</div>", html)
+        self.assertIn(">90.0</div>", html)
         self.assertIn("Session: session-1...", html)
         self.assertIn("Baseline (ES only)", html)
-        self.assertIn("Heuristic", html)
-        self.assertIn(">12</div>", html)
 
 
 if __name__ == "__main__":

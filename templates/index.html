@@ -18,12 +18,7 @@
   <body>
     <div class="container">
       <div class="header">
-        <p class="eyebrow">Adaptive Retrieval Lab</p>
         <h1>Smart Search</h1>
-        <p class="subtitle">
-          Query-aware reranking with LTR, Cross-Encoder, Hybrid, and Adaptive
-          Router.
-        </p>
       </div>
 
       <div class="search-box">
@@ -39,7 +34,6 @@
           <option value="adaptive">Adaptive Router</option>
           <option value="ltr">LTR</option>
           <option value="cross_encoder">Cross Encoder</option>
-          <option value="hybrid">Hybrid</option>
           <option value="baseline">Baseline</option>
         </select>
         <button id="search-button">Search</button>
@@ -84,15 +78,6 @@
         <input
           type="radio"
           name="mode"
-          value="hybrid"
-          id="mode-hybrid"
-          style="display: none"
-        />
-        <label for="mode-hybrid"> Hybrid Ranking</label>
-
-        <input
-          type="radio"
-          name="mode"
           value="baseline"
           id="mode-baseline"
           style="display: none"
@@ -124,7 +109,6 @@
           <option value="adaptive">Adaptive Router</option>
           <option value="ltr">LTR</option>
           <option value="cross_encoder">Cross Encoder</option>
-          <option value="hybrid">Hybrid</option>
           <option value="baseline">Baseline</option>
         </select>
         <button id="toggle-tracking">
